@@ -1,14 +1,11 @@
 // src/components/LandingPage.js
 import React from "react";
 import { Container, Typography, Button, Box } from "@mui/material";
-
 import jobHunt from "../assets/job-hunt.svg";
 
 const LandingPage = () => {
   return (
     <Container maxWidth="md">
-     
-
       {/* Slogan */}
       <Typography variant="h6" align="center" paragraph>
         Get hired by top product based companies like
