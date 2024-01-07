@@ -17,6 +17,7 @@ import {
   FormControl,
   InputLabel,
   Chip,
+  Divider,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -42,7 +43,22 @@ const ResumePreview = () => {
     grade: "A",
   });
 
-  const [educationList, setEducationList] = useState([]);
+  const [educationList, setEducationList] = useState([
+    {
+      institute: "University of Example",
+      degree: "Bachelor of Science",
+      startDate: "2015-09-01",
+      endDate: "2019-05-01",
+      grade: "A",
+    },
+    {
+      institute: "University of Example",
+      degree: "Bachelor of Science",
+      startDate: "2015-09-01",
+      endDate: "2019-05-01",
+      grade: "A",
+    },
+  ]);
 
   const [selectedLanguages, setSelectedLanguages] = useState([
     "JavaScript",
@@ -110,13 +126,13 @@ const ResumePreview = () => {
   // Dummy Awards Data
   const initialAwards = [
     {
-      name: "Outstanding Performance Award",
+      name: "Outstanding Performer",
       year: "2022",
       shortDescription:
         "Recognized for exceptional performance and dedication.",
     },
     {
-      name: "Innovation Excellence Award",
+      name: "Innovation Excellence",
       year: "2021",
       shortDescription:
         "Acknowledged for innovative contributions to projects.",
@@ -606,12 +622,12 @@ const ResumePreview = () => {
                 <Typography variant="subtitle1" color="primary">
                   {basicDetails.currentJobTitle}
                 </Typography>
-                <Typography variant="body1">{basicDetails.email}</Typography>
-                <Typography variant="body1">{basicDetails.website}</Typography>
                 <Typography variant="body1">
-                  {basicDetails.phoneNumber}
+                  {`${basicDetails.email} | ${basicDetails.website}`}
                 </Typography>
-                <Typography variant="body1">{basicDetails.location}</Typography>
+                <Typography variant="body1">
+                  {`${basicDetails.phoneNumber} | ${basicDetails.location}`}
+                </Typography>
               </Box>
             </Grid>
 
@@ -628,37 +644,78 @@ const ResumePreview = () => {
           </Grid>
 
           {/* Second Row */}
-          <Grid container spacing={3} style={{ marginTop: "16px" }}>
+          <Grid container spacing={3}>
             {/* First Column */}
             <Grid item xs={6}>
               <Box textAlign="left">
-                <Typography variant="h6" style={{ marginTop: "16px" }}>
-                  Professional Experience
-                </Typography>
+                <Typography variant="h6">Professional Experience</Typography>
+                <Divider style={{ backgroundColor: "#f0f0f0" }} />
                 {experienceList.map((experience, index) => (
                   <Box key={index} mt={2}>
-                    <Typography variant="subtitle1">
+                    {/* First Row - Company Name */}
+                    <Typography variant="subtitle1" fontWeight="bold">
                       {experience.organisation}
                     </Typography>
-                    <Typography variant="subtitle2">
-                      {experience.title}
-                    </Typography>
-                    <Typography variant="body2">
-                      {experience.startDate} to {experience.endDate}
-                    </Typography>
+                    {/* Second Row - Job Title and Dates */}
+                    <Grid container spacing={3}>
+                      {/* First Column - Job Title */}
+                      <Grid item xs={6}>
+                        <Typography variant="subtitle1" color="primary">
+                          {experience.title}
+                        </Typography>
+                      </Grid>
+                      {/* Second Column - Dates (Right Aligned) */}
+                      <Grid item xs={6}>
+                        <Typography
+                          variant="body2"
+                          style={{ textAlign: "right" }}
+                        >
+                          {`${experience.startDate} - ${experience.endDate}`}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    {/* Third Row - Description */}
                     <Typography variant="body2">
                       {experience.description}
                     </Typography>
                   </Box>
                 ))}
 
+                {/* Awards Section */}
                 <Typography variant="h6" style={{ marginTop: "16px" }}>
                   Awards
                 </Typography>
+
+                <Divider style={{ backgroundColor: "#f0f0f0" }} />
                 {awardList.map((award, index) => (
                   <Box key={index} mt={2}>
-                    <Typography variant="subtitle1">{award.name}</Typography>
-                    <Typography variant="body2">Year: {award.year}</Typography>
+                    {/* First Row - Award Name and Year (Right Aligned) */}
+                    <Grid container spacing={3}>
+                      {/* First Column - Award Name in Bold */}
+                      <Grid item xs={10}>
+                        <Typography
+                          variant="subtitle1"
+                          fontWeight="bold"
+                          style={{
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {award.name}
+                        </Typography>
+                      </Grid>
+                      {/* Second Column - Year (Right Aligned) */}
+                      <Grid item xs={2}>
+                        <Typography
+                          variant="body2"
+                          style={{ textAlign: "right" }}
+                        >
+                          {award.year}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    {/* Second Row - Short Description */}
                     <Typography variant="body2">
                       Short Description: {award.shortDescription}
                     </Typography>
@@ -670,9 +727,9 @@ const ResumePreview = () => {
             {/* Second Column */}
             <Grid item xs={6}>
               <Box textAlign="left">
-                <Typography variant="h6" style={{ marginTop: "16px" }}>
-                  Skills
-                </Typography>
+                <Typography variant="h6">Skills</Typography>
+
+                <Divider style={{ backgroundColor: "#f0f0f0" }} />
                 <Typography variant="subtitle1">
                   Programming Languages
                 </Typography>
@@ -685,6 +742,7 @@ const ResumePreview = () => {
                 <Typography variant="subtitle1" style={{ marginTop: "16px" }}>
                   Tools
                 </Typography>
+
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                   {selectedTools.map((value) => (
                     <Chip key={value} label={value} />
@@ -703,14 +761,33 @@ const ResumePreview = () => {
 
               <Box textAlign="left" style={{ marginTop: "16px" }}>
                 <Typography variant="h6">Education</Typography>
+
+                <Divider style={{ backgroundColor: "#f0f0f0" }} />
                 {educationList.map((education, index) => (
                   <Box key={index} mt={2}>
-                    <Typography variant="subtitle1">
-                      {education.degree} - {education.institute}
+                    {/* First Row - College Name in Bold */}
+                    <Typography variant="subtitle1" fontWeight="bold">
+                      {education.institute}
                     </Typography>
-                    <Typography variant="body2">
-                      {education.startDate} to {education.endDate}
-                    </Typography>
+                    {/* Second Row - Degree, Start Date, End Date (Right Aligned) */}
+                    <Grid container spacing={3}>
+                      {/* First Column - Degree */}
+                      <Grid item xs={6}>
+                        <Typography variant="body2">
+                          {education.degree}
+                        </Typography>
+                      </Grid>
+                      {/* Second Column - Dates (Right Aligned) */}
+                      <Grid item xs={6}>
+                        <Typography
+                          variant="body2"
+                          style={{ textAlign: "right" }}
+                        >
+                          {`${education.startDate} - ${education.endDate}`}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    {/* Third Row - Grade */}
                     <Typography variant="body2">
                       Grade: {education.grade}
                     </Typography>
