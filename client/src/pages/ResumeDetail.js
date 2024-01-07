@@ -30,7 +30,7 @@ const ResumePreview = () => {
     email: "john.doe@example.com",
     website: "https://johndoe.com",
     phoneNumber: "123-456-7890",
-    location: "City, Country",
+    location: "Cityville, USA",
     yearsOfExperience: "5",
     totalExperience: "8",
   });
@@ -38,8 +38,8 @@ const ResumePreview = () => {
   const [educationDetails, setEducationDetails] = useState({
     institute: "University of Example",
     degree: "Bachelor of Science",
-    startDate: "2015-09-01",
-    endDate: "2019-05-01",
+    startDate: "09/2018",
+    endDate: "09/2018",
     grade: "A",
   });
 
@@ -47,15 +47,15 @@ const ResumePreview = () => {
     {
       institute: "University of Example",
       degree: "Bachelor of Science",
-      startDate: "2015-09-01",
-      endDate: "2019-05-01",
+      startDate: "09/2018",
+      endDate: "09/2018",
       grade: "A",
     },
     {
       institute: "University of Example",
       degree: "Bachelor of Science",
-      startDate: "2015-09-01",
-      endDate: "2019-05-01",
+      startDate: "09/2018",
+      endDate: "09/2018",
       grade: "A",
     },
   ]);
@@ -170,15 +170,18 @@ const ResumePreview = () => {
     description: "",
   });
   const intialExperience = {
-    organisation: "Google",
-    title: "SDE-1",
-    startDate: "01-01-2023",
-    endDate: "01-01-2024",
+    organisation: "TechCo Inc.",
+    title: "Sr. Software Engineer",
+    startDate: "01/2017",
+    endDate: "Present",
     description:
-      "lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum",
+      "Excels in full-stack development, leveraging JavaScript and Python to drive innovation. Spearheaded projects, receiving accolades for outstanding contributions and leadership.",
   };
 
-  const [experienceList, setExperienceList] = useState([intialExperience]);
+  const [experienceList, setExperienceList] = useState([
+    intialExperience,
+    intialExperience,
+  ]);
 
   const handleExperienceChange = (event) => {
     const { name, value } = event.target;
@@ -616,23 +619,20 @@ const ResumePreview = () => {
           {/* First Row */}
           <Grid container spacing={3} style={{ marginTop: "16px" }}>
             {/* First Column */}
-            <Grid item xs={6}>
+            <Grid item xs={10}>
               <Box textAlign="left">
                 <Typography variant="h5">{basicDetails.name}</Typography>
                 <Typography variant="subtitle1" color="primary">
                   {basicDetails.currentJobTitle}
                 </Typography>
                 <Typography variant="body1">
-                  {`${basicDetails.email} | ${basicDetails.website}`}
-                </Typography>
-                <Typography variant="body1">
-                  {`${basicDetails.phoneNumber} | ${basicDetails.location}`}
+                  {`${basicDetails.email} | ${basicDetails.website} | ${basicDetails.phoneNumber} | ${basicDetails.location}`}
                 </Typography>
               </Box>
             </Grid>
 
             {/* Second Column */}
-            <Grid item xs={6}>
+            <Grid item xs={2} container justifyContent="flex-end">
               <Box textAlign="right">
                 <Avatar
                   alt={basicDetails.name}
@@ -717,7 +717,7 @@ const ResumePreview = () => {
                     </Grid>
                     {/* Second Row - Short Description */}
                     <Typography variant="body2">
-                      Short Description: {award.shortDescription}
+                      {award.shortDescription}
                     </Typography>
                   </Box>
                 ))}
