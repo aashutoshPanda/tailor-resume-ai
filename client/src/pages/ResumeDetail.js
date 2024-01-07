@@ -1,13 +1,324 @@
-// src/components/Landing.js
-import React from "react";
+// src/components/ResumePreview.js
+import React, { useState } from 'react';
+import {
+  Container,
+  Box,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  TextField,
+  Avatar,
+  Typography,
+  Grid,
+  Button,
+  IconButton,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Chip,
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-function Landing() {
+const ResumePreview = () => {
+  const [basicDetails, setBasicDetails] = useState({
+    name: 'John Doe',
+    profilePicture: 'https://example.com/profile-picture.jpg',
+    currentJobTitle: 'Software Engineer',
+    email: 'john.doe@example.com',
+    website: 'https://johndoe.com',
+    phoneNumber: '123-456-7890',
+    location: 'City, Country',
+    yearsOfExperience: '5',
+    totalExperience: '8',
+  });
+
+  const [educationDetails, setEducationDetails] = useState({
+    institute: 'University of Example',
+    degree: 'Bachelor of Science',
+    startDate: '2015-09-01',
+    endDate: '2019-05-01',
+    grade: 'A',
+  });
+
+  const [educationList, setEducationList] = useState([]);
+
+  const [selectedLanguages, setSelectedLanguages] = useState(['JavaScript', 'Python']);
+  const [selectedTools, setSelectedTools] = useState(['Git', 'VS Code']);
+  const [selectedFrameworks, setSelectedFrameworks] = useState(['React', 'Node.js']);
+
+  const handleBasicDetailsChange = (event) => {
+    const { name, value } = event.target;
+    setBasicDetails((prevBasicDetails) => ({
+      ...prevBasicDetails,
+      [name]: value,
+    }));
+  };
+
+  const handleEducationChange = (event) => {
+    const { name, value } = event.target;
+    setEducationDetails((prevEducationDetails) => ({
+      ...prevEducationDetails,
+      [name]: value,
+    }));
+  };
+
+  const handleAddEducation = () => {
+    setEducationList((prevEducationList) => [...prevEducationList, { ...educationDetails }]);
+    setEducationDetails({
+      institute: 'University of Example',
+      degree: 'Bachelor of Science',
+      startDate: '2015-09-01',
+      endDate: '2019-05-01',
+      grade: 'A',
+    });
+  };
+
+  const handleDeleteEducation = (index) => {
+    setEducationList((prevEducationList) => prevEducationList.filter((_, i) => i !== index));
+  };
+
+  const handleLanguageChange = (event) => {
+    setSelectedLanguages(event.target.value);
+  };
+
+  const handleToolChange = (event) => {
+    setSelectedTools(event.target.value);
+  };
+
+  const handleFrameworkChange = (event) => {
+    setSelectedFrameworks(event.target.value);
+  };
+
   return (
-    <div>
-      <h2>resuem details Component</h2>
-      {/* Add your landing component content here */}
-    </div>
-  );
-}
+    <Container maxWidth="md">
+      <Grid container spacing={3}>
+        {/* Left Part - Input Fields */}
+        <Grid item xs={6}>
+          <Accordion>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="basic-details-content" id="basic-details-header">
+              <Typography>Basic Details</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {/* Basic Details Input Fields */}
+              {Object.entries(basicDetails).map(([field, value]) => (
+                <TextField
+                  key={field}
+                  fullWidth
+                  label={field.charAt(0).toUpperCase() + field.slice(1)}
+                  name={field}
+                  value={value}
+                  onChange={handleBasicDetailsChange}
+                  margin="normal"
+                />
+              ))}
+            </AccordionDetails>
+          </Accordion>
 
-export default Landing;
+          <Accordion>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="education-details-content" id="education-details-header">
+              <Typography>Education</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {/* Education Section Input Fields */}
+              <TextField
+                fullWidth
+                label="Name of Institute"
+                name="institute"
+                value={educationDetails.institute}
+                onChange={handleEducationChange}
+                margin="normal"
+              />
+              <TextField
+                fullWidth
+                label="Degree"
+                name="degree"
+                value={educationDetails.degree}
+                onChange={handleEducationChange}
+                margin="normal"
+              />
+              <TextField
+                fullWidth
+                type="date"
+                label="Start Date"
+                name="startDate"
+                value={educationDetails.startDate}
+                onChange={handleEducationChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+              <TextField
+                fullWidth
+                type="date"
+                label="End Date"
+                name="endDate"
+                value={educationDetails.endDate}
+                onChange={handleEducationChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+              <TextField
+                fullWidth
+                label="Grade"
+                name="grade"
+                value={educationDetails.grade}
+                onChange={handleEducationChange}
+                margin="normal"
+              />
+              <Button variant="contained" color="primary" onClick={handleAddEducation} style={{ marginTop: '16px' }}>
+                Add Education
+              </Button>
+
+              {/* Education Box Display */}
+              {educationList.map((education, index) => (
+                <Box
+                  key={index}
+                  border={1}
+                  borderColor="primary.main"
+                  borderRadius={8}
+                  p={2}
+                  mt={2}
+                  position="relative"
+                >
+                  <IconButton
+                    onClick={() => handleDeleteEducation(index)}
+                    style={{ position: 'absolute', top: 0, right: 0 }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                  <Typography variant="subtitle1" fontWeight="bold">
+                    {education.institute}
+                  </Typography>
+                  <Typography variant="body2">
+                    {education.degree} - {education.startDate} to {education.endDate}
+                  </Typography>
+                  <Typography variant="body2">Grade: {education.grade}</Typography>
+                </Box>
+              ))}
+            </AccordionDetails>
+          </Accordion>
+          {/* Skills Accordion */}
+          <Accordion>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="skills-details-content" id="skills-details-header">
+              <Typography>Skills</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {/* Programming Languages Multi-Select */}
+              <FormControl fullWidth margin="normal">
+                <InputLabel id="languages-label">Programming Languages</InputLabel>
+                <Select
+                  labelId="languages-label"
+                  id="languages"
+                  multiple
+                  value={selectedLanguages}
+                  onChange={handleLanguageChange}
+                  renderValue={(selected) => (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                >
+                  {['JavaScript', 'Python', 'Java', 'C++', 'Ruby'].map((language) => (
+                    <MenuItem key={language} value={language}>
+                      {language}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              {/* Tools Multi-Select */}
+              <FormControl fullWidth margin="normal">
+                <InputLabel id="tools-label">Tools</InputLabel>
+                <Select
+                  labelId="tools-label"
+                  id="tools"
+                  multiple
+                  value={selectedTools}
+                  onChange={handleToolChange}
+                  renderValue={(selected) => (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                >
+                  {['Git', 'VS Code', 'Docker', 'JIRA', 'Postman'].map((tool) => (
+                    <MenuItem key={tool} value={tool}>
+                      {tool}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              {/* Frameworks Multi-Select */}
+              <FormControl fullWidth margin="normal">
+                <InputLabel id="frameworks-label">Frameworks</InputLabel>
+                <Select
+                  labelId="frameworks-label"
+                  id="frameworks"
+                  multiple
+                  value={selectedFrameworks}
+                  onChange={handleFrameworkChange}
+                  renderValue={(selected) => (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                >
+                  {['React', 'Node.js', 'Angular', 'Spring Boot', 'Express.js'].map((framework) => (
+                    <MenuItem key={framework} value={framework}>
+                      {framework}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </AccordionDetails>
+          </Accordion>
+        </Grid>
+
+        {/* Right Part - Resume Preview */}
+        <Grid item xs={6}>
+          <Box textAlign="center">
+          <Avatar alt={basicDetails.name} src={basicDetails.profilePicture} sx={{ width: 100, height: 100, mb: 2 }} />
+            <Typography variant="h5">{basicDetails.name}</Typography>
+            <Typography variant="subtitle1">{basicDetails.currentJobTitle}</Typography>
+            <Typography variant="body1">{basicDetails.email}</Typography>
+            <Typography variant="body1">{basicDetails.website}</Typography>
+            <Typography variant="body1">{basicDetails.phoneNumber}</Typography>
+            <Typography variant="body1">{basicDetails.location}</Typography>
+            <Typography variant="body1">Years of Experience: {basicDetails.yearsOfExperience}</Typography>
+            <Typography variant="body1">Total Experience: {basicDetails.totalExperience}</Typography>
+
+            {/* Education Section Resume Preview */}
+            <Typography variant="h6" style={{ marginTop: '16px' }}>
+              Education
+            </Typography>
+            {educationList.map((education, index) => (
+              <Box key={index} mt={2}>
+                <Typography variant="subtitle1">
+                  {education.degree} - {education.institute}
+                </Typography>
+                <Typography variant="body2">
+                  {education.startDate} to {education.endDate}
+                </Typography>
+                <Typography variant="body2">Grade: {education.grade}</Typography>
+              </Box>
+            ))}
+          </Box>
+        </Grid>
+      </Grid>
+    </Container>
+  );
+};
+
+export default ResumePreview;

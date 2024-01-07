@@ -1,23 +1,13 @@
 // src/components/LandingPage.js
 import React from "react";
 import { Container, Typography, Button, Box } from "@mui/material";
-import logo from "../assets/logo.svg";
+
 import jobHunt from "../assets/job-hunt.svg";
 
 const LandingPage = () => {
   return (
     <Container maxWidth="md">
-      <Box mt={4} mb={4} textAlign="center">
-        {/* Logo and Title */}
-        <Typography variant="h4" gutterBottom>
-          <img
-            src={logo}
-            alt="Logo"
-            style={{ width: "40px", marginRight: "10px" }}
-          />
-          TailorMyResume
-        </Typography>
-      </Box>
+     
 
       {/* Slogan */}
       <Typography variant="h6" align="center" paragraph>
