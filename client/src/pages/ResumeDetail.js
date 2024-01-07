@@ -148,12 +148,21 @@ const ResumePreview = () => {
   };
   const [experienceDetails, setExperienceDetails] = useState({
     organisation: "",
+    title: "",
     startDate: "",
     endDate: "",
     description: "",
   });
+  const intialExperience = {
+    organisation: "Google",
+    title: "SDE-1",
+    startDate: "01-01-2023",
+    endDate: "01-01-2024",
+    description:
+      "lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum",
+  };
 
-  const [experienceList, setExperienceList] = useState([]);
+  const [experienceList, setExperienceList] = useState([intialExperience]);
 
   const handleExperienceChange = (event) => {
     const { name, value } = event.target;
@@ -170,6 +179,7 @@ const ResumePreview = () => {
     ]);
     setExperienceDetails({
       organisation: "",
+      title: "",
       startDate: "",
       endDate: "",
       description: "",
@@ -183,10 +193,10 @@ const ResumePreview = () => {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container>
       <Grid container spacing={3}>
         {/* Left Part - Input Fields */}
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -225,6 +235,14 @@ const ResumePreview = () => {
                 label="Organisation"
                 name="organisation"
                 value={experienceDetails.organisation}
+                onChange={handleExperienceChange}
+                margin="normal"
+              />
+              <TextField
+                fullWidth
+                label="Title"
+                name="title"
+                value={experienceDetails.title}
                 onChange={handleExperienceChange}
                 margin="normal"
               />
@@ -578,75 +596,129 @@ const ResumePreview = () => {
         </Grid>
 
         {/* Right Part - Resume Preview */}
-        <Grid item xs={6}>
-          <Box textAlign="center">
-            <Avatar
-              alt={basicDetails.name}
-              src={basicDetails.profilePicture}
-              sx={{ width: 100, height: 100, mb: 2 }}
-            />
-            <Typography variant="h5">{basicDetails.name}</Typography>
-            <Typography variant="subtitle1">
-              {basicDetails.currentJobTitle}
-            </Typography>
-            <Typography variant="body1">{basicDetails.email}</Typography>
-            <Typography variant="body1">{basicDetails.website}</Typography>
-            <Typography variant="body1">{basicDetails.phoneNumber}</Typography>
-            <Typography variant="body1">{basicDetails.location}</Typography>
-            <Typography variant="body1">
-              Years of Experience: {basicDetails.yearsOfExperience}
-            </Typography>
-            <Typography variant="body1">
-              Total Experience: {basicDetails.totalExperience}
-            </Typography>
-            {/* Professional Experience Section Resume Preview */}
-            <Typography variant="h6" style={{ marginTop: "16px" }}>
-              Professional Experience
-            </Typography>
-            {experienceList.map((experience, index) => (
-              <Box key={index} mt={2}>
+        <Grid item xs={8}>
+          {/* First Row */}
+          <Grid container spacing={3} style={{ marginTop: "16px" }}>
+            {/* First Column */}
+            <Grid item xs={6}>
+              <Box textAlign="left">
+                <Typography variant="h5">{basicDetails.name}</Typography>
+                <Typography variant="subtitle1" color="primary">
+                  {basicDetails.currentJobTitle}
+                </Typography>
+                <Typography variant="body1">{basicDetails.email}</Typography>
+                <Typography variant="body1">{basicDetails.website}</Typography>
+                <Typography variant="body1">
+                  {basicDetails.phoneNumber}
+                </Typography>
+                <Typography variant="body1">{basicDetails.location}</Typography>
+              </Box>
+            </Grid>
+
+            {/* Second Column */}
+            <Grid item xs={6}>
+              <Box textAlign="right">
+                <Avatar
+                  alt={basicDetails.name}
+                  src={basicDetails.profilePicture}
+                  sx={{ width: 100, height: 100, mb: 2 }}
+                />
+              </Box>
+            </Grid>
+          </Grid>
+
+          {/* Second Row */}
+          <Grid container spacing={3} style={{ marginTop: "16px" }}>
+            {/* First Column */}
+            <Grid item xs={6}>
+              <Box textAlign="left">
+                <Typography variant="h6" style={{ marginTop: "16px" }}>
+                  Professional Experience
+                </Typography>
+                {experienceList.map((experience, index) => (
+                  <Box key={index} mt={2}>
+                    <Typography variant="subtitle1">
+                      {experience.organisation}
+                    </Typography>
+                    <Typography variant="subtitle2">
+                      {experience.title}
+                    </Typography>
+                    <Typography variant="body2">
+                      {experience.startDate} to {experience.endDate}
+                    </Typography>
+                    <Typography variant="body2">
+                      {experience.description}
+                    </Typography>
+                  </Box>
+                ))}
+
+                <Typography variant="h6" style={{ marginTop: "16px" }}>
+                  Awards
+                </Typography>
+                {awardList.map((award, index) => (
+                  <Box key={index} mt={2}>
+                    <Typography variant="subtitle1">{award.name}</Typography>
+                    <Typography variant="body2">Year: {award.year}</Typography>
+                    <Typography variant="body2">
+                      Short Description: {award.shortDescription}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </Grid>
+
+            {/* Second Column */}
+            <Grid item xs={6}>
+              <Box textAlign="left">
+                <Typography variant="h6" style={{ marginTop: "16px" }}>
+                  Skills
+                </Typography>
                 <Typography variant="subtitle1">
-                  {experience.organisation}
+                  Programming Languages
                 </Typography>
-                <Typography variant="body2">
-                  {experience.startDate} to {experience.endDate}
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selectedLanguages.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+
+                <Typography variant="subtitle1" style={{ marginTop: "16px" }}>
+                  Tools
                 </Typography>
-                <Typography variant="body2">
-                  {experience.description}
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selectedTools.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+
+                <Typography variant="subtitle1" style={{ marginTop: "16px" }}>
+                  Frameworks
                 </Typography>
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selectedFrameworks.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
               </Box>
-            ))}
-            {/* Education Section Resume Preview */}
-            <Typography variant="h6" style={{ marginTop: "16px" }}>
-              Education
-            </Typography>
-            {educationList.map((education, index) => (
-              <Box key={index} mt={2}>
-                <Typography variant="subtitle1">
-                  {education.degree} - {education.institute}
-                </Typography>
-                <Typography variant="body2">
-                  {education.startDate} to {education.endDate}
-                </Typography>
-                <Typography variant="body2">
-                  Grade: {education.grade}
-                </Typography>
+
+              <Box textAlign="left" style={{ marginTop: "16px" }}>
+                <Typography variant="h6">Education</Typography>
+                {educationList.map((education, index) => (
+                  <Box key={index} mt={2}>
+                    <Typography variant="subtitle1">
+                      {education.degree} - {education.institute}
+                    </Typography>
+                    <Typography variant="body2">
+                      {education.startDate} to {education.endDate}
+                    </Typography>
+                    <Typography variant="body2">
+                      Grade: {education.grade}
+                    </Typography>
+                  </Box>
+                ))}
               </Box>
-            ))}
-            {/* Awards Section Resume Preview */}
-            <Typography variant="h6" style={{ marginTop: "16px" }}>
-              Awards
-            </Typography>
-            {awardList.map((award, index) => (
-              <Box key={index} mt={2}>
-                <Typography variant="subtitle1">{award.name}</Typography>
-                <Typography variant="body2">Year: {award.year}</Typography>
-                <Typography variant="body2">
-                  Short Description: {award.shortDescription}
-                </Typography>
-              </Box>
-            ))}
-          </Box>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Container>
