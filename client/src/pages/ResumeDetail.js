@@ -176,8 +176,12 @@ const ResumePreview = () => {
     title: "Sr. Software Engineer",
     startDate: "01/2017",
     endDate: "Present",
-    description:
-      "Excels in full-stack development, leveraging JavaScript and Python to drive innovation. Spearheaded projects, receiving accolades for outstanding contributions and leadership.",
+    description: `Excels in full-stack development, leveraging JavaScript and Python to drive innovation. Spearheaded projects, receiving accolades for outstanding contributions and leadership. 
+      
+    Excels in full-stack development, leveraging JavaScript and Python to drive innovation. Spearheaded projects, receiving accolades for outstanding contributions and leadership.
+    
+Excels in full-stack development, leveraging JavaScript and Python to drive innovation.
+    `,
   };
 
   const [experienceList, setExperienceList] = useState([
@@ -210,6 +214,66 @@ const ResumePreview = () => {
   const handleDeleteExperience = (index) => {
     setExperienceList((prevExperienceList) =>
       prevExperienceList.filter((_, i) => i !== index)
+    );
+  };
+
+  // Project State
+  const [projectDetails, setProjectDetails] = useState({
+    name: "Project 1",
+    startDate: "2022-01-01",
+    endDate: "2022-02-01",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    link: "https://example.com/project1",
+  });
+
+  // Dummy Projects Data
+  const initialProjects = [
+    {
+      name: "E-commerce Platform",
+      startDate: "2022-01-15",
+      endDate: "2022-03-10",
+      description:
+        "Led the development of a comprehensive e-commerce platform that revolutionized online retail. Implemented advanced features, including a dynamic product catalog, user-friendly shopping cart, and secure payment gateways.",
+      link: "https://example.com/ecommerce",
+    },
+    {
+      name: "Health and Fitness App",
+      startDate: "2022-03-20",
+      endDate: "2022-05-15",
+      description:
+        "Conceptualized and developed a cutting-edge health and fitness application aimed at promoting a holistic approach to well-being. Engineered personalized workout plans based on user preferences and fitness levels, integrating a diverse range of exercises.",
+      link: "https://example.com/fitnessapp",
+    },
+  ];
+
+  const [projectList, setProjectList] = useState(initialProjects);
+
+  // Project Handlers
+  const handleProjectChange = (event) => {
+    const { name, value } = event.target;
+    setProjectDetails((prevProjectDetails) => ({
+      ...prevProjectDetails,
+      [name]: value,
+    }));
+  };
+
+  const handleAddProject = () => {
+    setProjectList((prevProjectList) => [
+      ...prevProjectList,
+      { ...projectDetails },
+    ]);
+    setProjectDetails({
+      name: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+      link: "",
+    });
+  };
+
+  const handleDeleteProject = (index) => {
+    setProjectList((prevProjectList) =>
+      prevProjectList.filter((_, i) => i !== index)
     );
   };
   const rightPartRef = useRef(null);
@@ -455,6 +519,106 @@ const ResumePreview = () => {
               ))}
             </AccordionDetails>
           </Accordion>
+          {/* Projects Accordion */}
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="projects-details-content"
+              id="projects-details-header"
+            >
+              <Typography>Projects</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {/* Project Input Fields */}
+              <TextField
+                fullWidth
+                label="Name"
+                name="name"
+                value={projectDetails.name}
+                onChange={handleProjectChange}
+                margin="normal"
+              />
+              <TextField
+                fullWidth
+                type="date"
+                label="Start Date"
+                name="startDate"
+                value={projectDetails.startDate}
+                onChange={handleProjectChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+              <TextField
+                fullWidth
+                type="date"
+                label="End Date"
+                name="endDate"
+                value={projectDetails.endDate}
+                onChange={handleProjectChange}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                margin="normal"
+              />
+              <TextField
+                fullWidth
+                multiline
+                rows={4}
+                label="Description"
+                name="description"
+                value={projectDetails.description}
+                onChange={handleProjectChange}
+                margin="normal"
+              />
+              <TextField
+                fullWidth
+                label="Link"
+                name="link"
+                value={projectDetails.link}
+                onChange={handleProjectChange}
+                margin="normal"
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleAddProject}
+                style={{ marginTop: "16px" }}
+              >
+                Add Project
+              </Button>
+
+              {/* Project Box Display */}
+              {projectList.map((project, index) => (
+                <Box
+                  key={index}
+                  border={1}
+                  borderColor="primary.main"
+                  borderRadius={8}
+                  p={2}
+                  mt={2}
+                  position="relative"
+                >
+                  <IconButton
+                    onClick={() => handleDeleteProject(index)}
+                    style={{ position: "absolute", top: 0, right: 0 }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                  <Typography variant="subtitle1" fontWeight="bold">
+                    {project.name}
+                  </Typography>
+                  <Typography variant="body2">
+                    {`${project.startDate} to ${project.endDate}`}
+                  </Typography>
+                  <Typography variant="body2">{project.description}</Typography>
+                  <Typography variant="body2">Link: {project.link}</Typography>
+                </Box>
+              ))}
+            </AccordionDetails>
+          </Accordion>
+
           {/* Skills Accordion */}
           <Accordion>
             <AccordionSummary
@@ -704,7 +868,10 @@ const ResumePreview = () => {
                       </Grid>
                     </Grid>
                     {/* Third Row - Description */}
-                    <Typography variant="body2">
+                    <Typography
+                      variant="body2"
+                      style={{ whiteSpace: "pre-line" }}
+                    >
                       {experience.description}
                     </Typography>
                   </Box>
@@ -786,6 +953,58 @@ const ResumePreview = () => {
                     <Chip key={value} label={value} />
                   ))}
                 </Box>
+              </Box>
+              {/* Projects Section */}
+              {/* Projects Section */}
+              <Box textAlign="left" style={{ marginTop: "16px" }}>
+                <Typography variant="h6">Projects</Typography>
+                <Divider style={{ backgroundColor: "#f0f0f0" }} />
+                {projectList.map((project, index) => (
+                  <Box key={index} mt={2}>
+                    {/* First Row - Project Name, Start Date, and End Date */}
+                    <Grid
+                      container
+                      spacing={3}
+                      style={{ alignItems: "center" }}
+                    >
+                      {/* First Column - Project Name */}
+                      <Grid item xs={6}>
+                        <Typography
+                          variant="subtitle1"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          {project.name}
+                        </Typography>
+                      </Grid>
+                      {/* Second Column - Dates (Right Aligned) */}
+                      <Grid item xs={6}>
+                        <Typography
+                          variant="body2"
+                          style={{ textAlign: "right" }}
+                        >
+                          {`${project.startDate.slice(
+                            5,
+                            7
+                          )}/${project.startDate.slice(
+                            2,
+                            4
+                          )} - ${project.endDate.slice(
+                            5,
+                            7
+                          )}/${project.endDate.slice(2, 4)}`}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    {/* Second Row - Description */}
+                    <Typography variant="body2">
+                      {project.description}
+                    </Typography>
+                    {/* Third Row - Link */}
+                    <Typography variant="body2">
+                      Link: {project.link}
+                    </Typography>
+                  </Box>
+                ))}
               </Box>
 
               <Box textAlign="left" style={{ marginTop: "16px" }}>
