@@ -1,5 +1,5 @@
 // src/components/ResumePreview.js
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Container,
   Box,
@@ -21,6 +21,8 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteIcon from "@mui/icons-material/Delete";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const ResumePreview = () => {
   const [basicDetails, setBasicDetails] = useState({
@@ -209,6 +211,22 @@ const ResumePreview = () => {
     setExperienceList((prevExperienceList) =>
       prevExperienceList.filter((_, i) => i !== index)
     );
+  };
+  const rightPartRef = useRef(null);
+  const handleDownloadPDF = () => {
+    const input = rightPartRef.current;
+
+    // Use html2canvas to capture the content as an image
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+
+      // Use jsPDF to create a PDF document
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, "JPEG", 0, 0);
+
+      // Save the PDF with a specific name (e.g., "resume.pdf")
+      pdf.save("resume.pdf");
+    });
   };
 
   return (
@@ -612,10 +630,21 @@ const ResumePreview = () => {
               ))}
             </AccordionDetails>
           </Accordion>
+          {/* Button to download the right part as PDF */}
+          <Grid item xs={4}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleDownloadPDF}
+              style={{ marginTop: "16px" }}
+            >
+              Download
+            </Button>
+          </Grid>
         </Grid>
 
         {/* Right Part - Resume Preview */}
-        <Grid item xs={8}>
+        <Grid item xs={8} ref={rightPartRef}>
           {/* First Row */}
           <Grid container spacing={3} style={{ marginTop: "16px" }}>
             {/* First Column */}
