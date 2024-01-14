@@ -19,6 +19,7 @@ import {
   Chip,
   Divider,
 } from "@mui/material";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteIcon from "@mui/icons-material/Delete";
 import jsPDF from "jspdf";
@@ -292,13 +293,20 @@ Excels in full-stack development, leveraging JavaScript and Python to drive inno
       pdf.save("resume.pdf");
     });
   };
+  const [expandedAccordion, setExpandedAccordion] = useState(null);
 
+  const handleAccordionChange = (panel) => (event, isExpanded) => {
+    setExpandedAccordion(isExpanded ? panel : null);
+  };
   return (
     <Container>
       <Grid container spacing={3}>
         {/* Left Part - Input Fields */}
         <Grid item xs={4}>
-          <Accordion>
+          <Accordion
+            expanded={expandedAccordion === "basic-details"}
+            onChange={handleAccordionChange("basic-details")}
+          >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="basic-details-content"
@@ -321,7 +329,10 @@ Excels in full-stack development, leveraging JavaScript and Python to drive inno
               ))}
             </AccordionDetails>
           </Accordion>
-          <Accordion>
+          <Accordion
+            expanded={expandedAccordion === "experience"}
+            onChange={handleAccordionChange("experience")}
+          >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="experience-details-content"
@@ -396,7 +407,7 @@ Excels in full-stack development, leveraging JavaScript and Python to drive inno
                   key={index}
                   border={1}
                   borderColor="primary.main"
-                  borderRadius={8}
+                  borderRadius={2}
                   p={2}
                   mt={2}
                   position="relative"
@@ -421,7 +432,10 @@ Excels in full-stack development, leveraging JavaScript and Python to drive inno
             </AccordionDetails>
           </Accordion>
 
-          <Accordion>
+          <Accordion
+            expanded={expandedAccordion === "education"}
+            onChange={handleAccordionChange("education")}
+          >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="education-details-content"
@@ -494,7 +508,7 @@ Excels in full-stack development, leveraging JavaScript and Python to drive inno
                   key={index}
                   border={1}
                   borderColor="primary.main"
-                  borderRadius={8}
+                  borderRadius={2}
                   p={2}
                   mt={2}
                   position="relative"
@@ -520,7 +534,10 @@ Excels in full-stack development, leveraging JavaScript and Python to drive inno
             </AccordionDetails>
           </Accordion>
           {/* Projects Accordion */}
-          <Accordion>
+          <Accordion
+            expanded={expandedAccordion === "projects"}
+            onChange={handleAccordionChange("projects")}
+          >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="projects-details-content"
@@ -595,7 +612,7 @@ Excels in full-stack development, leveraging JavaScript and Python to drive inno
                   key={index}
                   border={1}
                   borderColor="primary.main"
-                  borderRadius={8}
+                  borderRadius={2}
                   p={2}
                   mt={2}
                   position="relative"
@@ -620,7 +637,10 @@ Excels in full-stack development, leveraging JavaScript and Python to drive inno
           </Accordion>
 
           {/* Skills Accordion */}
-          <Accordion>
+          <Accordion
+            expanded={expandedAccordion === "skills"}
+            onChange={handleAccordionChange("skills")}
+          >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="skills-details-content"
@@ -719,7 +739,10 @@ Excels in full-stack development, leveraging JavaScript and Python to drive inno
           </Accordion>
 
           {/* Awards Accordion */}
-          <Accordion>
+          <Accordion
+            expanded={expandedAccordion === "awards"}
+            onChange={handleAccordionChange("awards")}
+          >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="awards-details-content"
@@ -772,7 +795,7 @@ Excels in full-stack development, leveraging JavaScript and Python to drive inno
                   key={index}
                   border={1}
                   borderColor="primary.main"
-                  borderRadius={8}
+                  borderRadius={2}
                   p={2}
                   mt={2}
                   position="relative"
