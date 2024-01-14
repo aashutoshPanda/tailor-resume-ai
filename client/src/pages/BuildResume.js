@@ -24,54 +24,32 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteIcon from "@mui/icons-material/Delete";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import {
+  initialBasicDetails,
+  initialEducationDetails,
+  initialEducationList,
+  initialSelectedLanguages,
+  initialAwardList,
+  initialAward,
+  initialExperience,
+  initialExperienceList,
+  initialProject,
+  initialProjectList,
+} from "../constants/resumeBuilder";
 
 const ResumePreview = () => {
-  const [basicDetails, setBasicDetails] = useState({
-    name: "John Doe",
-    profilePicture: "https://example.com/profile-picture.jpg",
-    currentJobTitle: "Software Engineer",
-    email: "john.doe@example.com",
-    website: "https://johndoe.com",
-    phoneNumber: "123-456-7890",
-    location: "Cityville, USA",
-    yearsOfExperience: "5",
-    totalExperience: "8",
-  });
-
-  const [educationDetails, setEducationDetails] = useState({
-    institute: "University of Example",
-    degree: "Bachelor of Science",
-    startDate: "09/2018",
-    endDate: "09/2018",
-    grade: "A",
-  });
-
-  const [educationList, setEducationList] = useState([
-    {
-      institute: "University of Example",
-      degree: "Bachelor of Science",
-      startDate: "09/2018",
-      endDate: "09/2018",
-      grade: "A",
-    },
-    {
-      institute: "University of Example",
-      degree: "Bachelor of Science",
-      startDate: "09/2018",
-      endDate: "09/2018",
-      grade: "A",
-    },
-  ]);
-
-  const [selectedLanguages, setSelectedLanguages] = useState([
-    "JavaScript",
-    "Python",
-  ]);
+  const [basicDetails, setBasicDetails] = useState(initialBasicDetails);
+  const [educationDetails, setEducationDetails] = useState(
+    initialEducationDetails
+  );
+  const [educationList, setEducationList] = useState(initialEducationList);
+  const [selectedLanguages, setSelectedLanguages] = useState(
+    initialSelectedLanguages
+  );
   const [selectedTools, setSelectedTools] = useState(["Git", "VS Code"]);
-  const [selectedFrameworks, setSelectedFrameworks] = useState([
-    "React",
-    "Node.js",
-  ]);
+  const [selectedFrameworks, setSelectedFrameworks] = useState(
+    initialSelectedLanguages
+  );
 
   const handleBasicDetailsChange = (event) => {
     const { name, value } = event.target;
@@ -94,13 +72,7 @@ const ResumePreview = () => {
       ...prevEducationList,
       { ...educationDetails },
     ]);
-    setEducationDetails({
-      institute: "University of Example",
-      degree: "Bachelor of Science",
-      startDate: "2015-09-01",
-      endDate: "2019-05-01",
-      grade: "A",
-    });
+    setEducationDetails(initialEducationDetails);
   };
 
   const handleDeleteEducation = (index) => {
@@ -121,27 +93,8 @@ const ResumePreview = () => {
     setSelectedFrameworks(event.target.value);
   };
 
-  const [awardDetails, setAwardDetails] = useState({
-    name: "",
-    year: "",
-    shortDescription: "",
-  });
-  // Dummy Awards Data
-  const initialAwards = [
-    {
-      name: "Outstanding Performer",
-      year: "2022",
-      shortDescription:
-        "Recognized for exceptional performance and dedication.",
-    },
-    {
-      name: "Innovation Excellence",
-      year: "2021",
-      shortDescription:
-        "Acknowledged for innovative contributions to projects.",
-    },
-  ];
-  const [awardList, setAwardList] = useState(initialAwards);
+  const [awardDetails, setAwardDetails] = useState(initialAward);
+  const [awardList, setAwardList] = useState(initialAwardList);
 
   const handleAwardChange = (event) => {
     const { name, value } = event.target;
@@ -165,30 +118,8 @@ const ResumePreview = () => {
       prevAwardList.filter((_, i) => i !== index)
     );
   };
-  const [experienceDetails, setExperienceDetails] = useState({
-    organisation: "",
-    title: "",
-    startDate: "",
-    endDate: "",
-    description: "",
-  });
-  const intialExperience = {
-    organisation: "TechCo Inc.",
-    title: "Sr. Software Engineer",
-    startDate: "01/2017",
-    endDate: "Present",
-    description: `Excels in full-stack development, leveraging JavaScript and Python to drive innovation. Spearheaded projects, receiving accolades for outstanding contributions and leadership. 
-      
-    Excels in full-stack development, leveraging JavaScript and Python to drive innovation. Spearheaded projects, receiving accolades for outstanding contributions and leadership.
-    
-Excels in full-stack development, leveraging JavaScript and Python to drive innovation.
-    `,
-  };
-
-  const [experienceList, setExperienceList] = useState([
-    intialExperience,
-    intialExperience,
-  ]);
+  const [experienceDetails, setExperienceDetails] = useState(initialExperience);
+  const [experienceList, setExperienceList] = useState(initialExperienceList);
 
   const handleExperienceChange = (event) => {
     const { name, value } = event.target;
@@ -203,13 +134,7 @@ Excels in full-stack development, leveraging JavaScript and Python to drive inno
       ...prevExperienceList,
       { ...experienceDetails },
     ]);
-    setExperienceDetails({
-      organisation: "",
-      title: "",
-      startDate: "",
-      endDate: "",
-      description: "",
-    });
+    setExperienceDetails(initialExperience);
   };
 
   const handleDeleteExperience = (index) => {
@@ -219,35 +144,8 @@ Excels in full-stack development, leveraging JavaScript and Python to drive inno
   };
 
   // Project State
-  const [projectDetails, setProjectDetails] = useState({
-    name: "Project 1",
-    startDate: "2022-01-01",
-    endDate: "2022-02-01",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    link: "https://example.com/project1",
-  });
-
-  // Dummy Projects Data
-  const initialProjects = [
-    {
-      name: "E-commerce Platform",
-      startDate: "2022-01-15",
-      endDate: "2022-03-10",
-      description:
-        "Led the development of a comprehensive e-commerce platform that revolutionized online retail. Implemented advanced features, including a dynamic product catalog, user-friendly shopping cart, and secure payment gateways.",
-      link: "https://example.com/ecommerce",
-    },
-    {
-      name: "Health and Fitness App",
-      startDate: "2022-03-20",
-      endDate: "2022-05-15",
-      description:
-        "Conceptualized and developed a cutting-edge health and fitness application aimed at promoting a holistic approach to well-being. Engineered personalized workout plans based on user preferences and fitness levels, integrating a diverse range of exercises.",
-      link: "https://example.com/fitnessapp",
-    },
-  ];
-
-  const [projectList, setProjectList] = useState(initialProjects);
+  const [projectDetails, setProjectDetails] = useState(initialProject);
+  const [projectList, setProjectList] = useState(initialProjectList);
 
   // Project Handlers
   const handleProjectChange = (event) => {

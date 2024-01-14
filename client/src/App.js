@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import JobDetail from "./pages/JobDetail";
-import ResumeDetail from "./pages/ResumeDetail";
+import BuildResume from "./pages/BuildResume";
 import Landing from "./pages/Landing";
 import { Typography, Box } from "@mui/material";
 import logo from "./assets/logo.png";
@@ -29,9 +29,9 @@ function App() {
       </Box>
       <Routes>
         <Route path="/home" element={<Home />} />
-        <Route path="/resume" element={<ResumeDetail />} />
+        <Route path="/resume" element={<BuildResume />} />
         <Route path="/job" element={<JobDetail />} />
-        <Route path="/" element={<ResumeDetail />} />
+        <Route path="/" element={<BuildResume />} />
       </Routes>
     </Router>
   );
