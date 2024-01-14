@@ -2,6 +2,7 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import ResumeCard from "./ResumeCard";
+import EmptyListImage from "../assets/add-resume.svg";
 
 const dummyResumeCardList = [
   {
@@ -14,10 +15,19 @@ const dummyResumeCardList = [
     image: "path-to-image-2.jpg",
     lastModifiedDate: Date.now(),
   },
-  // Add more dummy data as needed
 ];
 
 const ResumeCardList = () => {
+  if (dummyResumeCardList.length === 0) {
+    return (
+      <img
+        src={EmptyListImage}
+        alt="Empty List"
+        style={{ width: "50%", height: "auto", marginTop: "12px" }}
+      />
+    );
+  }
+
   return (
     <Grid container spacing={2}>
       {dummyResumeCardList.map((resume, index) => (

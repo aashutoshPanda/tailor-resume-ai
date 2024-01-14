@@ -1,14 +1,6 @@
 // src/components/HomeScreen.js
 import React from "react";
-import {
-  Container,
-  Paper,
-  Tab,
-  Tabs,
-  Button,
-  Box,
-  useTheme,
-} from "@mui/material";
+import { Container, Paper, Tab, Tabs, Fab, Box, useTheme } from "@mui/material";
 import ResumeCardList from "../components/ResumeCardList";
 import JobsScreen from "../components/jobTab";
 import AddIcon from "@mui/icons-material/Add";
@@ -35,13 +27,12 @@ const HomeScreen = () => {
         {/* Content based on selected tab */}
         {tabValue === 0 && <ResumeCardList />}
         {tabValue === 1 && <JobsScreen />}
-
-        {/* Floating Action Button */}
-        <Box position="fixed" bottom={theme.spacing(2)} left={theme.spacing(2)}>
-          <Button variant="contained" color="primary" startIcon={<AddIcon />}>
-            New Resume
-          </Button>
-        </Box>
+      </Box>
+      {/* Floating Action Button */}
+      <Box style={{ display: "flex", flexDirection: "row-reverse" }}>
+        <Fab color="primary" aria-label="add">
+          <AddIcon />
+        </Fab>
       </Box>
     </Container>
   );
