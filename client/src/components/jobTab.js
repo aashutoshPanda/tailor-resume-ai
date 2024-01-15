@@ -1,10 +1,7 @@
 // src/components/JobsScreen.js
 import React, { useState } from "react";
 import {
-  Container,
   Paper,
-  Tab,
-  Tabs,
   Box,
   Table,
   TableBody,

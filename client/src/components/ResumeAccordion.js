@@ -146,7 +146,7 @@ const ResumeAccordion = () => {
     setExpandedAccordion(isExpanded ? panel : null);
   };
   return (
-    <Grid item xs={4}>
+    <Grid item xs={12} sm={4}>
       <Accordion
         expanded={expandedAccordion === "basic-details"}
         onChange={handleAccordionChange("basic-details")}

@@ -1,6 +1,15 @@
 // src/components/ResumePreview.js
 import React, { forwardRef } from "react";
-import { Box, Avatar, Typography, Grid, Chip, Divider } from "@mui/material";
+import {
+  Box,
+  Avatar,
+  Typography,
+  Grid,
+  Chip,
+  Divider,
+  useMediaQuery,
+} from "@mui/material";
+import { useTheme } from "@mui/system";
 import { useSelector } from "react-redux";
 
 const ResumePreview = (props, ref) => {
@@ -23,26 +32,44 @@ const ResumePreview = (props, ref) => {
     (state) => state.resumeBuilder.experienceList
   );
   const projectList = useSelector((state) => state.resumeBuilder.projectList);
+  const theme = useTheme();
+  const basicDetailsMobile = (
+    <>
+      <Typography variant="body1">{basicDetails.email}</Typography>
+      <Typography variant="body1">{basicDetails.website}</Typography>
+      <Typography variant="body1">{basicDetails.phoneNumber}</Typography>
+      <Typography variant="body1">{basicDetails.location}</Typography>
+    </>
+  );
+
+  const basicDetailsDesktop = (
+    <Typography variant="body1">
+      {`${basicDetails.email} | ${basicDetails.website} | ${basicDetails.phoneNumber} | ${basicDetails.location}`}
+    </Typography>
+  );
+
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const basicDetailComponent = isMobile
+    ? basicDetailsMobile
+    : basicDetailsDesktop;
 
   return (
-    <Grid item xs={8} ref={ref}>
+    <Grid item md={8} ref={ref}>
       {/* First Row */}
-      <Grid container spacing={3} style={{ marginTop: "16px" }}>
+      <Grid container spacing={3}>
         {/* First Column */}
-        <Grid item xs={10}>
+        <Grid item md={10} xs={10}>
           <Box textAlign="left">
             <Typography variant="h5">{basicDetails.name}</Typography>
             <Typography variant="subtitle1" color="primary">
               {basicDetails.currentJobTitle}
             </Typography>
-            <Typography variant="body1">
-              {`${basicDetails.email} | ${basicDetails.website} | ${basicDetails.phoneNumber} | ${basicDetails.location}`}
-            </Typography>
+            {basicDetailComponent}
           </Box>
         </Grid>
 
         {/* Second Column */}
-        <Grid item xs={2} container justifyContent="flex-end">
+        <Grid item md={2} xs={2} container justifyContent="flex-end">
           <Box textAlign="right">
             <Avatar
               alt={basicDetails.name}
@@ -56,7 +83,7 @@ const ResumePreview = (props, ref) => {
       {/* Second Row */}
       <Grid container spacing={3}>
         {/* First Column */}
-        <Grid item xs={6}>
+        <Grid item md={6}>
           <Box textAlign="left">
             <Typography variant="h6">Professional Experience</Typography>
             <Divider style={{ backgroundColor: "#f0f0f0" }} />
@@ -69,13 +96,13 @@ const ResumePreview = (props, ref) => {
                 {/* Second Row - Job Title and Dates */}
                 <Grid container spacing={3}>
                   {/* First Column - Job Title */}
-                  <Grid item xs={6}>
+                  <Grid item md={6}>
                     <Typography variant="subtitle1" color="primary">
                       {experience.title}
                     </Typography>
                   </Grid>
                   {/* Second Column - Dates (Right Aligned) */}
-                  <Grid item xs={6}>
+                  <Grid item md={6}>
                     <Typography variant="body2" style={{ textAlign: "right" }}>
                       {`${experience.startDate} - ${experience.endDate}`}
                     </Typography>
@@ -99,7 +126,7 @@ const ResumePreview = (props, ref) => {
                 {/* First Row - Award Name and Year (Right Aligned) */}
                 <Grid container spacing={3}>
                   {/* First Column - Award Name in Bold */}
-                  <Grid item xs={10}>
+                  <Grid item md={10}>
                     <Typography
                       variant="subtitle1"
                       fontWeight="bold"
@@ -113,7 +140,7 @@ const ResumePreview = (props, ref) => {
                     </Typography>
                   </Grid>
                   {/* Second Column - Year (Right Aligned) */}
-                  <Grid item xs={2}>
+                  <Grid item md={2}>
                     <Typography variant="body2" style={{ textAlign: "right" }}>
                       {award.year}
                     </Typography>
@@ -129,7 +156,7 @@ const ResumePreview = (props, ref) => {
         </Grid>
 
         {/* Second Column */}
-        <Grid item xs={6}>
+        <Grid item md={6}>
           <Box textAlign="left">
             <Typography variant="h6">Skills</Typography>
 
@@ -170,7 +197,7 @@ const ResumePreview = (props, ref) => {
                 {/* First Row - Project Name, Start Date, and End Date */}
                 <Grid container spacing={3} style={{ alignItems: "center" }}>
                   {/* First Column - Project Name */}
-                  <Grid item xs={6}>
+                  <Grid item md={6}>
                     <Typography
                       variant="subtitle1"
                       style={{ fontWeight: "bold" }}
@@ -179,7 +206,7 @@ const ResumePreview = (props, ref) => {
                     </Typography>
                   </Grid>
                   {/* Second Column - Dates (Right Aligned) */}
-                  <Grid item xs={6}>
+                  <Grid item md={6}>
                     <Typography variant="body2" style={{ textAlign: "right" }}>
                       {`${project.startDate.slice(
                         5,
@@ -215,11 +242,11 @@ const ResumePreview = (props, ref) => {
                 {/* Second Row - Degree, Start Date, End Date (Right Aligned) */}
                 <Grid container spacing={3}>
                   {/* First Column - Degree */}
-                  <Grid item xs={6}>
+                  <Grid item md={6}>
                     <Typography variant="body2">{education.degree}</Typography>
                   </Grid>
                   {/* Second Column - Dates (Right Aligned) */}
-                  <Grid item xs={6}>
+                  <Grid item md={6}>
                     <Typography variant="body2" style={{ textAlign: "right" }}>
                       {`${education.startDate} - ${education.endDate}`}
                     </Typography>
