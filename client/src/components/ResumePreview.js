@@ -1,10 +1,9 @@
 // src/components/ResumePreview.js
-import React, { useRef } from "react";
+import React, { forwardRef } from "react";
 import { Box, Avatar, Typography, Grid, Chip, Divider } from "@mui/material";
 import { useSelector } from "react-redux";
 
-const ResumePreview = () => {
-  const rightPartRef = useRef(null);
+const ResumePreview = (props, ref) => {
   const basicDetails = useSelector((state) => state.resumeBuilder.basicDetails);
 
   const educationList = useSelector(
@@ -24,8 +23,9 @@ const ResumePreview = () => {
     (state) => state.resumeBuilder.experienceList
   );
   const projectList = useSelector((state) => state.resumeBuilder.projectList);
+
   return (
-    <Grid item xs={8} ref={rightPartRef}>
+    <Grid item xs={8} ref={ref}>
       {/* First Row */}
       <Grid container spacing={3} style={{ marginTop: "16px" }}>
         {/* First Column */}
@@ -238,4 +238,4 @@ const ResumePreview = () => {
   );
 };
 
-export default ResumePreview;
+export default forwardRef(ResumePreview);
