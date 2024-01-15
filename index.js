@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import routes from "./src/routes/index.js";
 
 dotenv.config();
 const app = express();
@@ -27,8 +28,14 @@ db.once("open", () => {
   console.log("Connected to MongoDB");
 });
 
-// Your routes and middleware go here
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+// Here we define the api routes
+app.use(routes);
+
+// Routes
+app.use("/resume", resumeRoutes);
 app.get("/", (req, res) => {
   res.send("Hello, MongoDB!");
 });
