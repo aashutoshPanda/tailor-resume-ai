@@ -1,13 +1,12 @@
 // src/components/HomeScreen.js
 import React from "react";
-import { Container, Paper, Tab, Tabs, Fab, Box, useTheme } from "@mui/material";
+import { Container, Paper, Tab, Tabs, Fab, Box } from "@mui/material";
 import ResumeCardList from "../components/ResumeCardList";
-import JobsScreen from "../components/jobTab";
+import JobsScreen from "../components/JobTab";
 import AddIcon from "@mui/icons-material/Add";
 
 const HomeScreen = () => {
-  const [tabValue, setTabValue] = React.useState(0);
-  const theme = useTheme();
+  const [tabValue, setTabValue] = React.useState(1);
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
