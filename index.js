@@ -5,7 +5,7 @@ import routes from "./src/routes/index.js";
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3030;
 
 // Connect to MongoDB
 // Connect to MongoDB
@@ -35,7 +35,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 
 // Routes
-app.use("/resume", resumeRoutes);
 app.get("/", (req, res) => {
   res.send("Hello, MongoDB!");
 });

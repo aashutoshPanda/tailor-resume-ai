@@ -1,5 +1,5 @@
 // controllers/resumeController.js
-import Resume from "../models/resumeModel";
+import Resume from "../models/resumeModel.js";
 
 // Create a new resume
 export const createResume = async (req, res) => {
@@ -25,6 +25,7 @@ export const getAllResumes = async (req, res) => {
 export const getResumeById = async (req, res) => {
   try {
     const resume = await Resume.findById(req.params.id);
+    console.log({ id: req.params.id });
     if (!resume) {
       return res.status(404).json({ error: "Resume not found" });
     }

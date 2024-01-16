@@ -6,14 +6,14 @@ import {
   getResumeById,
   updateResumeById,
   deleteResumeById,
-} from "../controllers/resumeController";
+} from "../controllers/resumeController.js";
 
 const router = express.Router();
 
 router.post("/", createResume);
 router.get("/", getAllResumes);
 router.get("/:id", getResumeById);
-router.put("/:id", updateResumeById);
+router.patch("/:id", updateResumeById);
 router.delete("/:id", deleteResumeById);
 
 export default router;
