@@ -21,7 +21,7 @@ export const updateLocalJob = createAsyncThunk("jobs/updateLocalJob", (job) => {
 });
 
 export const updateJob = createAsyncThunk("jobs/updateJob", async (job) => {
-  const response = await axios.patch(`${API_BASE_URL}/${job.id}`, job);
+  const response = await axios.patch(`${API_BASE_URL}/${job._id}`, job);
   return response.data;
 });
 
@@ -52,6 +52,7 @@ const jobSlice = createSlice({
         state.selectedJob = action.payload;
       })
       .addCase(updateLocalJob.fulfilled, (state, action) => {
+        state.selectedJob = action.payload;
         // Update the job in the local state without making a request
         const updatedJob = action.payload;
         const index = state.jobs.findIndex((job) => job._id === updatedJob._id);
@@ -60,6 +61,7 @@ const jobSlice = createSlice({
         }
       })
       .addCase(updateJob.fulfilled, (state, action) => {
+        state.selectedJob = action.payload;
         // Update the job in the local state after making a patch request
         const updatedJob = action.payload;
         const index = state.jobs.findIndex((job) => job._id === updatedJob._id);
@@ -79,4 +81,5 @@ const jobSlice = createSlice({
   },
 });
 
+export const { updateSelectedJob } = jobSlice.actions;
 export default jobSlice.reducer;

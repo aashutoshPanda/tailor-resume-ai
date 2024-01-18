@@ -8,6 +8,10 @@ const jobSchema = new mongoose.Schema({
   lastDate: Date,
   jobLink: String,
   status: String,
+  resume: String, // Added resume field
+  description: String, // Added description field
+  referralStatus: String, // Added referralStatus field
+  referralName: String, // Added referralName field
 });
 
 const Job = mongoose.model("Job", jobSchema);

@@ -1,6 +1,7 @@
 // src/components/JobsScreen.js
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   Paper,
   Box,
@@ -21,6 +22,7 @@ import { deleteJob } from "../reducers/jobSlice";
 
 const JobOpeningTable = ({ jobOpeningList }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("lastModified");
   const [page, setPage] = useState(0);
@@ -111,7 +113,10 @@ const JobOpeningTable = ({ jobOpeningList }) => {
                 </TableCell>
                 <TableCell>
                   <Box>
-                    <EditIcon style={{ cursor: "pointer", marginRight: "8px" }} />
+                    <EditIcon
+                      style={{ cursor: "pointer", marginRight: "8px" }}
+                      onClick={() => navigate(`/job/${job._id}`)}
+                    />
                     <DeleteIcon
                       style={{ cursor: "pointer", marginRight: "8px" }}
                       onClick={() => handleDeleteClick(job._id)}

@@ -1,0 +1,2 @@
+1. CRUD of job from API
+2. CRUD of resume from API

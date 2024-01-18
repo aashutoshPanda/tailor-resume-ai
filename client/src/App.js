@@ -22,8 +22,8 @@ function App() {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/resume" element={<BuildResume />} />
-          <Route path="/job" element={<JobDetail />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/job/:id" element={<JobDetail />} />
+          <Route path="/" element={<JobDetail />} />
         </Routes>
       </Router>
     </Provider>
