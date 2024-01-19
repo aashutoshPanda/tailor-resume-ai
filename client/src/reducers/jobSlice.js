@@ -1,6 +1,7 @@
 // jobSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { initialJobOpening } from "../constants/jobs";
 
 const API_BASE_URL = "http://localhost:3030/jobs"; // Replace with your actual API endpoint
 
@@ -12,6 +13,7 @@ export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
 });
 
 export const fetchJobById = createAsyncThunk("jobs/fetchJobById", async (id) => {
+  if (id === "new") return { ...initialJobOpening };
   const response = await axios.get(`${API_BASE_URL}/${id}`);
   return response.data;
 });
@@ -40,7 +42,7 @@ const jobSlice = createSlice({
   name: "jobs",
   initialState: {
     jobs: [],
-    selectedJob: null,
+    selectedJob: initialJobOpening,
   },
   reducers: {},
   extraReducers: (builder) => {

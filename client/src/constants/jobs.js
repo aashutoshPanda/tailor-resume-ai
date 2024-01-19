@@ -80,3 +80,16 @@ export const dummyJobOpeningList = [
     status: "PENDING",
   },
 ];
+
+export const initialJobOpening = {
+  organisation: "Dream Organisation",
+  designation: "My favourite title",
+  lastModified: new Date().toLocaleDateString(),
+  lastDate: new Date().toLocaleDateString(),
+  jobLink: "https://my-dream-job.com",
+  status: "PENDING",
+  resume: "fullstack resume",
+  description: "The best job anyone can get!",
+  referralStatus: "NOT_TAKEN",
+  referralName: "The Good Fellow",
+};

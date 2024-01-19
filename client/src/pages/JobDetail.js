@@ -1,14 +1,6 @@
 // src/components/JobOpeningPage.js
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchJobs,
-  fetchJobById,
-  updateSelectedJob,
-  updateLocalJob,
-  deleteJob,
-  addJob,
-  updateJob,
-} from "../reducers/jobSlice";
+import { addJob, fetchJobById, updateSelectedJob, updateLocalJob, deleteJob, updateJob } from "../reducers/jobSlice";
 import React, { useState, useEffect } from "react";
 import {
   Container,
@@ -25,13 +17,33 @@ import {
   Switch,
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
+import { initialJobOpening } from "../constants/jobs";
 
 const userResumeNames = ["fullstack-resume", "backend-resume", "frontend-resume"];
 
 const JobOpeningPage = () => {
   const { id: jobId } = useParams();
+  const isCreateMode = jobId === "new";
   const navigate = useNavigate();
-  const job = useSelector((state) => state.jobs.selectedJob);
+
+  const handleSave = async () => {
+    try {
+      // If the job is being created, dispatch the addJob action
+      // Otherwise, dispatch the updateJob action
+      if (isCreateMode) {
+        dispatch(addJob(job)); // Implement addJob logic in your jobSlice
+      } else {
+        dispatch(updateJob(job));
+      }
+
+      // If the dispatch is successful, navigate to the "/home" route
+      navigate("/home");
+    } catch (error) {
+      // If the dispatch fails, handle the error appropriately
+      console.error("Failed to save job:", error);
+    }
+  };
+  let job = useSelector((state) => state.jobs.selectedJob);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,12 +61,6 @@ const JobOpeningPage = () => {
     );
   };
 
-  const handleSave = () => {
-    // Implement your save logic here
-    dispatch(updateJob(job));
-    navigate("/home");
-  };
-
   const handleDelete = () => {
     // Implement your delete logic here
     dispatch(deleteJob(job._id));
@@ -66,7 +72,8 @@ const JobOpeningPage = () => {
     return job.jobLink.startsWith("https://");
   };
 
-  if (!job) return "No such job found";
+  // possibly the case when invalid job id is provided in the url
+  if (!job._id && !isCreateMode) return "No such job found";
 
   return (
     <Container maxWidth="md">
@@ -150,9 +157,11 @@ const JobOpeningPage = () => {
           <Button variant="contained" color="primary" onClick={handleSave}>
             Save
           </Button>
-          <Button variant="contained" color="secondary" onClick={handleDelete} style={{ marginLeft: "8px" }}>
-            Delete
-          </Button>
+          {!isCreateMode ? (
+            <Button variant="contained" color="secondary" onClick={handleDelete} style={{ marginLeft: "8px" }}>
+              Delete
+            </Button>
+          ) : null}
         </Box>
       </Box>
     </Container>

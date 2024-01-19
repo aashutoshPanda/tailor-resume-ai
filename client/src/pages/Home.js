@@ -4,12 +4,18 @@ import { Container, Paper, Tab, Tabs, Fab, Box } from "@mui/material";
 import ResumeCardList from "../components/ResumeCardList";
 import JobsScreen from "../components/JobTab";
 import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
 
 const HomeScreen = () => {
   const [tabValue, setTabValue] = React.useState(1);
-
+  const navigate = useNavigate();
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
+  };
+
+  const handleAddClick = () => {
+    const urlToNavigate = tabValue === 0 ? "/resume" : "/job/new";
+    navigate(urlToNavigate);
   };
 
   return (
@@ -30,7 +36,7 @@ const HomeScreen = () => {
       {/* Floating Action Button */}
       <Box style={{ display: "flex", flexDirection: "row-reverse" }}>
         <Fab color="primary" aria-label="add">
-          <AddIcon />
+          <AddIcon onClick={handleAddClick} />
         </Fab>
       </Box>
     </Container>
