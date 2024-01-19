@@ -42,34 +42,21 @@ import {
 
 const ResumeAccordion = () => {
   const dispatch = useDispatch();
-  const basicDetails = useSelector((state) => state.resumeBuilder.basicDetails);
-  const educationDetails = useSelector(
-    (state) => state.resumeBuilder.educationDetails
-  );
-  const educationList = useSelector(
-    (state) => state.resumeBuilder.educationList
-  );
-  const selectedLanguages = useSelector(
-    (state) => state.resumeBuilder.selectedLanguages
-  );
-  const selectedTools = useSelector(
-    (state) => state.resumeBuilder.selectedTools
-  );
-  const selectedFrameworks = useSelector(
-    (state) => state.resumeBuilder.selectedFrameworks
-  );
-  const awardDetails = useSelector((state) => state.resumeBuilder.awardDetails);
-  const awardList = useSelector((state) => state.resumeBuilder.awardList);
-  const experienceDetails = useSelector(
-    (state) => state.resumeBuilder.experienceDetails
-  );
-  const experienceList = useSelector(
-    (state) => state.resumeBuilder.experienceList
-  );
-  const projectDetails = useSelector(
-    (state) => state.resumeBuilder.projectDetails
-  );
-  const projectList = useSelector((state) => state.resumeBuilder.projectList);
+  const selectedResume = useSelector((state) => state.resumeBuilder.selectedResume);
+  const {
+    basicDetails,
+    educationList,
+    selectedLanguages,
+    selectedTools,
+    selectedFrameworks,
+    awardList,
+    experienceDetails,
+    experienceList,
+    educationDetails,
+    projectDetails,
+    awardDetails,
+    projectList,
+  } = selectedResume;
 
   const handleBasicDetailsChange = (event) => {
     const { name, value } = event.target;
@@ -147,10 +134,7 @@ const ResumeAccordion = () => {
   };
   return (
     <Grid item xs={12} sm={4}>
-      <Accordion
-        expanded={expandedAccordion === "basic-details"}
-        onChange={handleAccordionChange("basic-details")}
-      >
+      <Accordion expanded={expandedAccordion === "basic-details"} onChange={handleAccordionChange("basic-details")}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="basic-details-content"
@@ -173,10 +157,7 @@ const ResumeAccordion = () => {
           ))}
         </AccordionDetails>
       </Accordion>
-      <Accordion
-        expanded={expandedAccordion === "experience"}
-        onChange={handleAccordionChange("experience")}
-      >
+      <Accordion expanded={expandedAccordion === "experience"} onChange={handleAccordionChange("experience")}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="experience-details-content"
@@ -236,26 +217,13 @@ const ResumeAccordion = () => {
             onChange={handleExperienceChange}
             margin="normal"
           />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleAddExperience}
-            style={{ marginTop: "16px" }}
-          >
+          <Button variant="contained" color="primary" onClick={handleAddExperience} style={{ marginTop: "16px" }}>
             Add Experience
           </Button>
 
           {/* Experience Box Display */}
           {experienceList.map((experience, index) => (
-            <Box
-              key={index}
-              border={1}
-              borderColor="primary.main"
-              borderRadius={2}
-              p={2}
-              mt={2}
-              position="relative"
-            >
+            <Box key={index} border={1} borderColor="primary.main" borderRadius={2} p={2} mt={2} position="relative">
               <IconButton
                 onClick={() => handleDeleteExperience(index)}
                 style={{ position: "absolute", top: 0, right: 0 }}
@@ -276,10 +244,7 @@ const ResumeAccordion = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion
-        expanded={expandedAccordion === "education"}
-        onChange={handleAccordionChange("education")}
-      >
+      <Accordion expanded={expandedAccordion === "education"} onChange={handleAccordionChange("education")}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="education-details-content"
@@ -337,26 +302,13 @@ const ResumeAccordion = () => {
             onChange={handleEducationChange}
             margin="normal"
           />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleAddEducation}
-            style={{ marginTop: "16px" }}
-          >
+          <Button variant="contained" color="primary" onClick={handleAddEducation} style={{ marginTop: "16px" }}>
             Add Education
           </Button>
 
           {/* Education Box Display */}
           {educationList.map((education, index) => (
-            <Box
-              key={index}
-              border={1}
-              borderColor="primary.main"
-              borderRadius={2}
-              p={2}
-              mt={2}
-              position="relative"
-            >
+            <Box key={index} border={1} borderColor="primary.main" borderRadius={2} p={2} mt={2} position="relative">
               <IconButton
                 onClick={() => handleDeleteEducation(index)}
                 style={{ position: "absolute", top: 0, right: 0 }}
@@ -367,8 +319,7 @@ const ResumeAccordion = () => {
                 {education.institute}
               </Typography>
               <Typography variant="body2">
-                {education.degree} - {education.startDate} to{" "}
-                {education.endDate}
+                {education.degree} - {education.startDate} to {education.endDate}
               </Typography>
               <Typography variant="body2">Grade: {education.grade}</Typography>
             </Box>
@@ -376,10 +327,7 @@ const ResumeAccordion = () => {
         </AccordionDetails>
       </Accordion>
       {/* Projects Accordion */}
-      <Accordion
-        expanded={expandedAccordion === "projects"}
-        onChange={handleAccordionChange("projects")}
-      >
+      <Accordion expanded={expandedAccordion === "projects"} onChange={handleAccordionChange("projects")}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="projects-details-content"
@@ -439,38 +387,20 @@ const ResumeAccordion = () => {
             onChange={handleProjectChange}
             margin="normal"
           />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleAddProject}
-            style={{ marginTop: "16px" }}
-          >
+          <Button variant="contained" color="primary" onClick={handleAddProject} style={{ marginTop: "16px" }}>
             Add Project
           </Button>
 
           {/* Project Box Display */}
           {projectList.map((project, index) => (
-            <Box
-              key={index}
-              border={1}
-              borderColor="primary.main"
-              borderRadius={2}
-              p={2}
-              mt={2}
-              position="relative"
-            >
-              <IconButton
-                onClick={() => handleDeleteProject(index)}
-                style={{ position: "absolute", top: 0, right: 0 }}
-              >
+            <Box key={index} border={1} borderColor="primary.main" borderRadius={2} p={2} mt={2} position="relative">
+              <IconButton onClick={() => handleDeleteProject(index)} style={{ position: "absolute", top: 0, right: 0 }}>
                 <DeleteIcon />
               </IconButton>
               <Typography variant="subtitle1" fontWeight="bold">
                 {project.name}
               </Typography>
-              <Typography variant="body2">
-                {`${project.startDate} to ${project.endDate}`}
-              </Typography>
+              <Typography variant="body2">{`${project.startDate} to ${project.endDate}`}</Typography>
               <Typography variant="body2">{project.description}</Typography>
               <Typography variant="body2">Link: {project.link}</Typography>
             </Box>
@@ -479,10 +409,7 @@ const ResumeAccordion = () => {
       </Accordion>
 
       {/* Skills Accordion */}
-      <Accordion
-        expanded={expandedAccordion === "skills"}
-        onChange={handleAccordionChange("skills")}
-      >
+      <Accordion expanded={expandedAccordion === "skills"} onChange={handleAccordionChange("skills")}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="skills-details-content"
@@ -508,13 +435,11 @@ const ResumeAccordion = () => {
                 </Box>
               )}
             >
-              {["JavaScript", "Python", "Java", "C++", "Ruby"].map(
-                (language) => (
-                  <MenuItem key={language} value={language}>
-                    {language}
-                  </MenuItem>
-                )
-              )}
+              {["JavaScript", "Python", "Java", "C++", "Ruby"].map((language) => (
+                <MenuItem key={language} value={language}>
+                  {language}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 
@@ -560,23 +485,18 @@ const ResumeAccordion = () => {
                 </Box>
               )}
             >
-              {["React", "Node.js", "Angular", "Spring Boot", "Express.js"].map(
-                (framework) => (
-                  <MenuItem key={framework} value={framework}>
-                    {framework}
-                  </MenuItem>
-                )
-              )}
+              {["React", "Node.js", "Angular", "Spring Boot", "Express.js"].map((framework) => (
+                <MenuItem key={framework} value={framework}>
+                  {framework}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </AccordionDetails>
       </Accordion>
 
       {/* Awards Accordion */}
-      <Accordion
-        expanded={expandedAccordion === "awards"}
-        onChange={handleAccordionChange("awards")}
-      >
+      <Accordion expanded={expandedAccordion === "awards"} onChange={handleAccordionChange("awards")}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="awards-details-content"
@@ -614,30 +534,14 @@ const ResumeAccordion = () => {
             onChange={handleAwardChange}
             margin="normal"
           />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleAddAward}
-            style={{ marginTop: "16px" }}
-          >
+          <Button variant="contained" color="primary" onClick={handleAddAward} style={{ marginTop: "16px" }}>
             Add Award
           </Button>
 
           {/* Awards Box Display */}
           {awardList.map((award, index) => (
-            <Box
-              key={index}
-              border={1}
-              borderColor="primary.main"
-              borderRadius={2}
-              p={2}
-              mt={2}
-              position="relative"
-            >
-              <IconButton
-                onClick={() => handleDeleteAward(index)}
-                style={{ position: "absolute", top: 0, right: 0 }}
-              >
+            <Box key={index} border={1} borderColor="primary.main" borderRadius={2} p={2} mt={2} position="relative">
+              <IconButton onClick={() => handleDeleteAward(index)} style={{ position: "absolute", top: 0, right: 0 }}>
                 <DeleteIcon />
               </IconButton>
               <Typography variant="subtitle1" fontWeight="bold">

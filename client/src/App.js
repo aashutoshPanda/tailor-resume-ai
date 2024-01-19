@@ -21,7 +21,7 @@ function App() {
         </Box>
         <Routes>
           <Route path="/home" element={<Home />} />
-          <Route path="/resume" element={<BuildResume />} />
+          <Route path="/resume/:id" element={<BuildResume />} />
           <Route path="/job/:id" element={<JobDetail />} />
           <Route path="/" element={<JobDetail />} />
         </Routes>

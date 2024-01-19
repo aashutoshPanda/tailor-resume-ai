@@ -7,14 +7,14 @@ import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 
 const HomeScreen = () => {
-  const [tabValue, setTabValue] = React.useState(1);
+  const [tabValue, setTabValue] = React.useState(0);
   const navigate = useNavigate();
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
   };
 
   const handleAddClick = () => {
-    const urlToNavigate = tabValue === 0 ? "/resume" : "/job/new";
+    const urlToNavigate = tabValue === 0 ? "/resume/new" : "/job/new";
     navigate(urlToNavigate);
   };
 

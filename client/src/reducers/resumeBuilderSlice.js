@@ -1,92 +1,109 @@
 // reducers/resumeSlice.js
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  initialBasicDetails,
-  initialEducationDetails,
-  initialEducationList,
-  initialSelectedLanguages,
-  initialAwardList,
-  initialAward,
-  initialExperience,
-  initialExperienceList,
-  initialProject,
-  initialProjectList,
-} from "../constants/resumeBuilder";
+import { initialEducationDetails, initialExperience, initialResumeState } from "../constants/resumeBuilder";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const initialState = {
-  basicDetails: initialBasicDetails,
-  educationDetails: initialEducationDetails,
-  educationList: initialEducationList,
-  selectedLanguages: initialSelectedLanguages,
-  selectedTools: ["Git", "VS Code"],
-  selectedFrameworks: initialSelectedLanguages,
-  awardDetails: initialAward,
-  awardList: initialAwardList,
-  experienceDetails: initialExperience,
-  experienceList: initialExperienceList,
-  projectDetails: initialProject,
-  projectList: initialProjectList,
-};
+const API_BASE_URL = "http://localhost:3030/resumes"; // Replace with your actual API endpoint
+
+// Async Thunks
+export const fetchAllResumes = createAsyncThunk("resume/fetchAllResumes", async () => {
+  const response = await axios.get(API_BASE_URL);
+  return response.data;
+});
+export const fetchResumeById = createAsyncThunk("resume/fetchResume", async (id) => {
+  if (id === "new") return initialResumeState;
+  const response = await axios.get(`${API_BASE_URL}/${id}`);
+
+  // this way we keep the defaults of fields as well
+  // like experienceDetails key, which should be in state but not in db
+  return { ...initialResumeState, ...response.data };
+});
+
+export const updateResume = createAsyncThunk("resume/updateResume", async (resume) => {
+  const response = await axios.patch(`${API_BASE_URL}/${resume._id}`, resume);
+  return response.data;
+});
+
+export const deleteResume = createAsyncThunk("resume/deleteResume", async (id) => {
+  await axios.delete(`${API_BASE_URL}/${id}`);
+  return id;
+});
+
+export const addResume = createAsyncThunk("resume/addResume", async (resume) => {
+  const response = await axios.post(API_BASE_URL, resume);
+  return response.data;
+});
 
 const resumeBuilderSlice = createSlice({
   name: "resumeBuilder",
-  initialState,
+  initialState: {
+    resumes: [],
+    selectedResume: { ...initialResumeState },
+  },
   reducers: {
+    updateResumeName: (state, action) => {
+      state.selectedResume.name = action.payload;
+    },
     updateBasicDetails: (state, action) => {
-      state.basicDetails = { ...state.basicDetails, ...action.payload };
+      state.selectedResume.basicDetails = { ...state.selectedResume.basicDetails, ...action.payload };
     },
     updateEducationDetails: (state, action) => {
-      state.educationDetails = { ...state.educationDetails, ...action.payload };
+      state.selectedResume.educationDetails = { ...state.selectedResume.educationDetails, ...action.payload };
     },
     addEducation: (state) => {
-      state.educationList = [...state.educationList, state.educationDetails];
-      state.educationDetails = initialEducationDetails;
+      // add to the list
+      state.selectedResume.educationList = [
+        ...state.selectedResume.educationList,
+        state.selectedResume.educationDetails,
+      ];
+      // reset the inputs to default
+      state.selectedResume.educationDetails = initialEducationDetails;
     },
     deleteEducation: (state, action) => {
-      state.educationList = state.educationList.filter(
-        (_, i) => i !== action.payload
-      );
+      state.selectedResume.educationList = state.selectedResume.educationList.filter((_, i) => i !== action.payload);
     },
     updateLanguage: (state, action) => {
-      state.selectedLanguages = action.payload;
+      state.selectedResume.selectedLanguages = action.payload;
     },
     updateTool: (state, action) => {
-      state.selectedTools = action.payload;
+      state.selectedResume.selectedTools = action.payload;
     },
     updateFramework: (state, action) => {
-      state.selectedFrameworks = action.payload;
+      state.selectedResume.selectedFrameworks = action.payload;
     },
     updateAwardDetails: (state, action) => {
-      state.awardDetails = { ...state.awardDetails, ...action.payload };
+      state.selectedResume.awardDetails = { ...state.selectedResume.awardDetails, ...action.payload };
     },
     addAward: (state) => {
-      state.awardList = [...state.awardList, state.awardDetails];
-      state.awardDetails = { name: "", year: "", shortDescription: "" };
+      state.selectedResume.awardList = [...state.selectedResume.awardList, state.selectedResume.awardDetails];
+      state.selectedResume.awardDetails = { name: "", year: "", shortDescription: "" };
     },
     deleteAward: (state, action) => {
-      state.awardList = state.awardList.filter((_, i) => i !== action.payload);
+      state.selectedResume.awardList = state.selectedResume.awardList.filter((_, i) => i !== action.payload);
     },
     updateExperienceDetails: (state, action) => {
-      state.experienceDetails = {
-        ...state.experienceDetails,
+      state.selectedResume.experienceDetails = {
+        ...state.selectedResume.experienceDetails,
         ...action.payload,
       };
     },
     addExperience: (state) => {
-      state.experienceList = [...state.experienceList, state.experienceDetails];
-      state.experienceDetails = initialExperience;
+      state.selectedResume.experienceList = [
+        ...state.selectedResume.experienceList,
+        state.selectedResume.experienceDetails,
+      ];
+      state.selectedResume.experienceDetails = initialExperience;
     },
     deleteExperience: (state, action) => {
-      state.experienceList = state.experienceList.filter(
-        (_, i) => i !== action.payload
-      );
+      state.selectedResume.experienceList = state.selectedResume.experienceList.filter((_, i) => i !== action.payload);
     },
     updateProjectDetails: (state, action) => {
-      state.projectDetails = { ...state.projectDetails, ...action.payload };
+      state.selectedResume.projectDetails = { ...state.selectedResume.projectDetails, ...action.payload };
     },
     addProject: (state) => {
-      state.projectList = [...state.projectList, state.projectDetails];
-      state.projectDetails = {
+      state.selectedResume.projectList = [...state.selectedResume.projectList, state.selectedResume.projectDetails];
+      state.selectedResume.projectDetails = {
         name: "",
         startDate: "",
         endDate: "",
@@ -95,14 +112,32 @@ const resumeBuilderSlice = createSlice({
       };
     },
     deleteProject: (state, action) => {
-      state.projectList = state.projectList.filter(
-        (_, i) => i !== action.payload
-      );
+      state.selectedResume.projectList = state.selectedResume.projectList.filter((_, i) => i !== action.payload);
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAllResumes.fulfilled, (state, action) => {
+        state.resumes = action.payload; // Assuming action.payload is the entire resume object
+      })
+      .addCase(fetchResumeById.fulfilled, (state, action) => {
+        state.selectedResume = action.payload; // Assuming action.payload is the entire resume object
+      })
+      .addCase(updateResume.fulfilled, (state, action) => {
+        state.selectedResume = { ...state.selectedResume, ...action.payload }; // Assuming action.payload is the entire resume object
+      })
+      .addCase(deleteResume.fulfilled, (state, action) => {
+        const deletedResumeId = action.payload;
+        state.resumes = state.resumes.filter((resume) => resume._id !== deletedResumeId);
+      })
+      .addCase(addResume.fulfilled, (state, action) => {
+        state.resumes = [...state.resumes, action.payload]; // Assuming action.payload is the entire resume object
+      });
   },
 });
 
 export const {
+  updateResumeName,
   updateBasicDetails,
   updateEducationDetails,
   addEducation,

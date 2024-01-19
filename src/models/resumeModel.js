@@ -23,6 +23,14 @@ const awardSchema = new mongoose.Schema({
   shortDescription: String,
 });
 
+const experienceSchema = new mongoose.Schema({
+  organisation: String,
+  title: String,
+  startDate: String,
+  endDate: String,
+  description: String,
+});
+
 const resumeSchema = new mongoose.Schema({
   id: String,
   name: String,
@@ -37,12 +45,22 @@ const resumeSchema = new mongoose.Schema({
     yearsOfExperience: String,
     totalExperience: String,
   },
-  education: [educationSchema],
+  experienceList: [experienceSchema],
+
+  educationList: [educationSchema],
   languages: [String],
   tools: [String],
   frameworks: [String],
-  projects: [projectSchema],
-  awards: [awardSchema],
+  projectList: [projectSchema],
+  awardList: [awardSchema],
+  lastModified: {
+    type: Date,
+    default: Date.now,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const Resume = mongoose.model("Resume", resumeSchema);

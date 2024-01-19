@@ -8,7 +8,6 @@ const API_BASE_URL = "http://localhost:3030/jobs"; // Replace with your actual A
 // Async Thunks
 export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
   const response = await axios.get(API_BASE_URL);
-  console.log("data", response.data);
   return response.data;
 });
 
