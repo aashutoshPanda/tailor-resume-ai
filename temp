@@ -1,5 +1,0 @@
-npm install -g typescript-language-server typescript
-npm i -g vscode-langservers-extracted
-npm install -g emmet-ls
-curl -fsSL https://dprint.dev/install.sh | sh
-npm i -g prettier
