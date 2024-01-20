@@ -1,19 +1,17 @@
 // jobSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { initialJobOpening } from "../constants/jobs";
-
-const API_BASE_URL = "http://localhost:3030/jobs"; // Replace with your actual API endpoint
+import api from "../api";
 
 // Async Thunks
 export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
-  const response = await axios.get(API_BASE_URL);
+  const response = await api.get("/jobs");
   return response.data;
 });
 
 export const fetchJobById = createAsyncThunk("jobs/fetchJobById", async (id) => {
   if (id === "new") return { ...initialJobOpening };
-  const response = await axios.get(`${API_BASE_URL}/${id}`);
+  const response = await api.get(`/jobs/${id}`);
   return response.data;
 });
 
@@ -22,17 +20,17 @@ export const updateLocalJob = createAsyncThunk("jobs/updateLocalJob", (job) => {
 });
 
 export const updateJob = createAsyncThunk("jobs/updateJob", async (job) => {
-  const response = await axios.patch(`${API_BASE_URL}/${job._id}`, job);
+  const response = await api.patch(`/jobs/${job._id}`, job);
   return response.data;
 });
 
 export const deleteJob = createAsyncThunk("jobs/deleteJob", async (id) => {
-  await axios.delete(`${API_BASE_URL}/${id}`);
+  await api.delete(`/jobs/${id}`);
   return id;
 });
 
 export const addJob = createAsyncThunk("jobs/addJob", async (job) => {
-  const response = await axios.post(API_BASE_URL, job);
+  const response = await api.post("/jobs", job);
   return response.data;
 });
 

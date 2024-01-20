@@ -1,2 +1,8 @@
-1. CRUD of job from API
-2. CRUD of resume from API
+1. CRUD of job from API [DONE]
+2. CRUD of resume from API [DONE]
+3. Add authentication - token based [DONE]
+4. Add resume field in jobs [foreign relation] 
+5. Add custom resume filling option - this will be a link to resume in job field
+6. Integrate ChatGPT - to make resume content better
+7. Duplicate resume
+8. Duplicate job opening

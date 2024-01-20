@@ -2,18 +2,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialEducationDetails, initialExperience, initialResumeState } from "../constants/resumeBuilder";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-const API_BASE_URL = "http://localhost:3030/resumes"; // Replace with your actual API endpoint
+import api from "../api";
 
 // Async Thunks
 export const fetchAllResumes = createAsyncThunk("resume/fetchAllResumes", async () => {
-  const response = await axios.get(API_BASE_URL);
+  const response = await api.get("resumes");
   return response.data;
 });
 export const fetchResumeById = createAsyncThunk("resume/fetchResume", async (id) => {
   if (id === "new") return initialResumeState;
-  const response = await axios.get(`${API_BASE_URL}/${id}`);
+  const response = await api.get(`/resumes/${id}`);
 
   // this way we keep the defaults of fields as well
   // like experienceDetails key, which should be in state but not in db
@@ -21,17 +19,17 @@ export const fetchResumeById = createAsyncThunk("resume/fetchResume", async (id)
 });
 
 export const updateResume = createAsyncThunk("resume/updateResume", async (resume) => {
-  const response = await axios.patch(`${API_BASE_URL}/${resume._id}`, resume);
+  const response = await api.patch(`/resumes/${resume._id}`, resume);
   return response.data;
 });
 
 export const deleteResume = createAsyncThunk("resume/deleteResume", async (id) => {
-  await axios.delete(`${API_BASE_URL}/${id}`);
+  await api.delete(`/resumes/${id}`);
   return id;
 });
 
 export const addResume = createAsyncThunk("resume/addResume", async (resume) => {
-  const response = await axios.post(API_BASE_URL, resume);
+  const response = await api.post("/resumes", resume);
   return response.data;
 });
 

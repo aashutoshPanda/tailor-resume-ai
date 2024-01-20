@@ -7,13 +7,14 @@ import {
   updateResumeById,
   deleteResumeById,
 } from "../controllers/resumeController.js";
+import { isResumeOwner } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
 router.post("/", createResume);
 router.get("/", getAllResumes);
-router.get("/:id", getResumeById);
-router.patch("/:id", updateResumeById);
-router.delete("/:id", deleteResumeById);
+router.get("/:id", isResumeOwner, getResumeById);
+router.patch("/:id", isResumeOwner, updateResumeById);
+router.delete("/:id", isResumeOwner, deleteResumeById);
 
 export default router;

@@ -1,6 +1,6 @@
 // src/App.js
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import JobDetail from "./pages/JobDetail";
 import BuildResume from "./pages/BuildResume";
@@ -20,10 +20,13 @@ function App() {
           <Typography variant="h5">TAILOR MY RESUME</Typography>
         </Box>
         <Routes>
-          <Route path="/home" element={<Home />} />
+          {/* Redirect from / and /home to /home/resume */}
+          <Route path="/" element={<Navigate to="/home/resume" replace />} />
+          <Route path="/home" element={<Navigate to="/home/resume" replace />} />
+
+          <Route path="/home/:tab" element={<Home />} />
           <Route path="/resume/:id" element={<BuildResume />} />
           <Route path="/job/:id" element={<JobDetail />} />
-          <Route path="/" element={<JobDetail />} />
         </Routes>
       </Router>
     </Provider>

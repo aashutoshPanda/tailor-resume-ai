@@ -20,11 +20,13 @@
     },
     "homepage": "https://github.com/aashutoshPanda/tailor-my-resume#readme",
     "dependencies": {
+        "bcrypt": "^5.1.1",
         "cors": "^2.8.5",
         "cron-parser": "^4.8.1",
         "dotenv": "^16.3.1",
         "express": "^4.18.2",
         "ioredis": "^5.3.2",
+        "jsonwebtoken": "^9.0.2",
         "mongoose": "^8.0.4",
         "morgan": "^1.10.0",
         "yup": "^1.2.0"

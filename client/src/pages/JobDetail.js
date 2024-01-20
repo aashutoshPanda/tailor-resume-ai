@@ -35,9 +35,8 @@ const JobOpeningPage = () => {
       } else {
         dispatch(updateJob(job));
       }
-
+      navigate("/home/job");
       // If the dispatch is successful, navigate to the "/home" route
-      navigate("/home");
     } catch (error) {
       // If the dispatch fails, handle the error appropriately
       console.error("Failed to save job:", error);

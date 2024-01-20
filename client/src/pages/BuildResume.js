@@ -27,7 +27,6 @@ const ResumeBuilder = () => {
     // Use html2canvas to capture the content as an image
     html2canvas(input).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
-      console.log({ imgData });
 
       // Use jsPDF to create a PDF document
       const pdf = new jsPDF();
@@ -50,11 +49,10 @@ const ResumeBuilder = () => {
       if (isCreateMode) {
         dispatch(addResume(selectedResume)); // Implement addJob logic in your jobSlice
       } else {
-        console.log("selected resume before update", selectedResume);
         dispatch(updateResume(selectedResume));
       }
       // If the dispatch is successful, navigate to the "/home" route
-      navigate("/home");
+      navigate("/home/resume");
     } catch (error) {
       // If the dispatch fails, handle the error appropriately
       console.error("Failed to save resume:", error);
