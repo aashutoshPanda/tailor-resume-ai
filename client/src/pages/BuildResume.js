@@ -1,24 +1,22 @@
-// src/components/ResumePreview.js
-import React, { useRef, useState } from "react";
-import {
-  TextField,
-  Container,
-  Grid,
-  useMediaQuery,
-  Drawer,
-} from "@mui/material";
+import React, { useRef, useEffect } from "react";
+import { TextField, Container, Grid, useMediaQuery, Drawer } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import ResumeAccordion from "../components/ResumeAccordion";
 import ResumePreview from "../components/ResumePreview";
-import {
-  FloatingDownloadButton,
-  FloatingSaveButton,
-} from "../components/FloatingDownloadButton";
+import { FloatingDownloadButton, FloatingSaveButton } from "../components/FloatingDownloadButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import { addResume, fetchResumeById, updateResume, updateResumeName } from "../reducers/resumeBuilderSlice";
 
 const ResumeBuilder = () => {
+  const { id: resumeId } = useParams();
+  const isCreateMode = resumeId === "new";
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const selectedResume = useSelector((state) => state.resumeBuilder.selectedResume);
   const ref = useRef(null);
   const isMobile = useMediaQuery("(max-width:600px)");
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
@@ -40,16 +38,36 @@ const ResumeBuilder = () => {
     });
   };
 
-  const handleSave = () => {
-    console.log("saved");
+  useEffect(() => {
+    // Fetch jobs when the component mounts using the jobId from the URL
+    dispatch(fetchResumeById(resumeId));
+  }, [resumeId, dispatch]);
+
+  const handleSave = async () => {
+    try {
+      // If the job is being created, dispatch the addJob action
+      // Otherwise, dispatch the updateJob action
+      if (isCreateMode) {
+        dispatch(addResume(selectedResume)); // Implement addJob logic in your jobSlice
+      } else {
+        console.log("selected resume before update", selectedResume);
+        dispatch(updateResume(selectedResume));
+      }
+      // If the dispatch is successful, navigate to the "/home" route
+      navigate("/home");
+    } catch (error) {
+      // If the dispatch fails, handle the error appropriately
+      console.error("Failed to save resume:", error);
+    }
   };
+
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  const [resumeName, setResumeName] = useState("MyResume");
+  const resumeName = useSelector((state) => state.resumeBuilder.selectedResume.name);
   const handleResumeNameChange = (e) => {
-    setResumeName(e.target.value);
+    dispatch(updateResumeName(e.target.value));
   };
   const resumeNameInput = (
     <TextField
@@ -62,6 +80,9 @@ const ResumeBuilder = () => {
       margin="normal"
     />
   );
+
+  // case when invalid id is present in the url
+  if (!selectedResume._id && !isCreateMode) return "No such resume found";
   return (
     <Container style={{ position: "relative" }}>
       {!isMobile ? resumeNameInput : null}

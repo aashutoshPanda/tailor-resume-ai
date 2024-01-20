@@ -95,6 +95,7 @@ Excels in full-stack development, leveraging JavaScript and Python to drive inno
   },
 ];
 
+export const initialResumeName = "My resume";
 export const initialProject = {
   name: "E-commerce Platform",
   startDate: "2022-01-15",
@@ -121,3 +122,19 @@ export const initialProjectList = [
     link: "https://example.com/ecommerce",
   },
 ];
+
+export const initialResumeState = {
+  name: initialResumeName,
+  basicDetails: initialBasicDetails,
+  educationDetails: initialEducationDetails,
+  educationList: initialEducationList,
+  selectedLanguages: initialSelectedLanguages,
+  selectedTools: ["Git", "VS Code"],
+  selectedFrameworks: initialSelectedLanguages,
+  awardDetails: initialAward,
+  awardList: initialAwardList,
+  experienceDetails: initialExperience,
+  experienceList: initialExperienceList,
+  projectDetails: initialProject,
+  projectList: initialProjectList,
+};

@@ -1,38 +1,21 @@
 // src/components/ResumePreview.js
 import React, { forwardRef } from "react";
-import {
-  Box,
-  Avatar,
-  Typography,
-  Grid,
-  Chip,
-  Divider,
-  useMediaQuery,
-} from "@mui/material";
-import { useTheme } from "@mui/system";
+import { Box, Avatar, Typography, Grid, Chip, Divider, useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
 
 const ResumePreview = (props, ref) => {
-  const basicDetails = useSelector((state) => state.resumeBuilder.basicDetails);
+  const selectedResume = useSelector((state) => state.resumeBuilder.selectedResume);
+  const {
+    basicDetails,
+    educationList,
+    selectedLanguages,
+    selectedTools,
+    selectedFrameworks,
+    awardList,
+    experienceList,
+    projectList,
+  } = selectedResume;
 
-  const educationList = useSelector(
-    (state) => state.resumeBuilder.educationList
-  );
-  const selectedLanguages = useSelector(
-    (state) => state.resumeBuilder.selectedLanguages
-  );
-  const selectedTools = useSelector(
-    (state) => state.resumeBuilder.selectedTools
-  );
-  const selectedFrameworks = useSelector(
-    (state) => state.resumeBuilder.selectedFrameworks
-  );
-  const awardList = useSelector((state) => state.resumeBuilder.awardList);
-  const experienceList = useSelector(
-    (state) => state.resumeBuilder.experienceList
-  );
-  const projectList = useSelector((state) => state.resumeBuilder.projectList);
-  const theme = useTheme();
   const basicDetailsMobile = (
     <>
       <Typography variant="body1">{basicDetails.email}</Typography>
@@ -49,9 +32,7 @@ const ResumePreview = (props, ref) => {
   );
 
   const isMobile = useMediaQuery("(max-width:600px)");
-  const basicDetailComponent = isMobile
-    ? basicDetailsMobile
-    : basicDetailsDesktop;
+  const basicDetailComponent = isMobile ? basicDetailsMobile : basicDetailsDesktop;
 
   return (
     <Grid item md={8} ref={ref}>
@@ -71,11 +52,7 @@ const ResumePreview = (props, ref) => {
         {/* Second Column */}
         <Grid item md={2} xs={2} container justifyContent="flex-end">
           <Box textAlign="right">
-            <Avatar
-              alt={basicDetails.name}
-              src={basicDetails.profilePicture}
-              sx={{ width: 100, height: 100, mb: 2 }}
-            />
+            <Avatar alt={basicDetails.name} src={basicDetails.profilePicture} sx={{ width: 100, height: 100, mb: 2 }} />
           </Box>
         </Grid>
       </Grid>
@@ -147,9 +124,7 @@ const ResumePreview = (props, ref) => {
                   </Grid>
                 </Grid>
                 {/* Second Row - Short Description */}
-                <Typography variant="body2">
-                  {award.shortDescription}
-                </Typography>
+                <Typography variant="body2">{award.shortDescription}</Typography>
               </Box>
             ))}
           </Box>
@@ -198,23 +173,14 @@ const ResumePreview = (props, ref) => {
                 <Grid container spacing={3} style={{ alignItems: "center" }}>
                   {/* First Column - Project Name */}
                   <Grid item md={6}>
-                    <Typography
-                      variant="subtitle1"
-                      style={{ fontWeight: "bold" }}
-                    >
+                    <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
                       {project.name}
                     </Typography>
                   </Grid>
                   {/* Second Column - Dates (Right Aligned) */}
                   <Grid item md={6}>
                     <Typography variant="body2" style={{ textAlign: "right" }}>
-                      {`${project.startDate.slice(
-                        5,
-                        7
-                      )}/${project.startDate.slice(
-                        2,
-                        4
-                      )} - ${project.endDate.slice(
+                      {`${project.startDate.slice(5, 7)}/${project.startDate.slice(2, 4)} - ${project.endDate.slice(
                         5,
                         7
                       )}/${project.endDate.slice(2, 4)}`}
@@ -253,9 +219,7 @@ const ResumePreview = (props, ref) => {
                   </Grid>
                 </Grid>
                 {/* Third Row - Grade */}
-                <Typography variant="body2">
-                  Grade: {education.grade}
-                </Typography>
+                <Typography variant="body2">Grade: {education.grade}</Typography>
               </Box>
             ))}
           </Box>

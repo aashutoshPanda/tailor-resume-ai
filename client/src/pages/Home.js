@@ -1,16 +1,21 @@
 // src/components/HomeScreen.js
 import React from "react";
-import { Container, Paper, Tab, Tabs, Fab, Box, useTheme } from "@mui/material";
+import { Container, Paper, Tab, Tabs, Fab, Box } from "@mui/material";
 import ResumeCardList from "../components/ResumeCardList";
-import JobsScreen from "../components/jobTab";
+import JobsScreen from "../components/JobTab";
 import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
 
 const HomeScreen = () => {
   const [tabValue, setTabValue] = React.useState(0);
-  const theme = useTheme();
-
+  const navigate = useNavigate();
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
+  };
+
+  const handleAddClick = () => {
+    const urlToNavigate = tabValue === 0 ? "/resume/new" : "/job/new";
+    navigate(urlToNavigate);
   };
 
   return (
@@ -31,7 +36,7 @@ const HomeScreen = () => {
       {/* Floating Action Button */}
       <Box style={{ display: "flex", flexDirection: "row-reverse" }}>
         <Fab color="primary" aria-label="add">
-          <AddIcon />
+          <AddIcon onClick={handleAddClick} />
         </Fab>
       </Box>
     </Container>
