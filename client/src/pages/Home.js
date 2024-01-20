@@ -13,7 +13,7 @@ const HomeScreen = () => {
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
-    const urlToNavigate = newValue === 0 ? "/home?tab=resume" : "/home?tab=job";
+    const urlToNavigate = newValue === 0 ? "/home/resume" : "/home/job";
     navigate(urlToNavigate);
   };
 

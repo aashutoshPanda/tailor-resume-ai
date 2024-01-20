@@ -20,8 +20,10 @@ function App() {
           <Typography variant="h5">TAILOR MY RESUME</Typography>
         </Box>
         <Routes>
-          {/* Redirect from / to /home/resume */}
+          {/* Redirect from / and /home to /home/resume */}
           <Route path="/" element={<Navigate to="/home/resume" replace />} />
+          <Route path="/home" element={<Navigate to="/home/resume" replace />} />
+
           <Route path="/home/:tab" element={<Home />} />
           <Route path="/resume/:id" element={<BuildResume />} />
           <Route path="/job/:id" element={<JobDetail />} />
