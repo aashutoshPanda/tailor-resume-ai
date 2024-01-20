@@ -84,8 +84,8 @@ export const dummyJobOpeningList = [
 export const initialJobOpening = {
   organisation: "Dream Organisation",
   designation: "My favourite title",
-  lastModified: new Date().toLocaleDateString(),
-  lastDate: new Date().toLocaleDateString(),
+  lastModified: new Date().toISOString(),
+  lastDate: new Date().toISOString(),
   jobLink: "https://my-dream-job.com",
   status: "PENDING",
   resume: "fullstack resume",
