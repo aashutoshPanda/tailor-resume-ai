@@ -54,3 +54,18 @@ export const register = async (req, res) => {
     });
   }
 };
+
+/**
+ * @desc GET Get all the users for debugging
+ */
+export const getAllUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find({});
+    res.status(201).json(allUsers);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({
+      message: "Something went wrong while getting all users",
+    });
+  }
+};
