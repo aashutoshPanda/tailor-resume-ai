@@ -1,5 +1,5 @@
 export const initialBasicDetails = {
-  name: "John Doe",
+  name: "Don Joe",
   profilePicture: "https://example.com/profile-picture.jpg",
   currentJobTitle: "Software Engineer",
   email: "john.doe@example.com",

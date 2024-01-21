@@ -8,7 +8,7 @@ const instance = axios.create({ baseURL });
 instance.interceptors.request.use((config) => {
   // using this token for dev only
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJiOWViYTNhOTY0Mzk2Y2FmODk1YyIsImlhdCI6MTcwNTc1Mzc4MiwiZXhwIjoxNzA1ODQwMTgyfQ.F0000STVFT2Q87LkFfp8G849JK8W84TUR3F-NysiX4Q";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YWJiOWViYTNhOTY0Mzk2Y2FmODk1YyIsImlhdCI6MTcwNTg3MDM5NSwiZXhwIjoxNzA1OTU2Nzk1fQ.kn1XpSoTa9R-btlvmzIfM0CHNOhugdl0RDZjCn3S9Xo";
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

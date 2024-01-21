@@ -21,7 +21,8 @@ function App() {
         </Box>
         <Routes>
           {/* Redirect from / and /home to /home/resume */}
-          <Route path="/" element={<Navigate to="/home/resume" replace />} />
+          <Route path="/" element={<Navigate to="/resume/new" replace />} />
+          {/* <Route path="/" element={<Navigate to="/home/resume" replace />} /> */}
           <Route path="/home" element={<Navigate to="/home/resume" replace />} />
 
           <Route path="/home/:tab" element={<Home />} />
