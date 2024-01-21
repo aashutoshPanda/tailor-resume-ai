@@ -3,13 +3,21 @@ import { createSlice } from "@reduxjs/toolkit";
 import { initialEducationDetails, initialExperience, initialResumeState } from "../constants/resumeBuilder";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../api";
+import { improveResumeJSONWithGPT } from "../utils/openai.js";
 
 // Async Thunks
 export const fetchAllResumes = createAsyncThunk("resume/fetchAllResumes", async () => {
   const response = await api.get("resumes");
   return response.data;
 });
+
+export const improveResumeWithGPT = createAsyncThunk("resume/improveWithGPT", async (resume) => {
+  const improvedResume = await improveResumeJSONWithGPT(resume);
+  return improvedResume;
+});
+
 export const fetchResumeById = createAsyncThunk("resume/fetchResume", async (id) => {
+  console.log({ initialResumeState });
   if (id === "new") return initialResumeState;
   const response = await api.get(`/resumes/${id}`);
 
@@ -38,6 +46,7 @@ const resumeBuilderSlice = createSlice({
   initialState: {
     resumes: [],
     selectedResume: { ...initialResumeState },
+    loading: false,
   },
   reducers: {
     updateResumeName: (state, action) => {
@@ -130,6 +139,19 @@ const resumeBuilderSlice = createSlice({
       })
       .addCase(addResume.fulfilled, (state, action) => {
         state.resumes = [...state.resumes, action.payload]; // Assuming action.payload is the entire resume object
+      })
+      .addCase(improveResumeWithGPT.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(improveResumeWithGPT.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log("this is the payload", action.payload);
+        console.log("this is the update state", { ...state.selectedResume, ...action.payload });
+        const upadtedState = { ...state.selectedResume, ...action.payload };
+        state.selectedResume = upadtedState;
+      })
+      .addCase(improveResumeWithGPT.rejected, (state) => {
+        state.loading = false;
       });
   },
 });

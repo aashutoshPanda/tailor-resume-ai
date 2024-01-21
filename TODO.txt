@@ -6,3 +6,12 @@
 6. Integrate ChatGPT - to make resume content better
 7. Duplicate resume
 8. Duplicate job opening
+
+
+Bugs
+1. Mobile view of table jobs
+2. Resume name not getting updated
+3. Delete button from Job detail does not work
+4. Download button from Resume Card list does not work
+5. Get more keys for ChatGPT or use paid version
+6. Add rate limiting in backend and move ChatGPT logic to backend

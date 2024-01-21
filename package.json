@@ -29,6 +29,7 @@
         "jsonwebtoken": "^9.0.2",
         "mongoose": "^8.0.4",
         "morgan": "^1.10.0",
+        "openai": "^4.25.0",
         "yup": "^1.2.0"
     },
     "devDependencies": {

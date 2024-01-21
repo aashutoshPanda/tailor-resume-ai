@@ -5,11 +5,17 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import ResumeAccordion from "../components/ResumeAccordion";
 import ResumePreview from "../components/ResumePreview";
-import { FloatingDownloadButton, FloatingSaveButton } from "../components/FloatingDownloadButton";
+import { FloatingAIButton, FloatingDownloadButton, FloatingSaveButton } from "../components/FloatingDownloadButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { addResume, fetchResumeById, updateResume, updateResumeName } from "../reducers/resumeBuilderSlice";
+import {
+  addResume,
+  fetchResumeById,
+  improveResumeWithGPT,
+  updateResume,
+  updateResumeName,
+} from "../reducers/resumeBuilderSlice";
 
 const ResumeBuilder = () => {
   const { id: resumeId } = useParams();
@@ -17,6 +23,7 @@ const ResumeBuilder = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const selectedResume = useSelector((state) => state.resumeBuilder.selectedResume);
+  const loading = useSelector((state) => state.resumeBuilder.loading);
   const ref = useRef(null);
   const isMobile = useMediaQuery("(max-width:600px)");
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
@@ -67,6 +74,10 @@ const ResumeBuilder = () => {
   const handleResumeNameChange = (e) => {
     dispatch(updateResumeName(e.target.value));
   };
+
+  const handleAIButtonClick = (e) => {
+    dispatch(improveResumeWithGPT(selectedResume));
+  };
   const resumeNameInput = (
     <TextField
       label="Resume"
@@ -109,6 +120,7 @@ const ResumeBuilder = () => {
         )}
       </Grid>
 
+      <FloatingAIButton handleClick={handleAIButtonClick} disabled={loading} />
       <FloatingSaveButton handleClick={handleSave} />
       <FloatingDownloadButton handleClick={handleDownload} />
     </Container>
