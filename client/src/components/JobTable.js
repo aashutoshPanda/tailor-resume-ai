@@ -14,6 +14,7 @@ import {
   Typography,
   TableSortLabel,
   TablePagination,
+  useTheme,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -28,6 +29,7 @@ const JobOpeningTable = ({ jobOpeningList }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
 
+  const theme = useTheme();
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -69,7 +71,7 @@ const JobOpeningTable = ({ jobOpeningList }) => {
   };
   return (
     <div>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} style={{ marginTop: theme.spacing(2) }}>
         <Table>
           <TableHead>
             <TableRow>
