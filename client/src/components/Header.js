@@ -7,6 +7,7 @@ import { localStorageKeyAPIToken } from "../constants/api";
 
 const Header = () => {
   const navigate = useNavigate();
+  const isTokenPresent = localStorage.getItem(localStorageKeyAPIToken); // Replace "yourToken" with the actual token key
 
   const handleLogout = () => {
     localStorage.removeItem(localStorageKeyAPIToken);
@@ -24,12 +25,14 @@ const Header = () => {
           </Box>
         </Grid>
 
-        {/* Logout Button */}
-        <Grid item xs={6} container justifyContent="flex-end">
-          <Button variant="outlined" color="primary" onClick={handleLogout}>
-            Logout
-          </Button>
-        </Grid>
+        {/* Conditional Rendering of Logout Button */}
+        {isTokenPresent && (
+          <Grid item xs={6} container justifyContent="flex-end">
+            <Button variant="outlined" color="primary" onClick={handleLogout}>
+              Logout
+            </Button>
+          </Grid>
+        )}
       </Grid>
     </Container>
   );
