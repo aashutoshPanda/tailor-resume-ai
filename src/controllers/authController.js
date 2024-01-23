@@ -43,7 +43,10 @@ export const register = async (req, res) => {
     const { email, password, fullName } = req.body;
     const encryptedPassword = await bcrypt.hash(password, salt);
     const { id } = await User.create({ email, password: encryptedPassword, fullName });
-    res.status(201).json({ id, email: email });
+    const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+      expiresIn: 86400, // 24 hours
+    });
+    res.status(201).json({ id, email, token });
   } catch (err) {
     console.log(err);
     return res.status(500).send({

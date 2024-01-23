@@ -75,8 +75,8 @@ const JobOpeningPage = () => {
   if (!job._id && !isCreateMode) return "No such job found";
 
   return (
-    <Container maxWidth="md">
-      <Box mt={4}>
+    <Container maxWidth="lg">
+      <Box>
         {/* ... (previous form fields) */}
         <TextField
           fullWidth

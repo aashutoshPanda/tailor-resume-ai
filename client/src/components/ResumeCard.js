@@ -23,7 +23,7 @@ const ResumeCard = ({ resume }) => {
   };
 
   return (
-    <Card style={{ marginTop: theme.spacing(2) }}>
+    <Card style={{ marginTop: theme.spacing(2), maxWidth: theme.spacing(80) }}>
       {/* Card Content */}
       <CardContent>
         <Typography variant="h6" component="div" align="left">

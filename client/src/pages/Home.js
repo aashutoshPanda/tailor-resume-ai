@@ -23,8 +23,8 @@ const HomeScreen = () => {
   };
 
   return (
-    <Container maxWidth="md">
-      <Box mt={4} mb={4} textAlign="center">
+    <Container maxWidth="lg">
+      <Box mb={4} textAlign="center">
         {/* Tab Layout */}
         <Paper square>
           <Tabs value={tabValue} onChange={handleChange} centered>
