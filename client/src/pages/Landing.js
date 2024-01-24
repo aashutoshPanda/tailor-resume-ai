@@ -1,12 +1,15 @@
 // src/components/LandingPage.js
 import React, { useState, useEffect } from "react";
-import { Container, Typography, Button, Box, TextField, Divider, Grid, Tab, Tabs } from "@mui/material";
+import { Container, Typography, Button, Box, TextField, Divider, Grid, Tab, Tabs, Card, Stack } from "@mui/material";
 import jobHunt from "../assets/job-hunt.svg";
 import api from "../api";
 import { localStorageKeyAPIToken } from "../constants/api";
 import { useNavigate } from "react-router-dom";
+import { bgGradient } from "../theme/css";
+import { alpha, useTheme } from "@mui/material/styles";
 
 const LandingPage = () => {
+  const theme = useTheme();
   const [value, setValue] = useState(0); // Tab index state
   const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +24,7 @@ const LandingPage = () => {
     if (token) {
       navigate("/home");
     }
-  }, []);
+  }, [navigate]);
 
   const handleGuestLogin = () => {
     try {
@@ -74,14 +77,7 @@ const LandingPage = () => {
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h6" align="center" paragraph>
-        Get hired by top product-based companies like
-        <br />
-        Google, Microsoft,
-        <br />
-        and more.
-      </Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} mt={6}>
         {/* First Column - Portrait Image */}
         <Grid item xs={12} md={6}>
           <Box mt={4} mb={4} textAlign="center">
@@ -91,115 +87,136 @@ const LandingPage = () => {
 
         {/* Second Column - Buttons */}
         <Grid item xs={12} md={6}>
-          {/* Tabs for Login and Register */}
-          {/* Guest Login Button */}
-          <Box mt={2} textAlign="center">
-            <Button variant="contained" color="secondary" onClick={handleGuestLogin}>
-              Guest Login
-            </Button>
-          </Box>
+          <Box
+            sx={{
+              ...bgGradient({
+                color: alpha(theme.palette.background.default, 0.9),
+                imgUrl: "/assets/background/overlay_4.jpg",
+              }),
+              height: 1,
+            }}
+          >
+            <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
+              <Card
+                sx={{
+                  p: 5,
+                  width: 1,
+                  maxWidth: 420,
+                }}
+              >
+                {/* Guest Login Button */}
+                <Typography variant="h6" align="center" paragraph>
+                  Get hired by top product-based companies now!
+                </Typography>
+                <Box mt={2} textAlign="center">
+                  <Button variant="contained" color="primary" onClick={handleGuestLogin}>
+                    Guest Login
+                  </Button>
+                </Box>
 
-          {/* "OR" Divider */}
-          <Box mt={2} textAlign="center">
-            <Divider>OR</Divider>
-          </Box>
-          <Tabs value={value} onChange={handleChange} centered>
-            <Tab label="Login" />
-            <Tab label="Register" />
-          </Tabs>
+                {/* "OR" Divider */}
+                <Divider sx={{ my: 3 }}>
+                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                    OR
+                  </Typography>
+                </Divider>
 
-          {/* Login Tab Content */}
-          {value === 0 && (
-            <>
-              <Box textAlign="center">
-                <TextField
-                  label="email"
-                  variant="standard"
-                  margin="normal"
-                  value={email}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </Box>
+                {/* Tabs for Login and Register */}
+                <Tabs value={value} onChange={handleChange} centered>
+                  <Tab label="Login" />
+                  <Tab label="Register" />
+                </Tabs>
 
-              <Box textAlign="center">
-                <TextField
-                  label="Password"
-                  type="password"
-                  variant="standard"
-                  margin="normal"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </Box>
+                {/* Login Tab Content */}
+                {value === 0 && (
+                  <>
+                    <Box textAlign="center">
+                      <TextField
+                        label="email"
+                        margin="normal"
+                        value={email}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                    </Box>
 
-              <Box textAlign="center">
-                <Button variant="contained" color="primary" onClick={handleRegularLogin}>
-                  Log In
-                </Button>
-                {/* Display login error */}
-                {loginError && (
-                  <Box textAlign="center" mt={2}>
-                    <Typography variant="body2" color="error">
-                      {loginError}
-                    </Typography>
-                  </Box>
+                    <Box textAlign="center">
+                      <TextField
+                        label="Password"
+                        type="password"
+                        margin="normal"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </Box>
+
+                    <Box textAlign="center">
+                      <Button variant="contained" color="inherit" onClick={handleRegularLogin}>
+                        Log In
+                      </Button>
+                      {/* Display login error */}
+                      {loginError && (
+                        <Box textAlign="center" mt={2}>
+                          <Typography variant="body2" color="error">
+                            {loginError}
+                          </Typography>
+                        </Box>
+                      )}
+                    </Box>
+                  </>
                 )}
-              </Box>
-            </>
-          )}
 
-          {/* Register Tab Content */}
-          {value === 1 && (
-            <>
-              <Box textAlign="center">
-                <TextField
-                  label="email"
-                  variant="standard"
-                  margin="normal"
-                  value={email}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </Box>
+                {/* Register Tab Content */}
+                {value === 1 && (
+                  <>
+                    <Box textAlign="center">
+                      <TextField
+                        label="email"
+                        margin="normal"
+                        value={email}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                    </Box>
 
-              <Box textAlign="center">
-                <TextField
-                  label="Password"
-                  type="password"
-                  variant="standard"
-                  margin="normal"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </Box>
+                    <Box textAlign="center">
+                      <TextField
+                        label="Password"
+                        type="password"
+                        margin="normal"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </Box>
 
-              <Box textAlign="center">
-                <TextField
-                  label="Confirm Password"
-                  type="password"
-                  variant="standard"
-                  margin="normal"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  error={passwordError !== ""}
-                  helperText={passwordError}
-                />
-              </Box>
+                    <Box textAlign="center">
+                      <TextField
+                        label="Confirm Password"
+                        type="password"
+                        margin="normal"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        error={passwordError !== ""}
+                        helperText={passwordError}
+                      />
+                    </Box>
 
-              <Box textAlign="center">
-                <Button variant="contained" color="primary" onClick={handleRegister}>
-                  Register
-                </Button>
-                {/* Display registration error */}
-                {registrationError && (
-                  <Box textAlign="center" mt={2}>
-                    <Typography variant="body2" color="error">
-                      {registrationError}
-                    </Typography>
-                  </Box>
+                    <Box textAlign="center">
+                      <Button variant="contained" color="inherit" onClick={handleRegister}>
+                        Register
+                      </Button>
+                      {/* Display registration error */}
+                      {registrationError && (
+                        <Box textAlign="center" mt={2}>
+                          <Typography variant="body2" color="error">
+                            {registrationError}
+                          </Typography>
+                        </Box>
+                      )}
+                    </Box>
+                  </>
                 )}
-              </Box>
-            </>
-          )}
+              </Card>
+            </Stack>
+          </Box>
         </Grid>
       </Grid>
     </Container>

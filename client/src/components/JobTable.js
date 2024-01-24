@@ -20,6 +20,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { deleteJob } from "../reducers/jobSlice";
+import Label from "../components/MinimalMUILabel";
 
 const JobOpeningTable = ({ jobOpeningList }) => {
   const dispatch = useDispatch();
@@ -109,9 +110,7 @@ const JobOpeningTable = ({ jobOpeningList }) => {
                 <TableCell>{new Date(job.lastModified).toLocaleString()}</TableCell>
                 <TableCell>{new Date(job.lastDate).toLocaleDateString()}</TableCell>
                 <TableCell>
-                  <Typography variant="body2" color={job.status === "APPLIED" ? "success" : "warning"}>
-                    {job.status}
-                  </Typography>
+                  <Label color={(job.status === "APPLIED" && "success") || "error"}>{job.status}</Label>
                 </TableCell>
                 <TableCell>
                   <Box>

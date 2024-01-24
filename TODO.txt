@@ -3,9 +3,13 @@
 3. Add authentication - token based [DONE]
 4. Add resume field in jobs [foreign relation] 
 5. Add custom resume filling option - this will be a link to resume in job field
-6. Integrate ChatGPT - to make resume content better
+6. Integrate ChatGPT - to make resume content better [DONE]
 7. Duplicate resume
 8. Duplicate job opening
+9. Make more resume templates
+10. Resume preview image option
+11. Redis cache 
+
 
 
 Bugs
@@ -15,3 +19,4 @@ Bugs
 4. Download button from Resume Card list does not work
 5. Get more keys for ChatGPT or use paid version
 6. Add rate limiting in backend and move ChatGPT logic to backend
+7. Show timestamps in better format - Resume card
