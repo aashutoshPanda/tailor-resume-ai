@@ -146,7 +146,11 @@ const JobOpeningPage = () => {
           minRows={3}
           maxRows={10}
           placeholder="Description"
-          style={{ width: "100%", marginTop: "16px" }}
+          style={{
+            width: "100%",
+            marginTop: "16px",
+            border: "0px",
+          }}
           name="description"
           value={job.description}
           onChange={handleChange}
@@ -157,7 +161,7 @@ const JobOpeningPage = () => {
             Save
           </Button>
           {!isCreateMode ? (
-            <Button variant="contained" color="secondary" onClick={handleDelete} style={{ marginLeft: "8px" }}>
+            <Button variant="contained" color="inherit" onClick={handleDelete} style={{ marginLeft: "8px" }}>
               Delete
             </Button>
           ) : null}

@@ -16,19 +16,19 @@ const Header = () => {
 
   return (
     <Container maxWidth="lg">
-      <Grid container alignItems="center">
+      <Grid container alignItems="center" mt={6}>
         {/* Logo and Title */}
         <Grid item xs={6}>
           <Box display="flex" alignItems="center">
             <img src={logo} alt="Logo" style={{ width: "55px", marginRight: "10px", marginBottom: "10px" }} />
-            <Typography variant="h5">TAILOR MY RESUME</Typography>
+            <Typography variant="h5">Tailor My Resume</Typography>
           </Box>
         </Grid>
 
         {/* Conditional Rendering of Logout Button */}
         {isTokenPresent && (
           <Grid item xs={6} container justifyContent="flex-end">
-            <Button variant="outlined" color="primary" onClick={handleLogout}>
+            <Button variant="contained" color="inherit" onClick={handleLogout}>
               Logout
             </Button>
           </Grid>

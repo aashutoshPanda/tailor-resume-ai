@@ -5,10 +5,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShareIcon from "@mui/icons-material/Share";
 import DownloadIcon from "@mui/icons-material/Download";
-import ResumePreviewImage from "../assets/resume-preview.webp";
+import ResumePreviewImage from "../assets/resume-preview.png";
 import { useDispatch } from "react-redux";
 import { deleteResume } from "../reducers/resumeBuilderSlice";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const ResumeCard = ({ resume }) => {
   const theme = useTheme();
@@ -22,6 +23,8 @@ const ResumeCard = ({ resume }) => {
     navigate(`/resume/${id}`);
   };
 
+  const lastModifiedMoment = moment(resume.lastModified);
+  const elapsed = lastModifiedMoment.fromNow();
   return (
     <Card style={{ marginTop: theme.spacing(2), maxWidth: theme.spacing(80) }}>
       {/* Card Content */}
@@ -30,7 +33,7 @@ const ResumeCard = ({ resume }) => {
           {resume.name}
         </Typography>
         <Typography variant="subtitle2" color="textSecondary" align="left">
-          Last Edited: {resume.lastModified}
+          Last Edited: {elapsed}
         </Typography>
 
         <img src={ResumePreviewImage} alt={resume.name} style={{ width: "40%", height: "auto" }} />
