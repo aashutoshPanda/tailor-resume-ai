@@ -3,8 +3,8 @@ import React from "react";
 import { Container, Paper, Tab, Tabs, Fab, Box } from "@mui/material";
 import ResumeCardList from "../components/ResumeCardList";
 import JobsScreen from "../components/JobTab";
-import AddIcon from "@mui/icons-material/Add";
 import { useNavigate, useParams } from "react-router-dom";
+import { Add } from "@mui/icons-material";
 
 const HomeScreen = () => {
   const { tab: tabType } = useParams();
@@ -26,7 +26,7 @@ const HomeScreen = () => {
     <Container maxWidth="lg">
       <Box mb={4} textAlign="center">
         {/* Tab Layout */}
-        <Paper square>
+        <Paper>
           <Tabs value={tabValue} onChange={handleChange} centered>
             <Tab label="Resumes" />
             <Tab label="Jobs" />
@@ -38,11 +38,20 @@ const HomeScreen = () => {
         {tabValue === 1 && <JobsScreen />}
       </Box>
       {/* Floating Action Button */}
-      <Box style={{ display: "flex", flexDirection: "row-reverse" }}>
-        <Fab color="primary" aria-label="add" onClick={handleAddClick}>
-          <AddIcon />
-        </Fab>
-      </Box>
+      <Fab
+        onClick={handleAddClick}
+        color="primary"
+        aria-label="add"
+        size="large"
+        style={{
+          position: "fixed",
+          bottom: "16px",
+          right: "100px",
+          zIndex: 1000, // Adjust the z-index as needed
+        }}
+      >
+        <Add fontSize="large" />
+      </Fab>
     </Container>
   );
 };

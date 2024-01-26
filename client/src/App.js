@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import { Provider } from "react-redux";
 import store from "./store";
 import { localStorageKeyAPIToken } from "./constants/api";
+import wavesSVG from "../src/assets/waves.svg";
 
 const PrivateRoutes = () => {
   const token = localStorage.getItem(localStorageKeyAPIToken); // Replace "yourTokenKey" with the actual key used to store the token
@@ -17,22 +18,25 @@ const PrivateRoutes = () => {
 
 function App() {
   return (
-    <Provider store={store}>
-      <Router>
-        <Header />
-        <Routes>
-          {/* Redirect from / and /home to /home/resume */}
-          <Route path="/" element={<Landing />} />
-          <Route element={<PrivateRoutes />}>
-            <Route path="/home" element={<Navigate to="/home/resume" replace />} />
-            <Route path="/home/:tab" element={<Home />} />
-            <Route path="/resume/:id" element={<BuildResume />} />
-            <Route path="/job/:id" element={<JobDetail />} />
-            <Route path="*" element={<Navigate to="/home" />} replace />
-          </Route>
-        </Routes>
-      </Router>
-    </Provider>
+    <div>
+      <img src={wavesSVG} style={{ position: "fixed", bottom: "0px", zIndex: -100000000 }}></img>
+      <Provider store={store}>
+        <Router>
+          <Header />
+          <Routes>
+            {/* Redirect from / and /home to /home/resume */}
+            <Route path="/" element={<Landing />} />
+            <Route element={<PrivateRoutes />}>
+              <Route path="/home" element={<Navigate to="/home/resume" replace />} />
+              <Route path="/home/:tab" element={<Home />} />
+              <Route path="/resume/:id" element={<BuildResume />} />
+              <Route path="/job/:id" element={<JobDetail />} />
+              <Route path="*" element={<Navigate to="/home" />} replace />
+            </Route>
+          </Routes>
+        </Router>
+      </Provider>
+    </div>
   );
 }
 

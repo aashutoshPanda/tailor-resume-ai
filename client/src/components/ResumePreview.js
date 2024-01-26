@@ -1,6 +1,6 @@
 // src/components/ResumePreview.js
 import React, { forwardRef } from "react";
-import { Box, Avatar, Typography, Grid, Chip, Divider, useMediaQuery } from "@mui/material";
+import { Paper, Box, Avatar, Typography, Grid, Chip, Divider, useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
 
 const ResumePreview = (props, ref) => {
@@ -35,7 +35,7 @@ const ResumePreview = (props, ref) => {
   const basicDetailComponent = isMobile ? basicDetailsMobile : basicDetailsDesktop;
 
   return (
-    <Grid item md={8} ref={ref}>
+    <Grid item md={8} ref={ref} component={Paper} mt={3} p={1}>
       {/* First Row */}
       <Grid container spacing={3}>
         {/* First Column */}
