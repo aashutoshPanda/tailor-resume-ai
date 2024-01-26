@@ -1,27 +1,54 @@
 // src/components/ResumeCard.js
 import React from "react";
-import { Typography, Box, Button, Grid, Container } from "@mui/material";
-import logo from "../assets/logo.png";
+import { Box, Button, Grid, Container } from "@mui/material";
+import logo from "../assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 import { localStorageKeyAPIToken } from "../constants/api";
-
+import Iconify from "./iconify";
+import { alpha, useTheme } from "@mui/material/styles";
 const Header = () => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const isTokenPresent = localStorage.getItem(localStorageKeyAPIToken); // Replace "yourToken" with the actual token key
 
+  // Access the pathname property of the URLSearchParams object to get the current path
   const handleLogout = () => {
     localStorage.removeItem(localStorageKeyAPIToken);
     navigate("/");
   };
 
+  const handleBack = () => {
+    // Navigate back to the previous page
+    navigate(-1);
+  };
+
   return (
     <Container maxWidth="lg">
-      <Grid container alignItems="center" mt={6}>
+      <Grid container alignItems="center" justifyContent="center" pt={6}>
         {/* Logo and Title */}
-        <Grid item xs={6}>
-          <Box display="flex" alignItems="center">
-            <img src={logo} alt="Logo" style={{ width: "55px", marginRight: "10px", marginBottom: "10px" }} />
-            <Typography variant="h5">Tailor My Resume</Typography>
+        <Grid item xs={12} md={6} container alignItems="center" justifyContent="center">
+          {isTokenPresent && (
+            <Iconify
+              icon="eva:arrow-back-fill"
+              width={40}
+              sx={{ color: alpha(theme.palette.primary.main, 1) }}
+              onClick={handleBack}
+            />
+          )}
+          <Box
+            component="div"
+            sx={{
+              width: 450,
+              height: 60,
+              display: "inline-flex",
+              overflow: "hidden",
+            }}
+          >
+            <img
+              src={logo}
+              alt="Logo"
+              style={{ minWidth: 500, minHeight: 250, position: "relative", top: -95, left: 20 }}
+            />
           </Box>
         </Grid>
 

@@ -77,145 +77,132 @@ const LandingPage = () => {
 
   return (
     <Container maxWidth="lg">
-      <Grid container spacing={2} mt={6}>
+      <Grid container alignItems="center" justifyContent="center" pt={6}>
+        {/* Logo and Title */}
+        <Grid item xs={12} md={6}>
+          <Card
+            sx={{
+              p: 5,
+              width: 1,
+              maxWidth: 420,
+            }}
+          >
+            {/* Guest Login Button */}
+            <Typography variant="h6" align="center" paragraph>
+              Get hired by top product-based companies now!
+            </Typography>
+            <Box mt={2} textAlign="center">
+              <Button variant="contained" color="primary" onClick={handleGuestLogin}>
+                Guest Login
+              </Button>
+            </Box>
+
+            {/* "OR" Divider */}
+            <Divider sx={{ my: 3 }}>
+              <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                OR
+              </Typography>
+            </Divider>
+
+            {/* Tabs for Login and Register */}
+            <Tabs value={value} onChange={handleChange} centered>
+              <Tab label="Login" />
+              <Tab label="Register" />
+            </Tabs>
+
+            {/* Login Tab Content */}
+            {value === 0 && (
+              <>
+                <Box textAlign="center">
+                  <TextField
+                    label="email"
+                    margin="normal"
+                    value={email}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </Box>
+
+                <Box textAlign="center">
+                  <TextField
+                    label="Password"
+                    type="password"
+                    margin="normal"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Box>
+
+                <Box textAlign="center">
+                  <Button variant="contained" color="inherit" onClick={handleRegularLogin}>
+                    Log In
+                  </Button>
+                  {/* Display login error */}
+                  {loginError && (
+                    <Box textAlign="center" mt={2}>
+                      <Typography variant="body2" color="error">
+                        {loginError}
+                      </Typography>
+                    </Box>
+                  )}
+                </Box>
+              </>
+            )}
+
+            {/* Register Tab Content */}
+            {value === 1 && (
+              <>
+                <Box textAlign="center">
+                  <TextField
+                    label="email"
+                    margin="normal"
+                    value={email}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </Box>
+
+                <Box textAlign="center">
+                  <TextField
+                    label="Password"
+                    type="password"
+                    margin="normal"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Box>
+
+                <Box textAlign="center">
+                  <TextField
+                    label="Confirm Password"
+                    type="password"
+                    margin="normal"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    error={passwordError !== ""}
+                    helperText={passwordError}
+                  />
+                </Box>
+
+                <Box textAlign="center">
+                  <Button variant="contained" color="inherit" onClick={handleRegister}>
+                    Register
+                  </Button>
+                  {/* Display registration error */}
+                  {registrationError && (
+                    <Box textAlign="center" mt={2}>
+                      <Typography variant="body2" color="error">
+                        {registrationError}
+                      </Typography>
+                    </Box>
+                  )}
+                </Box>
+              </>
+            )}
+          </Card>
+        </Grid>
         {/* First Column - Portrait Image */}
         <Grid item xs={12} md={6}>
           <Box mt={4} mb={4} textAlign="center">
             <img src={jobHunt} alt="Portrait" style={{ height: "450px" }} />
-          </Box>
-        </Grid>
-
-        {/* Second Column - Buttons */}
-        <Grid item xs={12} md={6}>
-          <Box
-            sx={{
-              ...bgGradient({
-                color: alpha(theme.palette.background.default, 0.9),
-                imgUrl: "/assets/background/overlay_4.jpg",
-              }),
-              height: 1,
-            }}
-          >
-            <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
-              <Card
-                sx={{
-                  p: 5,
-                  width: 1,
-                  maxWidth: 420,
-                }}
-              >
-                {/* Guest Login Button */}
-                <Typography variant="h6" align="center" paragraph>
-                  Get hired by top product-based companies now!
-                </Typography>
-                <Box mt={2} textAlign="center">
-                  <Button variant="contained" color="primary" onClick={handleGuestLogin}>
-                    Guest Login
-                  </Button>
-                </Box>
-
-                {/* "OR" Divider */}
-                <Divider sx={{ my: 3 }}>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    OR
-                  </Typography>
-                </Divider>
-
-                {/* Tabs for Login and Register */}
-                <Tabs value={value} onChange={handleChange} centered>
-                  <Tab label="Login" />
-                  <Tab label="Register" />
-                </Tabs>
-
-                {/* Login Tab Content */}
-                {value === 0 && (
-                  <>
-                    <Box textAlign="center">
-                      <TextField
-                        label="email"
-                        margin="normal"
-                        value={email}
-                        onChange={(e) => setUsername(e.target.value)}
-                      />
-                    </Box>
-
-                    <Box textAlign="center">
-                      <TextField
-                        label="Password"
-                        type="password"
-                        margin="normal"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </Box>
-
-                    <Box textAlign="center">
-                      <Button variant="contained" color="inherit" onClick={handleRegularLogin}>
-                        Log In
-                      </Button>
-                      {/* Display login error */}
-                      {loginError && (
-                        <Box textAlign="center" mt={2}>
-                          <Typography variant="body2" color="error">
-                            {loginError}
-                          </Typography>
-                        </Box>
-                      )}
-                    </Box>
-                  </>
-                )}
-
-                {/* Register Tab Content */}
-                {value === 1 && (
-                  <>
-                    <Box textAlign="center">
-                      <TextField
-                        label="email"
-                        margin="normal"
-                        value={email}
-                        onChange={(e) => setUsername(e.target.value)}
-                      />
-                    </Box>
-
-                    <Box textAlign="center">
-                      <TextField
-                        label="Password"
-                        type="password"
-                        margin="normal"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                    </Box>
-
-                    <Box textAlign="center">
-                      <TextField
-                        label="Confirm Password"
-                        type="password"
-                        margin="normal"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        error={passwordError !== ""}
-                        helperText={passwordError}
-                      />
-                    </Box>
-
-                    <Box textAlign="center">
-                      <Button variant="contained" color="inherit" onClick={handleRegister}>
-                        Register
-                      </Button>
-                      {/* Display registration error */}
-                      {registrationError && (
-                        <Box textAlign="center" mt={2}>
-                          <Typography variant="body2" color="error">
-                            {registrationError}
-                          </Typography>
-                        </Box>
-                      )}
-                    </Box>
-                  </>
-                )}
-              </Card>
-            </Stack>
           </Box>
         </Grid>
       </Grid>

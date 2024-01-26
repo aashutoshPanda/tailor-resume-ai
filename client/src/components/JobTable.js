@@ -51,7 +51,7 @@ const JobOpeningTable = ({ jobOpeningList }) => {
   };
 
   if (jobOpeningList.length === 0) {
-    return <Typography variant="body1">No job openings are present.</Typography>;
+    return null;
   }
 
   const sortedJobOpeningList = jobOpeningList

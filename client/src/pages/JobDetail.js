@@ -1,25 +1,9 @@
 // src/components/JobOpeningPage.js
 import { useDispatch, useSelector } from "react-redux";
-import { addJob, fetchJobById, updateSelectedJob, updateLocalJob, deleteJob, updateJob } from "../reducers/jobSlice";
-import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Box,
-  TextField,
-  TextareaAutosize,
-  Button,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-  FormGroup,
-  FormControlLabel,
-  Switch,
-} from "@mui/material";
+import { addJob, fetchJobById, updateLocalJob, deleteJob, updateJob } from "../reducers/jobSlice";
+import React, { useEffect } from "react";
+import { Container, Box, TextField, Button, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
-import { initialJobOpening } from "../constants/jobs";
-
-const userResumeNames = ["fullstack-resume", "backend-resume", "frontend-resume"];
 
 const JobOpeningPage = () => {
   const { id: jobId } = useParams();
@@ -142,7 +126,8 @@ const JobOpeningPage = () => {
           />
         )}
 
-        <TextareaAutosize
+        <TextField
+          multiline
           minRows={3}
           maxRows={10}
           placeholder="Description"
