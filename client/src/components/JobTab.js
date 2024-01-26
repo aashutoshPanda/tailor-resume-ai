@@ -3,7 +3,7 @@ import addJobOpeningImage from "../assets/add-job.svg";
 import JobOpeningTable from "./JobTable";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchJobs, fetchJobById, updateLocalJob, updateJob, deleteJob, addJob } from "../reducers/jobSlice";
+import { fetchJobs } from "../reducers/jobSlice";
 
 const JobsScreen = () => {
   const dispatch = useDispatch();

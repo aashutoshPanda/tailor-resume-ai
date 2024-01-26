@@ -1,5 +1,6 @@
 // models/resumeModel.js
 import mongoose from "mongoose";
+import { initialResumeThumbnailURL } from "../constants/resume.js";
 
 const educationSchema = new mongoose.Schema({
   institute: String,
@@ -34,6 +35,10 @@ const experienceSchema = new mongoose.Schema({
 const resumeSchema = new mongoose.Schema({
   id: String,
   name: String,
+  thumbnail: {
+    type: String,
+    default: initialResumeThumbnailURL,
+  },
   basicDetails: {
     name: String,
     profilePicture: String,

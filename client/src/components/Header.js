@@ -24,9 +24,8 @@ const Header = () => {
 
   return (
     <Container maxWidth="lg">
-      <Grid container alignItems="center" justifyContent="center" pt={6}>
-        {/* Logo and Title */}
-        <Grid item xs={12} md={6} container alignItems="center" justifyContent="center">
+      <Grid container justifyContent="space-between" alignItems="center" flexWrap="nowrap" mt={-8}>
+        <Grid item>
           {isTokenPresent && (
             <Iconify
               icon="eva:arrow-back-fill"
@@ -35,31 +34,28 @@ const Header = () => {
               onClick={handleBack}
             />
           )}
-          <Box
-            component="div"
-            sx={{
-              width: 450,
-              height: 60,
-              display: "inline-flex",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              src={logo}
-              alt="Logo"
-              style={{ minWidth: 500, minHeight: 250, position: "relative", top: -95, left: 20 }}
-            />
-          </Box>
         </Grid>
 
-        {/* Conditional Rendering of Logout Button */}
-        {isTokenPresent && (
-          <Grid item xs={6} container justifyContent="flex-end">
+        <Grid item>
+          <Box
+            component="img"
+            sx={{
+              height: 233,
+              width: 350,
+              clipPath: "rect(5px 5px 160px 145px round 20%)",
+            }}
+            alt="logo"
+            src={logo}
+          />
+        </Grid>
+
+        <Grid item>
+          {isTokenPresent && (
             <Button variant="contained" color="inherit" onClick={handleLogout}>
               Logout
             </Button>
-          </Grid>
-        )}
+          )}
+        </Grid>
       </Grid>
     </Container>
   );

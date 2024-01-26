@@ -17,7 +17,6 @@ export const improveResumeWithGPT = createAsyncThunk("resume/improveWithGPT", as
 });
 
 export const fetchResumeById = createAsyncThunk("resume/fetchResume", async (id) => {
-  console.log({ initialResumeState });
   if (id === "new") return initialResumeState;
   const response = await api.get(`/resumes/${id}`);
 
@@ -52,6 +51,9 @@ const resumeBuilderSlice = createSlice({
     updateResumeName: (state, action) => {
       state.selectedResume.name = action.payload;
     },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
     updateBasicDetails: (state, action) => {
       state.selectedResume.basicDetails = { ...state.selectedResume.basicDetails, ...action.payload };
     },
@@ -59,12 +61,10 @@ const resumeBuilderSlice = createSlice({
       state.selectedResume.educationDetails = { ...state.selectedResume.educationDetails, ...action.payload };
     },
     addEducation: (state) => {
-      // add to the list
       state.selectedResume.educationList = [
         ...state.selectedResume.educationList,
         state.selectedResume.educationDetails,
       ];
-      // reset the inputs to default
       state.selectedResume.educationDetails = initialEducationDetails;
     },
     deleteEducation: (state, action) => {
@@ -174,6 +174,7 @@ export const {
   updateProjectDetails,
   addProject,
   deleteProject,
+  setLoading,
 } = resumeBuilderSlice.actions;
 
 export default resumeBuilderSlice.reducer;

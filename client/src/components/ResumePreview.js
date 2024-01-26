@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 const ResumePreview = (props, ref) => {
   const selectedResume = useSelector((state) => state.resumeBuilder.selectedResume);
+  const loading = useSelector((state) => state.resumeBuilder.loading);
   const {
     basicDetails,
     educationList,

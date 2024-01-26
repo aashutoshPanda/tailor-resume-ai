@@ -1,15 +1,12 @@
 // src/components/LandingPage.js
 import React, { useState, useEffect } from "react";
-import { Container, Typography, Button, Box, TextField, Divider, Grid, Tab, Tabs, Card, Stack } from "@mui/material";
+import { Container, Typography, Button, Box, TextField, Divider, Grid, Tab, Tabs, Card } from "@mui/material";
 import jobHunt from "../assets/job-hunt.svg";
 import api from "../api";
 import { localStorageKeyAPIToken } from "../constants/api";
 import { useNavigate } from "react-router-dom";
-import { bgGradient } from "../theme/css";
-import { alpha, useTheme } from "@mui/material/styles";
 
 const LandingPage = () => {
-  const theme = useTheme();
   const [value, setValue] = useState(0); // Tab index state
   const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");

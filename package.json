@@ -21,6 +21,8 @@
     "homepage": "https://github.com/aashutoshPanda/tailor-my-resume#readme",
     "dependencies": {
         "bcrypt": "^5.1.1",
+        "body-parser": "^1.20.2",
+        "cloudinary": "^1.41.3",
         "cors": "^2.8.5",
         "cron-parser": "^4.8.1",
         "dotenv": "^16.3.1",
@@ -30,6 +32,7 @@
         "mongoose": "^8.0.4",
         "morgan": "^1.10.0",
         "openai": "^4.25.0",
+        "uninstall": "^0.0.0",
         "yup": "^1.2.0"
     },
     "devDependencies": {

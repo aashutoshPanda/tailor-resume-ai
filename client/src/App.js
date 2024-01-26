@@ -19,7 +19,7 @@ const PrivateRoutes = () => {
 function App() {
   return (
     <div>
-      <img src={wavesSVG} style={{ position: "fixed", bottom: "0px", zIndex: -100000000 }}></img>
+      <img src={wavesSVG} style={{ position: "fixed", bottom: "0px", zIndex: -100000000 }} alt="waves"></img>
       <Provider store={store}>
         <Router>
           <Header />

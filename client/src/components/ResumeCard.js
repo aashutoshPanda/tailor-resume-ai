@@ -4,8 +4,7 @@ import { Card, CardContent, CardActions, useTheme, IconButton, Typography, Box }
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShareIcon from "@mui/icons-material/Share";
-import DownloadIcon from "@mui/icons-material/Download";
-import ResumePreviewImage from "../assets/resume-preview.png";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useDispatch } from "react-redux";
 import { deleteResume } from "../reducers/resumeBuilderSlice";
 import { useNavigate } from "react-router-dom";
@@ -36,14 +35,14 @@ const ResumeCard = ({ resume }) => {
           Last Edited: {elapsed}
         </Typography>
 
-        <img src={ResumePreviewImage} alt={resume.name} style={{ width: "40%", height: "auto" }} />
+        <img src={resume.thumbnail} alt={resume.name} style={{ width: "40%", height: "auto" }} />
       </CardContent>
 
       {/* Card Actions */}
       <CardActions>
         <Box ml="auto">
-          <IconButton aria-label="download" size="small">
-            <DownloadIcon />
+          <IconButton aria-label="download" size="small" onClick={() => handleEdit(resume._id)}>
+            <VisibilityIcon />
           </IconButton>
           <IconButton aria-label="edit" size="small" onClick={() => handleEdit(resume._id)}>
             <EditIcon />

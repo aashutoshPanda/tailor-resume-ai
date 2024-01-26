@@ -1,6 +1,8 @@
+import { initialResumeImageData } from "./imageData";
+
 export const initialBasicDetails = {
   name: "Don Joe",
-  profilePicture: "https://example.com/profile-picture.jpg",
+  profilePicture: "https://www.dmcfs.in/images/dummy-female.png",
   currentJobTitle: "Software Engineer",
   email: "john.doe@example.com",
   website: "https://johndoe.com",
@@ -137,4 +139,5 @@ export const initialResumeState = {
   experienceList: initialExperienceList,
   projectDetails: initialProject,
   projectList: initialProjectList,
+  imgData: initialResumeImageData,
 };

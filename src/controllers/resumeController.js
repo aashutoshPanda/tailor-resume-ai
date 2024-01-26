@@ -1,17 +1,16 @@
 // controllers/resumeController.js
 import Resume from "../models/resumeModel.js";
 import User from "../models/UserModel.js";
+import { deleteResumeThumbail, getResumeThumbnail } from "../utils/cloudinary.js";
 
 // Create a new resume
 export const createResume = async (req, res) => {
   try {
-    const newResume = await Resume.create(req.body);
+    const thumbnail = await getResumeThumbnail(req.body.imgData);
+    console.log({ thumbnail });
+    const newResume = await Resume.create({ ...req.body, thumbnail });
     // Update the current user with the new resume
-    const updatedUser = await User.findOneAndUpdate(
-      { _id: req.user._id },
-      { $push: { resumeIds: newResume._id } },
-      { new: true }
-    );
+    await User.findOneAndUpdate({ _id: req.user._id }, { $push: { resumeIds: newResume._id } }, { new: true });
     res.status(201).json(newResume);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -22,18 +21,12 @@ export const createResume = async (req, res) => {
 export const getAllResumes = async (req, res) => {
   try {
     const userId = req.user._id;
-
-    // Find the current user
     const currentUser = await User.findById(userId);
-
     if (!currentUser) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    // Retrieve resumes based on resumeIds
     const resumeIds = currentUser.resumeIds;
     const userResumes = await Resume.find({ _id: { $in: resumeIds } });
-
     res.status(200).json(userResumes);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -56,7 +49,16 @@ export const getResumeById = async (req, res) => {
 // Update a resume by ID
 export const updateResumeById = async (req, res) => {
   try {
-    const updatedResume = await Resume.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const oldResume = await Resume.findById(req.params.id);
+    const oldThumbnail = oldResume?.thumbnail;
+    await deleteResumeThumbail(oldThumbnail);
+    const thumbnail = await getResumeThumbnail(req.body.imgData);
+    console.log("new thumbnail", thumbnail);
+    const updatedResume = await Resume.findByIdAndUpdate(req.params.id, {
+      ...req.body,
+      thumbnail,
+      lastModified: Date.now(),
+    });
     if (!updatedResume) {
       return res.status(404).json({ error: "Resume not found" });
     }
@@ -70,8 +72,11 @@ export const updateResumeById = async (req, res) => {
 export const deleteResumeById = async (req, res) => {
   try {
     // Find and delete the resume
-    const deletedResume = await Resume.findByIdAndDelete(req.params.id);
 
+    const oldResume = await Resume.findById(req.params.id);
+    const oldThumbnail = oldResume?.thumbnail;
+    await deleteResumeThumbail(oldThumbnail);
+    const deletedResume = await Resume.findByIdAndDelete(req.params.id);
     if (!deletedResume) {
       return res.status(404).json({ error: "Resume not found" });
     }

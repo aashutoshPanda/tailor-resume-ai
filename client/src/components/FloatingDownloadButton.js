@@ -24,9 +24,10 @@ export const FloatingAIButton = ({ handleClick, disabled }) => {
     </Tooltip>
   );
 };
-export const FloatingDownloadButton = ({ handleClick }) => {
+export const FloatingDownloadButton = ({ handleClick, disabled }) => {
   return (
     <Fab
+      disabled={disabled}
       onClick={handleClick}
       color="primary"
       aria-label="add"
@@ -41,9 +42,10 @@ export const FloatingDownloadButton = ({ handleClick }) => {
     </Fab>
   );
 };
-export const FloatingSaveButton = ({ handleClick }) => {
+export const FloatingSaveButton = ({ handleClick, disabled }) => {
   return (
     <Fab
+      disabled={disabled}
       onClick={handleClick}
       color="primary"
       aria-label="add"

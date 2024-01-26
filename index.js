@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import routes from "./src/routes/index.js";
 import cors from "cors";
+import bodyParser from "body-parser";
 
 dotenv.config();
 const app = express();
@@ -28,6 +29,8 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 db.once("open", () => {
   console.log("Connected to MongoDB");
 });
+
+app.use(bodyParser.json({ limit: "50mb" }));
 
 app.use(cors());
 app.use(express.json());

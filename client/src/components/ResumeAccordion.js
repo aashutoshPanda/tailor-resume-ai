@@ -1,5 +1,5 @@
 // src/components/ResumePreview.js
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Accordion,
@@ -43,6 +43,7 @@ import {
 const ResumeAccordion = () => {
   const dispatch = useDispatch();
   const selectedResume = useSelector((state) => state.resumeBuilder.selectedResume);
+  const loading = useSelector((state) => state.resumeBuilder.loading);
   const {
     basicDetails,
     educationList,

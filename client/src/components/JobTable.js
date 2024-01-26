@@ -11,7 +11,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
   TableSortLabel,
   TablePagination,
   useTheme,

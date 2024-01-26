@@ -56,7 +56,7 @@ const JobOpeningPage = () => {
   };
 
   // possibly the case when invalid job id is provided in the url
-  if (!job._id && !isCreateMode) return "No such job found";
+  if (!job._id && !isCreateMode) return null;
 
   return (
     <Container maxWidth="lg">

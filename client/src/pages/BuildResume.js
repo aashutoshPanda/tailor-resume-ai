@@ -9,8 +9,10 @@ import { FloatingAIButton, FloatingDownloadButton, FloatingSaveButton } from "..
 import MenuIcon from "@mui/icons-material/Menu";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
+import Backdrop from "../components/Backdrop";
 import {
   addResume,
+  setLoading,
   fetchResumeById,
   improveResumeWithGPT,
   updateResume,
@@ -28,39 +30,41 @@ const ResumeBuilder = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
-  const handleDownload = () => {
-    const input = ref.current;
-
-    // Use html2canvas to capture the content as an image
-    html2canvas(input).then((canvas) => {
+  const handleDownload = async () => {
+    try {
+      const input = ref.current;
+      const canvas = await html2canvas(input);
       const imgData = canvas.toDataURL("image/png");
-
-      // Use jsPDF to create a PDF document
       const pdf = new jsPDF();
       pdf.addImage(imgData, "JPEG", 0, 0);
-
-      // Save the PDF with a specific name (e.g., "resume.pdf")
-      pdf.save("tailor-my-resume");
-    });
+      pdf.save(selectedResume.name);
+    } catch (error) {
+      // Handle error
+      console.error("Error generating PDF:", error);
+    }
   };
 
   useEffect(() => {
-    // Fetch jobs when the component mounts using the jobId from the URL
     dispatch(fetchResumeById(resumeId));
   }, [resumeId, dispatch]);
 
   const handleSave = async () => {
     try {
-      // If the job is being created, dispatch the addJob action
-      // Otherwise, dispatch the updateJob action
+      dispatch(setLoading(true));
+      const input = ref.current;
+      const canvas = await html2canvas(input);
+      const imgData = canvas.toDataURL("image/png");
+
       if (isCreateMode) {
-        dispatch(addResume(selectedResume)); // Implement addJob logic in your jobSlice
+        await dispatch(addResume({ ...selectedResume, imgData })); // Implement addJob logic in your jobSlice
       } else {
-        dispatch(updateResume(selectedResume));
+        await dispatch(updateResume({ ...selectedResume, imgData }));
       }
       // If the dispatch is successful, navigate to the "/home" route
       navigate("/home/resume");
+      dispatch(setLoading(false));
     } catch (error) {
+      dispatch(setLoading(false));
       // If the dispatch fails, handle the error appropriately
       console.error("Failed to save resume:", error);
     }
@@ -87,11 +91,12 @@ const ResumeBuilder = () => {
       value={resumeName}
       onChange={handleResumeNameChange}
       margin="normal"
+      disabled={loading}
     />
   );
 
   // case when invalid id is present in the url
-  if (!selectedResume._id && !isCreateMode) return "No such resume found";
+  if (!selectedResume._id && !isCreateMode) return null;
   return (
     <Container style={{ position: "relative" }}>
       {!isMobile ? resumeNameInput : null}
@@ -119,10 +124,10 @@ const ResumeBuilder = () => {
           </>
         )}
       </Grid>
-
+      {loading ? <Backdrop open={true} /> : null}
       <FloatingAIButton handleClick={handleAIButtonClick} disabled={loading} />
-      <FloatingSaveButton handleClick={handleSave} />
-      <FloatingDownloadButton handleClick={handleDownload} />
+      <FloatingSaveButton handleClick={handleSave} disabled={loading} />
+      <FloatingDownloadButton handleClick={handleDownload} disabled={loading} />
     </Container>
   );
 };
