@@ -1,10 +1,9 @@
 import React, { useRef, useEffect } from "react";
-import { TextField, Container, Grid, useMediaQuery, Drawer } from "@mui/material";
+import { TextField, Container, Grid, useMediaQuery, Drawer, MenuItem } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import ResumeAccordion from "../components/ResumeAccordion";
-import ResumePreview from "../components/ResumePreview";
 import { FloatingAIButton, FloatingDownloadButton, FloatingSaveButton } from "../components/FloatingDownloadButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,7 +16,11 @@ import {
   improveResumeWithGPT,
   updateResume,
   updateResumeName,
+  setTemplate,
 } from "../reducers/resumeBuilderSlice";
+import { resumeTemplates } from "../constants/resumeBuilder";
+import { resumeTemplateComponentMap } from "../components/ResumeTemplates/index";
+import AINotification from "../components/Notification";
 
 const ResumeBuilder = () => {
   const { id: resumeId } = useParams();
@@ -75,28 +78,60 @@ const ResumeBuilder = () => {
   };
 
   const resumeName = useSelector((state) => state.resumeBuilder.selectedResume.name);
+  const template = useSelector((state) => state.resumeBuilder.selectedResume.template);
+
   const handleResumeNameChange = (e) => {
     dispatch(updateResumeName(e.target.value));
+  };
+
+  const handleTemplateChange = (e) => {
+    dispatch(setTemplate(e.target.value));
   };
 
   const handleAIButtonClick = (e) => {
     dispatch(improveResumeWithGPT(selectedResume));
   };
+
   const resumeNameInput = (
-    <TextField
-      label="Resume"
-      name="resumeName"
-      fullWidth
-      size="small"
-      value={resumeName}
-      onChange={handleResumeNameChange}
-      margin="normal"
-      disabled={loading}
-    />
+    <>
+      {" "}
+      <TextField
+        label="Resume"
+        name="resumeName"
+        fullWidth
+        size="small"
+        value={resumeName}
+        onChange={handleResumeNameChange}
+        margin="normal"
+        disabled={loading}
+      />
+      <TextField
+        select
+        label="Template"
+        name="template"
+        fullWidth
+        size="small"
+        value={template}
+        onChange={handleTemplateChange}
+        margin="normal"
+        disabled={loading}
+      >
+        {Object.values(resumeTemplates).map((templateName) => (
+          <MenuItem key={templateName} value={templateName}>
+            {templateName}
+          </MenuItem>
+        ))}
+      </TextField>
+    </>
   );
 
   // case when invalid id is present in the url
   if (!selectedResume._id && !isCreateMode) return null;
+
+  const ResumePreviewComponent = resumeTemplateComponentMap[template];
+
+  console.log({ template, ResumePreviewComponent });
+
   return (
     <Container style={{ position: "relative" }}>
       {!isMobile ? resumeNameInput : null}
@@ -115,12 +150,12 @@ const ResumeBuilder = () => {
               </Grid>
             </Drawer>
 
-            <ResumePreview ref={ref} />
+            <ResumePreviewComponent ref={ref} />
           </>
         ) : (
           <>
             <ResumeAccordion />
-            <ResumePreview ref={ref} />
+            <ResumePreviewComponent ref={ref} />
           </>
         )}
       </Grid>
@@ -128,6 +163,7 @@ const ResumeBuilder = () => {
       <FloatingAIButton handleClick={handleAIButtonClick} disabled={loading} />
       <FloatingSaveButton handleClick={handleSave} disabled={loading} />
       <FloatingDownloadButton handleClick={handleDownload} disabled={loading} />
+      <AINotification />
     </Container>
   );
 };

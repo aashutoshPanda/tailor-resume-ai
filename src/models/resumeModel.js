@@ -47,8 +47,6 @@ const resumeSchema = new mongoose.Schema({
     website: String,
     phoneNumber: String,
     location: String,
-    yearsOfExperience: String,
-    totalExperience: String,
   },
   experienceList: [experienceSchema],
 
