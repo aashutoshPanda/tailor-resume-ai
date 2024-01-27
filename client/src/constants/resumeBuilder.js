@@ -1,99 +1,92 @@
 import { initialResumeImageData } from "./imageData";
 
 export const initialBasicDetails = {
-  name: "Don Joe",
-  profilePicture: "https://www.dmcfs.in/images/dummy-female.png",
+  name: "Madhav Sharma",
+  profilePicture: "https://dummy-image.png",
   currentJobTitle: "Software Engineer",
-  email: "john.doe@example.com",
-  website: "https://johndoe.com",
-  phoneNumber: "123-456-7890",
-  location: "Cityville, USA",
-  yearsOfExperience: "5",
-  totalExperience: "8",
+  email: "madhav.sharma@imagine.com",
+  website: "https://hi-madhav.com",
+  phoneNumber: "+91 123-456-7890",
+  location: "Delhi, India",
 };
+
 export const initialEducationDetails = {
-  institute: "University of Example",
-  degree: "Bachelor of Science",
-  startDate: "09/2018",
-  endDate: "09/2018",
-  grade: "A",
+  institute: "Delhi Technological University",
+  degree: "B. Tech",
+  startDate: "05/2018",
+  endDate: "04/2022",
+  grade: "9.7/10",
 };
 
 export const initialEducationList = [
   {
-    institute: "University of Example",
-    degree: "Bachelor of Science",
-    startDate: "09/2018",
-    endDate: "09/2018",
-    grade: "A",
+    institute: "Delhi Technological University",
+    degree: "B. Tech",
+    startDate: "05/2018",
+    endDate: "04/2022",
+    grade: "9.7/10",
   },
   {
-    institute: "University of Example",
-    degree: "Bachelor of Science",
-    startDate: "09/2018",
-    endDate: "09/2018",
-    grade: "A",
+    institute: "Delhi Public Schoool",
+    degree: "Senior Secondary",
+    startDate: "05/2016",
+    endDate: "02/2028",
+    grade: "95.6%",
   },
 ];
 
-export const initialSelectedLanguages = ["JavaScript", "Python"];
+export const initialSelectedLanguages = ["C++", "Python", "JavaScript", "Java"];
+export const initialSelectedFrameworks = ["Django", "React.js"];
+export const initialSelectedTools = ["Git", "Jenkins", "Docker", "Kubernetes"];
 
 export const initialAwardList = [
   {
-    name: "Outstanding Performer",
+    name: "Winner CodeMaster",
     year: "2022",
-    shortDescription: "Recognized for exceptional performance and dedication.",
+    shortDescription: "College hackathon (100+ participants)",
   },
   {
-    name: "Outstanding Performer",
-    year: "2022",
-    shortDescription: "Recognized for exceptional performance and dedication.",
+    name: "Winner KineticTech",
+    year: "2021",
+    shortDescription: "IOT hackathon (150+ participants)",
+  },
+  {
+    name: "Winner ReactDevSaga",
+    year: "2021",
+    shortDescription: "React hackathon (500+ participants)",
   },
 ];
 
 export const initialAward = {
-  name: "Outstanding Performer",
+  name: "Winner CodeMaster",
   year: "2022",
-  shortDescription: "Recognized for exceptional performance and dedication.",
+  shortDescription: "College hackathon (100+ participants)",
 };
 
 export const initialExperience = {
-  organisation: "TechCo Inc.",
-  title: "Sr. Software Engineer",
-  startDate: "01/2017",
+  organisation: "Hexagon Analytics",
+  title: "SDE I",
+  startDate: "06/2022",
   endDate: "Present",
-  description: `Excels in full-stack development, leveraging JavaScript and Python to drive innovation. Spearheaded projects, receiving accolades for outstanding contributions and leadership. 
-      
-    Excels in full-stack development, leveraging JavaScript and Python to drive innovation. Spearheaded projects, receiving accolades for outstanding contributions and leadership.
-    
-Excels in full-stack development, leveraging JavaScript and Python to drive innovation.
-    `,
+  description: "Description goes here",
 };
 
 export const initialExperienceList = [
   {
-    organisation: "TechCo Inc.",
-    title: "Sr. Software Engineer",
-    startDate: "01/2017",
+    organisation: "Hexagon Analytics",
+    title: "SDE I",
+    startDate: "06/2023",
     endDate: "Present",
-    description: `Excels in full-stack development, leveraging JavaScript and Python to drive innovation. Spearheaded projects, receiving accolades for outstanding contributions and leadership. 
-      
-    Excels in full-stack development, leveraging JavaScript and Python to drive innovation. Spearheaded projects, receiving accolades for outstanding contributions and leadership.
+    description: `Did some stuff for the company's main product that kinda helped some wealthy folks buy licenses together, and it made some money in the first quarter of 2021. 
     
-Excels in full-stack development, leveraging JavaScript and Python to drive innovation.
-    `,
+    Also made a bunch of software programs by looking at what users wanted. Oh, and made some API thing with Flask/Python and SQLAlchemy that let a bunch of developers get data without showing passwords. Also made some applets for a Resume Search Engine that shows information to users on the search results page.`,
   },
   {
-    organisation: "TechCo Inc.",
-    title: "Sr. Software Engineer",
-    startDate: "01/2017",
-    endDate: "Present",
-    description: `Excels in full-stack development, leveraging JavaScript and Python to drive innovation. Spearheaded projects, receiving accolades for outstanding contributions and leadership. 
-      
-    Excels in full-stack development, leveraging JavaScript and Python to drive innovation. Spearheaded projects, receiving accolades for outstanding contributions and leadership.
-    
-Excels in full-stack development, leveraging JavaScript and Python to drive innovation.
-    `,
+    organisation: "Growth Era Technologies",
+    title: "SDE I",
+    startDate: "05/2022",
+    endDate: "06/2026",
+    description: `Encouraged some development and testing during the SDLC with about 20 team members from different areas. Helped with setting up Cold Fusion, NetWare® Workstation Client-Server Edition (WSCSE), and a bunch of other database stuff. Had some discussions with management and project teams to plan QA according to project timelines and business goals. Found a problem with a mobile app used by over 90 banks, saved them from losing $850K, got promoted early by management.`,
   },
 ];
 
@@ -125,14 +118,20 @@ export const initialProjectList = [
   },
 ];
 
+export const resumeTemplates = {
+  internship: "Internship",
+  entryLevel: "Entry Level (0-2 years of Experience)",
+};
+
 export const initialResumeState = {
   name: initialResumeName,
+  template: resumeTemplates.entryLevel,
   basicDetails: initialBasicDetails,
   educationDetails: initialEducationDetails,
   educationList: initialEducationList,
   selectedLanguages: initialSelectedLanguages,
-  selectedTools: ["Git", "VS Code"],
-  selectedFrameworks: initialSelectedLanguages,
+  selectedTools: initialSelectedTools,
+  selectedFrameworks: initialSelectedFrameworks,
   awardDetails: initialAward,
   awardList: initialAwardList,
   experienceDetails: initialExperience,
@@ -141,3 +140,5 @@ export const initialResumeState = {
   projectList: initialProjectList,
   imgData: initialResumeImageData,
 };
+
+export const hasSeenAINotification = "hasSeenAINotification";

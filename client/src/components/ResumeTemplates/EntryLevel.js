@@ -3,9 +3,8 @@ import React, { forwardRef } from "react";
 import { Paper, Box, Avatar, Typography, Grid, Chip, Divider, useMediaQuery } from "@mui/material";
 import { useSelector } from "react-redux";
 
-const ResumePreview = (props, ref) => {
+const EntryLevelResumePreview = (props, ref) => {
   const selectedResume = useSelector((state) => state.resumeBuilder.selectedResume);
-  const loading = useSelector((state) => state.resumeBuilder.loading);
   const {
     basicDetails,
     educationList,
@@ -19,17 +18,28 @@ const ResumePreview = (props, ref) => {
 
   const basicDetailsMobile = (
     <>
-      <Typography variant="body1">{basicDetails.email}</Typography>
-      <Typography variant="body1">{basicDetails.website}</Typography>
+      <Typography variant="body1">
+        <a href={`mailto:${basicDetails.email}`}>{basicDetails.email}</a>
+      </Typography>
+      <Typography variant="body1">
+        {basicDetails.website ? <a href={basicDetails.website}>{basicDetails.website}</a> : null}
+      </Typography>
       <Typography variant="body1">{basicDetails.phoneNumber}</Typography>
       <Typography variant="body1">{basicDetails.location}</Typography>
     </>
   );
 
   const basicDetailsDesktop = (
-    <Typography variant="body1">
-      {`${basicDetails.email} | ${basicDetails.website} | ${basicDetails.phoneNumber} | ${basicDetails.location}`}
-    </Typography>
+    <>
+      <Typography variant="body1">
+        <a href={`mailto:${basicDetails.email}`}>{basicDetails.email}</a>{" "}
+        {basicDetails.website ? <a href={basicDetails.website}>{basicDetails.website}</a> : null}{" "}
+      </Typography>
+
+      <Typography variant="body1">
+        {basicDetails.phoneNumber} {basicDetails.location}
+      </Typography>
+    </>
   );
 
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -40,7 +50,7 @@ const ResumePreview = (props, ref) => {
       {/* First Row */}
       <Grid container spacing={3}>
         {/* First Column */}
-        <Grid item md={10} xs={10}>
+        <Grid item md={9} xs={9}>
           <Box textAlign="left">
             <Typography variant="h5">{basicDetails.name}</Typography>
             <Typography variant="subtitle1" color="primary">
@@ -51,9 +61,15 @@ const ResumePreview = (props, ref) => {
         </Grid>
 
         {/* Second Column */}
-        <Grid item md={2} xs={2} container justifyContent="flex-end">
-          <Box textAlign="right">
-            <Avatar alt={basicDetails.name} src={basicDetails.profilePicture} sx={{ width: 100, height: 100, mb: 2 }} />
+        <Grid item md={3} xs={3} container justifyContent="left">
+          <Box textAlign="left">
+            {basicDetails.profilePicture ? (
+              <Avatar
+                alt={basicDetails.name}
+                src={basicDetails.profilePicture}
+                sx={{ width: 100, height: 100, mb: 2 }}
+              />
+            ) : null}
           </Box>
         </Grid>
       </Grid>
@@ -63,7 +79,7 @@ const ResumePreview = (props, ref) => {
         {/* First Column */}
         <Grid item md={6}>
           <Box textAlign="left">
-            <Typography variant="h6">Professional Experience</Typography>
+            <Typography variant="h6">Experience</Typography>
             <Divider style={{ backgroundColor: "#f0f0f0" }} />
             {experienceList.map((experience, index) => (
               <Box key={index} mt={2}>
@@ -230,4 +246,4 @@ const ResumePreview = (props, ref) => {
   );
 };
 
-export default forwardRef(ResumePreview);
+export default forwardRef(EntryLevelResumePreview);

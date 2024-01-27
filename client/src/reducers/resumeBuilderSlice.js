@@ -54,6 +54,9 @@ const resumeBuilderSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+    setTemplate: (state, action) => {
+      state.selectedResume.template = action.payload;
+    },
     updateBasicDetails: (state, action) => {
       state.selectedResume.basicDetails = { ...state.selectedResume.basicDetails, ...action.payload };
     },
@@ -175,6 +178,7 @@ export const {
   addProject,
   deleteProject,
   setLoading,
+  setTemplate,
 } = resumeBuilderSlice.actions;
 
 export default resumeBuilderSlice.reducer;

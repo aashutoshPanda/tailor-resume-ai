@@ -17,6 +17,7 @@ import {
   Chip,
 } from "@mui/material";
 
+import { convertToTitleCase } from "../utils/string";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -149,7 +150,7 @@ const ResumeAccordion = () => {
             <TextField
               key={field}
               fullWidth
-              label={field.charAt(0).toUpperCase() + field.slice(1)}
+              label={convertToTitleCase(field)}
               name={field}
               value={value}
               onChange={handleBasicDetailsChange}
@@ -164,7 +165,7 @@ const ResumeAccordion = () => {
           aria-controls="experience-details-content"
           id="experience-details-header"
         >
-          <Typography>Professional Experience</Typography>
+          <Typography> Experience</Typography>
         </AccordionSummary>
         <AccordionDetails>
           {/* Experience Input Fields */}
