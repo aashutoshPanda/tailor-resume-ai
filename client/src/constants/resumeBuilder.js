@@ -35,9 +35,9 @@ export const initialEducationList = [
   },
 ];
 
-export const initialSelectedLanguages = ["C++", "Python", "JavaScript", "Java"];
-export const initialSelectedFrameworks = ["Django", "React.js"];
-export const initialSelectedTools = ["Git", "Jenkins", "Docker", "Kubernetes"];
+export const initialLanguages = ["C++", "Python", "JavaScript", "Java"];
+export const initialFrameworks = ["Django", "React.js"];
+export const initialtools = ["Git", "Jenkins", "Docker", "Kubernetes"];
 
 export const initialAwardList = [
   {
@@ -122,16 +122,20 @@ export const resumeTemplates = {
   internship: "Internship",
   entryLevel: "Entry Level (0-2 years of Experience)",
 };
-
+export const visibilityTypes = {
+  private: "private",
+  public: "public",
+};
 export const initialResumeState = {
   name: initialResumeName,
   template: resumeTemplates.entryLevel,
+  visibility: visibilityTypes.private,
   basicDetails: initialBasicDetails,
   educationDetails: initialEducationDetails,
   educationList: initialEducationList,
-  selectedLanguages: initialSelectedLanguages,
-  selectedTools: initialSelectedTools,
-  selectedFrameworks: initialSelectedFrameworks,
+  languages: initialLanguages,
+  tools: initialtools,
+  frameworks: initialFrameworks,
   awardDetails: initialAward,
   awardList: initialAwardList,
   experienceDetails: initialExperience,

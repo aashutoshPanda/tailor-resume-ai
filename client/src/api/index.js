@@ -1,9 +1,8 @@
 // api.js
 import axios from "axios";
-import { baseURL } from "../constants/api";
 import { localStorageKeyAPIToken } from "../constants/api";
 
-const instance = axios.create({ baseURL });
+const instance = axios.create({ baseURL: process.env.REACT_APP_BACKEND_BASE_URL });
 
 // Add an interceptor for authorization headers
 instance.interceptors.request.use((config) => {

@@ -51,6 +51,9 @@ const resumeBuilderSlice = createSlice({
     updateResumeName: (state, action) => {
       state.selectedResume.name = action.payload;
     },
+    updateSelectedResume: (state, action) => {
+      state.selectedResume = action.payload;
+    },
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
@@ -74,13 +77,13 @@ const resumeBuilderSlice = createSlice({
       state.selectedResume.educationList = state.selectedResume.educationList.filter((_, i) => i !== action.payload);
     },
     updateLanguage: (state, action) => {
-      state.selectedResume.selectedLanguages = action.payload;
+      state.selectedResume.languages = action.payload;
     },
     updateTool: (state, action) => {
-      state.selectedResume.selectedTools = action.payload;
+      state.selectedResume.tools = action.payload;
     },
     updateFramework: (state, action) => {
-      state.selectedResume.selectedFrameworks = action.payload;
+      state.selectedResume.frameworks = action.payload;
     },
     updateAwardDetails: (state, action) => {
       state.selectedResume.awardDetails = { ...state.selectedResume.awardDetails, ...action.payload };
@@ -123,6 +126,11 @@ const resumeBuilderSlice = createSlice({
     },
     deleteProject: (state, action) => {
       state.selectedResume.projectList = state.selectedResume.projectList.filter((_, i) => i !== action.payload);
+    },
+    updateVisibility: (state, action) => {
+      const { id, visibility } = action.payload;
+      state.resumes = state.resumes.map((resume) => (resume._id === id ? { ...resume, visibility } : resume));
+      console.log({ action, resumes: state.resumes });
     },
   },
   extraReducers: (builder) => {
@@ -179,6 +187,8 @@ export const {
   deleteProject,
   setLoading,
   setTemplate,
+  updateSelectedResume,
+  updateVisibility,
 } = resumeBuilderSlice.actions;
 
 export default resumeBuilderSlice.reducer;

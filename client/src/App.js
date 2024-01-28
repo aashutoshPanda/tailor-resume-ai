@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import { localStorageKeyAPIToken } from "./constants/api";
 import wavesSVG from "../src/assets/waves.svg";
+import ShareResume from "./pages/ShareResume";
 
 const PrivateRoutes = () => {
   const token = localStorage.getItem(localStorageKeyAPIToken); // Replace "yourTokenKey" with the actual key used to store the token
@@ -26,6 +27,7 @@ function App() {
           <Routes>
             {/* Redirect from / and /home to /home/resume */}
             <Route path="/" element={<Landing />} />
+            <Route path="/resume/share/:id" element={<ShareResume />} />
             <Route element={<PrivateRoutes />}>
               <Route path="/home" element={<Navigate to="/home/resume" replace />} />
               <Route path="/home/:tab" element={<Home />} />

@@ -32,6 +32,8 @@ const ResumeBuilder = () => {
   const ref = useRef(null);
   const isMobile = useMediaQuery("(max-width:600px)");
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const resumeName = useSelector((state) => state.resumeBuilder.selectedResume.name);
+  const template = useSelector((state) => state.resumeBuilder.selectedResume.template);
 
   const handleDownload = async () => {
     try {
@@ -76,9 +78,6 @@ const ResumeBuilder = () => {
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
-
-  const resumeName = useSelector((state) => state.resumeBuilder.selectedResume.name);
-  const template = useSelector((state) => state.resumeBuilder.selectedResume.template);
 
   const handleResumeNameChange = (e) => {
     dispatch(updateResumeName(e.target.value));
