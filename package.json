@@ -2,11 +2,13 @@
     "name": "tailor-my-resume-server",
     "version": "1.0.0",
     "description": "tailor-my-resume",
-    "main": "index.js",
+    "main": "server.js",
     "scripts": {
-        "start": "node index.js",
-        "dev": "nodemon index.js",
-        "debug": "nodemon --inspect index.js"
+        "start": "node server.js",
+        "dev": "nodemon server.js",
+        "debug": "nodemon --inspect server.js",
+        "test": "jest --detectOpenHandles  --forceExit --coverage",
+        "test-with-logs": "jest --detectOpenHandles --forceExit"
     },
     "repository": {
         "type": "git",
@@ -20,6 +22,9 @@
     },
     "homepage": "https://github.com/aashutoshPanda/tailor-my-resume#readme",
     "dependencies": {
+        "@babel/core": "^7.23.9",
+        "@babel/preset-env": "^7.23.9",
+        "babel-jest": "^29.7.0",
         "bcrypt": "^5.1.1",
         "body-parser": "^1.20.2",
         "cloudinary": "^1.41.3",
@@ -36,11 +41,25 @@
         "yup": "^1.2.0"
     },
     "devDependencies": {
+        "jest": "^29.7.0",
         "nodemon": "^3.0.2",
-        "prettier": "^2.8.8"
+        "prettier": "^2.8.8",
+        "supertest": "^6.3.4"
     },
     "prettier": {
         "printWidth": 120
     },
-    "type": "module"
+    "type": "module",
+    "jest": {
+        "roots": [
+            "tests"
+        ],
+        "testTimeout": 5000,
+        "testEnvironment": "node",
+        "collectCoverage": true,
+        "coverageReporters": [
+            "json",
+            "html"
+        ]
+    }
 }
