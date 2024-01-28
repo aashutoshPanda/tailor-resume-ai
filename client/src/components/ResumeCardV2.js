@@ -18,8 +18,8 @@ export default function ResumeCardV2({ resume }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleDelete = (id) => {
-    dispatch(deleteResume(id));
+  const handleDelete = async (id) => {
+    await dispatch(deleteResume(id));
   };
   const handleEdit = (id) => {
     navigate(`/resume/${id}`);

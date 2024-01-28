@@ -4,8 +4,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShareIcon from "@mui/icons-material/Share";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import FileCopyIcon from "@mui/icons-material/FileCopy"; // Icon for duplication
 import { useDispatch } from "react-redux";
-import { deleteResume, updateVisibility } from "../reducers/resumeBuilderSlice";
+import { deleteResume, updateVisibility, addResume } from "../reducers/resumeBuilderSlice"; // Import addResume action
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import api from "../api";
@@ -19,8 +20,8 @@ const ResumeCard = ({ resume }) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
-  const handleDelete = (id) => {
-    dispatch(deleteResume(id));
+  const handleDelete = async (id) => {
+    await dispatch(deleteResume(id));
   };
 
   const handleEdit = (id) => {
@@ -50,6 +51,19 @@ const ResumeCard = ({ resume }) => {
     } catch (error) {
       console.error(error.message);
       setSnackbarMessage("Failed to make resume public");
+      setSnackbarOpen(true);
+    }
+  };
+
+  const handleDuplicate = async (resume) => {
+    try {
+      const { _id, lastModified, createdAt, ...currentResumeDetails } = resume;
+      await dispatch(addResume({ ...currentResumeDetails, name: `${currentResumeDetails.name} Copy` }));
+      setSnackbarMessage("Resume duplicated successfully.");
+    } catch (error) {
+      console.error(error.message);
+      setSnackbarMessage("Failed to duplicate resume.");
+    } finally {
       setSnackbarOpen(true);
     }
   };
@@ -93,7 +107,7 @@ const ResumeCard = ({ resume }) => {
       </CardContent>
       <CardActions>
         <Box ml="auto">
-          <IconButton aria-label="download" size="small" onClick={() => handleEdit(resume._id)}>
+          <IconButton aria-label="view" size="small" onClick={() => handleEdit(resume._id)}>
             <VisibilityIcon />
           </IconButton>
           <IconButton aria-label="edit" size="small" onClick={() => handleEdit(resume._id)}>
@@ -104,6 +118,9 @@ const ResumeCard = ({ resume }) => {
           </IconButton>
           <IconButton aria-label="share" size="small" onClick={() => handleShare(resume._id, resume.visibility)}>
             <ShareIcon />
+          </IconButton>
+          <IconButton aria-label="duplicate" size="small" onClick={() => handleDuplicate(resume)}>
+            <FileCopyIcon />
           </IconButton>
         </Box>
       </CardActions>

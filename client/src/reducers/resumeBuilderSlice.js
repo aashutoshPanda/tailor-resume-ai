@@ -156,8 +156,6 @@ const resumeBuilderSlice = createSlice({
       })
       .addCase(improveResumeWithGPT.fulfilled, (state, action) => {
         state.loading = false;
-        console.log("this is the payload", action.payload);
-        console.log("this is the update state", { ...state.selectedResume, ...action.payload });
         const upadtedState = { ...state.selectedResume, ...action.payload };
         state.selectedResume = upadtedState;
       })
