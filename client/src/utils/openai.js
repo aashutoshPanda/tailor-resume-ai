@@ -47,7 +47,6 @@ const improveContentWithGPTParallel = async (elements) => {
 };
 
 export const improveResumeJSONWithGPT = async (inputResumeJSON) => {
-  console.log("This is the type of resume", typeof inputResumeJSON);
   try {
     const originalProjectDescriptions = inputResumeJSON.projectList.map((item) => item.description);
     const improvedProjectDescriptions = await improveContentWithGPTParallel(originalProjectDescriptions);

@@ -13,7 +13,10 @@ const ResumeCardList = () => {
 
   useEffect(() => {
     // Fetch jobs when the component mounts
-    dispatch(fetchAllResumes());
+    const fetchResumes = async () => {
+      await dispatch(fetchAllResumes());
+    };
+    fetchResumes();
   }, [dispatch]);
 
   if (resumes.length === 0) {

@@ -50,7 +50,10 @@ const ResumeBuilder = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchResumeById(resumeId));
+    const fetchById = async () => {
+      await dispatch(fetchResumeById(resumeId));
+    };
+    fetchById();
   }, [resumeId, dispatch]);
 
   const handleSave = async () => {
@@ -79,16 +82,16 @@ const ResumeBuilder = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  const handleResumeNameChange = (e) => {
-    dispatch(updateResumeName(e.target.value));
+  const handleResumeNameChange = async (e) => {
+    await dispatch(updateResumeName(e.target.value));
   };
 
   const handleTemplateChange = (e) => {
     dispatch(setTemplate(e.target.value));
   };
 
-  const handleAIButtonClick = (e) => {
-    dispatch(improveResumeWithGPT(selectedResume));
+  const handleAIButtonClick = async (e) => {
+    await dispatch(improveResumeWithGPT(selectedResume));
   };
 
   const resumeNameInput = (
@@ -128,8 +131,6 @@ const ResumeBuilder = () => {
   if (!selectedResume._id && !isCreateMode) return null;
 
   const ResumePreviewComponent = resumeTemplateComponentMap[template];
-
-  console.log({ template, ResumePreviewComponent });
 
   return (
     <Container style={{ position: "relative" }}>

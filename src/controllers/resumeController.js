@@ -6,8 +6,16 @@ import { deleteResumeThumbail, getResumeThumbnail } from "../utils/cloudinary.js
 // Create a new resume
 export const createResume = async (req, res) => {
   try {
-    const thumbnail = await getResumeThumbnail(req.body.imgData);
-    console.log({ thumbnail });
+    if (!req.body.imgData && !req.body.thumbnail) {
+      return res.status(400).json({ error: "Either 'imgData' or 'thumbnail' must be provided." });
+    }
+    let thumbnail;
+    if (req.body.imgData) {
+      thumbnail = await getResumeThumbnail(req.body.imgData);
+    } else {
+      // we want to create thumbnail copy so that if original is deleted we have this one
+      thumbnail = await getResumeThumbnail(req.body.thumbnail);
+    }
     const newResume = await Resume.create({ ...req.body, thumbnail });
     // Update the current user with the new resume
     await User.findOneAndUpdate({ _id: req.user._id }, { $push: { resumeIds: newResume._id } }, { new: true });
