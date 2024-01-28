@@ -1,4 +1,3 @@
-// models/resumeModel.js
 import mongoose from "mongoose";
 import { initialResumeThumbnailURL } from "../constants/resume.js";
 
@@ -35,6 +34,7 @@ const experienceSchema = new mongoose.Schema({
 const resumeSchema = new mongoose.Schema({
   id: String,
   name: String,
+  template: String,
   thumbnail: {
     type: String,
     default: initialResumeThumbnailURL,
@@ -49,13 +49,17 @@ const resumeSchema = new mongoose.Schema({
     location: String,
   },
   experienceList: [experienceSchema],
-
   educationList: [educationSchema],
   languages: [String],
   tools: [String],
   frameworks: [String],
   projectList: [projectSchema],
   awardList: [awardSchema],
+  visibility: {
+    type: String,
+    enum: ["public", "private"],
+    default: "private",
+  },
   lastModified: {
     type: Date,
     default: Date.now,

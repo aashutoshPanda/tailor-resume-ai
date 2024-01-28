@@ -22,16 +22,8 @@ import { useSelector } from "react-redux";
 
 const InternshipResumePreview = (props, ref) => {
   const selectedResume = useSelector((state) => state.resumeBuilder.selectedResume);
-  const {
-    basicDetails,
-    educationList,
-    selectedLanguages,
-    selectedTools,
-    selectedFrameworks,
-    awardList,
-    experienceList,
-    projectList,
-  } = selectedResume;
+  const { basicDetails, educationList, languages, tools, frameworks, awardList, experienceList, projectList } =
+    selectedResume;
 
   const basicDetailsMobile = (
     <>
@@ -191,7 +183,7 @@ const InternshipResumePreview = (props, ref) => {
             <Divider style={{ backgroundColor: "#f0f0f0" }} />
             <Typography variant="subtitle1">Programming Languages</Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selectedLanguages.map((value) => (
+              {languages.map((value) => (
                 <Chip key={value} label={value} />
               ))}
             </Box>
@@ -201,7 +193,7 @@ const InternshipResumePreview = (props, ref) => {
             </Typography>
 
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selectedTools.map((value) => (
+              {tools.map((value) => (
                 <Chip key={value} label={value} />
               ))}
             </Box>
@@ -210,7 +202,7 @@ const InternshipResumePreview = (props, ref) => {
               Frameworks
             </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selectedFrameworks.map((value) => (
+              {frameworks.map((value) => (
                 <Chip key={value} label={value} />
               ))}
             </Box>

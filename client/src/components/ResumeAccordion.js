@@ -48,9 +48,9 @@ const ResumeAccordion = () => {
   const {
     basicDetails,
     educationList,
-    selectedLanguages,
-    selectedTools,
-    selectedFrameworks,
+    languages,
+    tools,
+    frameworks,
     awardList,
     experienceDetails,
     experienceList,
@@ -427,7 +427,7 @@ const ResumeAccordion = () => {
               labelId="languages-label"
               id="languages"
               multiple
-              value={selectedLanguages}
+              value={languages}
               onChange={handleLanguageChange}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -452,7 +452,7 @@ const ResumeAccordion = () => {
               labelId="tools-label"
               id="tools"
               multiple
-              value={selectedTools}
+              value={tools}
               onChange={handleToolChange}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -477,7 +477,7 @@ const ResumeAccordion = () => {
               labelId="frameworks-label"
               id="frameworks"
               multiple
-              value={selectedFrameworks}
+              value={frameworks}
               onChange={handleFrameworkChange}
               renderValue={(selected) => (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>

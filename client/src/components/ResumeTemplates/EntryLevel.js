@@ -5,16 +5,8 @@ import { useSelector } from "react-redux";
 
 const EntryLevelResumePreview = (props, ref) => {
   const selectedResume = useSelector((state) => state.resumeBuilder.selectedResume);
-  const {
-    basicDetails,
-    educationList,
-    selectedLanguages,
-    selectedTools,
-    selectedFrameworks,
-    awardList,
-    experienceList,
-    projectList,
-  } = selectedResume;
+  const { basicDetails, educationList, languages, tools, frameworks, awardList, experienceList, projectList } =
+    selectedResume;
 
   const basicDetailsMobile = (
     <>
@@ -46,7 +38,7 @@ const EntryLevelResumePreview = (props, ref) => {
   const basicDetailComponent = isMobile ? basicDetailsMobile : basicDetailsDesktop;
 
   return (
-    <Grid item md={8} ref={ref} component={Paper} mt={3} p={1}>
+    <Grid item md={8} ref={ref} component={Paper} mt={3}>
       {/* First Row */}
       <Grid container spacing={3}>
         {/* First Column */}
@@ -155,7 +147,7 @@ const EntryLevelResumePreview = (props, ref) => {
             <Divider style={{ backgroundColor: "#f0f0f0" }} />
             <Typography variant="subtitle1">Programming Languages</Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selectedLanguages.map((value) => (
+              {languages.map((value) => (
                 <Chip key={value} label={value} />
               ))}
             </Box>
@@ -165,7 +157,7 @@ const EntryLevelResumePreview = (props, ref) => {
             </Typography>
 
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selectedTools.map((value) => (
+              {tools.map((value) => (
                 <Chip key={value} label={value} />
               ))}
             </Box>
@@ -174,7 +166,7 @@ const EntryLevelResumePreview = (props, ref) => {
               Frameworks
             </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selectedFrameworks.map((value) => (
+              {frameworks.map((value) => (
                 <Chip key={value} label={value} />
               ))}
             </Box>
