@@ -7,7 +7,7 @@
         "start": "node server.js",
         "dev": "nodemon server.js",
         "debug": "nodemon --inspect server.js",
-        "test": "jest --detectOpenHandles  --forceExit --coverage",
+        "test": "jest --detectOpenHandles  --forceExit --coverage --silent",
         "test-with-logs": "jest --detectOpenHandles --forceExit"
     },
     "repository": {
@@ -58,8 +58,10 @@
         "testEnvironment": "node",
         "collectCoverage": true,
         "coverageReporters": [
-            "json",
             "html"
+        ],
+        "coveragePathIgnorePatterns": [
+            "<rootDir>/src/utils/cloudinary.js"
         ]
     }
 }
