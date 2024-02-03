@@ -20,7 +20,7 @@ export const login = async (req, res) => {
   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
     expiresIn: 86400, // 24 hours
   });
-  return res.status(200).send({
+  res.status(200).send({
     id: user.id,
     email,
     token,

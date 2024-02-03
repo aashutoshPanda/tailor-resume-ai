@@ -5,24 +5,20 @@ import { deleteResumeThumbail, getResumeThumbnail } from "../utils/cloudinary.js
 
 // Create a new resume
 export const createResume = async (req, res) => {
-  try {
-    if (!req.body.imgData && !req.body.thumbnail) {
-      return res.status(400).json({ error: "Either 'imgData' or 'thumbnail' must be provided." });
-    }
-    let thumbnail;
-    if (req.body.imgData) {
-      thumbnail = await getResumeThumbnail(req.body.imgData);
-    } else {
-      // we want to create thumbnail copy so that if original is deleted we have this one
-      thumbnail = await getResumeThumbnail(req.body.thumbnail);
-    }
-    const newResume = await Resume.create({ ...req.body, thumbnail });
-    // Update the current user with the new resume
-    await User.findOneAndUpdate({ _id: req.user._id }, { $push: { resumeIds: newResume._id } }, { new: true });
-    res.status(201).json(newResume);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  if (!req.body.imgData && !req.body.thumbnail) {
+    return res.status(400).json({ error: "Either 'imgData' or 'thumbnail' must be provided." });
   }
+  let thumbnail;
+  if (req.body.imgData) {
+    thumbnail = await getResumeThumbnail(req.body.imgData);
+  } else {
+    // we want to create thumbnail copy so that if original is deleted we have this one
+    thumbnail = await getResumeThumbnail(req.body.thumbnail);
+  }
+  const newResume = await Resume.create({ ...req.body, thumbnail });
+  // Update the current user with the new resume
+  await User.findOneAndUpdate({ _id: req.user._id }, { $push: { resumeIds: newResume._id } }, { new: true });
+  res.status(201).json(newResume);
 };
 
 // Get all resumes
@@ -36,9 +32,7 @@ export const getAllResumes = async (req, res) => {
     const resumeIds = currentUser.resumeIds;
     const userResumes = await Resume.find({ _id: { $in: resumeIds } });
     res.status(200).json(userResumes);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  } catch (error) {}
 };
 
 // Get a specific resume by ID
@@ -49,9 +43,7 @@ export const getResumeById = async (req, res) => {
       return res.status(404).json({ error: "Resume not found" });
     }
     res.status(200).json(resume);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  } catch (error) {}
 };
 
 // Update a resume by ID
@@ -71,9 +63,7 @@ export const updateResumeById = async (req, res) => {
       return res.status(404).json({ error: "Resume not found" });
     }
     res.status(200).json(updatedResume);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  } catch (error) {}
 };
 
 // Delete a resume by ID
@@ -100,7 +90,5 @@ export const deleteResumeById = async (req, res) => {
     }
 
     res.status(204).end();
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  } catch (error) {}
 };
