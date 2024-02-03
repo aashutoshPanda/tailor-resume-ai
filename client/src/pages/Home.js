@@ -1,6 +1,6 @@
 // src/components/HomeScreen.js
 import React from "react";
-import { Container, Paper, Tab, Tabs, Fab, Box } from "@mui/material";
+import { Container, Paper, Tab, Tabs, Fab, Box, useTheme, useMediaQuery } from "@mui/material";
 import ResumeCardList from "../components/ResumeCardList";
 import JobsScreen from "../components/JobTab";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,8 +9,9 @@ import { Add } from "@mui/icons-material";
 const HomeScreen = () => {
   const { tab: tabType } = useParams();
   const navigate = useNavigate();
+  const theme = useTheme();
   const [tabValue, setTabValue] = React.useState(tabType === "job" ? 1 : 0);
-
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
     const urlToNavigate = newValue === 0 ? "/home/resume" : "/home/job";
@@ -45,8 +46,8 @@ const HomeScreen = () => {
         size="large"
         style={{
           position: "fixed",
-          bottom: "16px",
-          right: "100px",
+          bottom: theme.spacing(12), // Proper spacing from bottom
+          right: isDesktop ? theme.spacing(48) : theme.spacing(5), // Adjusted positioning for desktop
           zIndex: 1000, // Adjust the z-index as needed
         }}
       >
