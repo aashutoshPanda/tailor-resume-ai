@@ -4,10 +4,10 @@ import { localStorageKeyAPIToken } from "../constants/api";
 
 // Set base URL based on environment
 const baseURL =
-  process.env.REACT_ENV === "PRODUCTION"
+  process.env.REACT_APP_ENV === "PRODUCTION"
     ? process.env.REACT_APP_BACKEND_BASE_URL_PROD
     : process.env.REACT_APP_BACKEND_BASE_URL_LOCAL;
-
+console.log({ baseURL }, `env is |${process.env.REACT_ENV}|`);
 const instance = axios.create({ baseURL });
 
 // Add an interceptor for authorization headers

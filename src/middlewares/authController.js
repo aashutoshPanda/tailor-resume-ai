@@ -17,8 +17,11 @@ export const login = async (req, res) => {
       message: "Invalid Password!",
     });
   }
+  // This is intentional | This project is just for learning, I wanted to have simple guest login
+  // So making a guest token with very long expiry
+  const secondsIn50Years = 50 * 365 * 24 * 60 * 60; // 50 years * 365 days/year * 24 hours/day * 60 minutes/hour * 60 seconds/minute
   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-    expiresIn: 86400, // 24 hours
+    expiresIn: secondsIn50Years,
   });
   res.status(200).send({
     id: user.id,
