@@ -92,6 +92,13 @@ const LandingPage = () => {
               <Button variant="contained" color="primary" onClick={handleGuestLogin}>
                 Guest Login
               </Button>
+              <Button
+                onClick={() => {
+                  throw new Error("Sentry Test Error");
+                }}
+              >
+                Break the world
+              </Button>
             </Box>
 
             {/* "OR" Divider */}

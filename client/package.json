@@ -13,6 +13,8 @@
     "@mui/material": "^5.15.3",
     "@mui/x-date-pickers": "^6.18.7",
     "@reduxjs/toolkit": "^2.0.1",
+    "@sentry/cli": "^2.27.0",
+    "@sentry/react": "^7.99.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -35,10 +37,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && npm run sentry:sourcemaps",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!ui-core)/\" --env=jsdom",
     "eject": "react-scripts eject",
-    "test-with-coverage": "npm run test -- --coverage ."
+    "test-with-coverage": "npm run test -- --coverage .",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org ashutosh-p9 --project tailor-my-resume-client ./build && sentry-cli sourcemaps upload --org ashutosh-p9 --project tailor-my-resume-client ./build"
   },
   "eslintConfig": {
     "extends": [
