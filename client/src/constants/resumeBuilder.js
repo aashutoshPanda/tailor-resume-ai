@@ -74,19 +74,26 @@ export const initialExperience = {
 export const initialExperienceList = [
   {
     organisation: "Hexagon Analytics",
-    title: "SDE I",
-    startDate: "06/2023",
+    title: "SDE II",
+    startDate: "01/2024",
     endDate: "Present",
     description: `Did some stuff for the company's main product that kinda helped some wealthy folks buy licenses together, and it made some money in the first quarter of 2021. 
     
     Also made a bunch of software programs by looking at what users wanted. Oh, and made some API thing with Flask/Python and SQLAlchemy that let a bunch of developers get data without showing passwords. Also made some applets for a Resume Search Engine that shows information to users on the search results page.`,
   },
   {
+    organisation: "Horizon Technologies",
+    title: "SDE I",
+    startDate: "01/2023",
+    endDate: "12/2023",
+    description: `Encouraged some development and testing during the SDLC with about 20 team members from different areas. Helped with setting up Cold Fusion, NetWare® Workstation Client-Server Edition (WSCSE), and a bunch of other database stuff. Had some discussions with management and project teams to plan QA according to project timelines and business goals. Found a problem with a mobile app used by over 90 banks, saved them from losing $850K, got promoted early by management.`,
+  },
+  {
     organisation: "Growth Era Technologies",
     title: "SDE I",
     startDate: "05/2022",
-    endDate: "06/2026",
-    description: `Encouraged some development and testing during the SDLC with about 20 team members from different areas. Helped with setting up Cold Fusion, NetWare® Workstation Client-Server Edition (WSCSE), and a bunch of other database stuff. Had some discussions with management and project teams to plan QA according to project timelines and business goals. Found a problem with a mobile app used by over 90 banks, saved them from losing $850K, got promoted early by management.`,
+    endDate: "12/2022",
+    description: `Made a dashboard which was kinda useful for my team.. also worked with big data, created new pipelines for better CI/CD, took part in internal hackathon`,
   },
 ];
 

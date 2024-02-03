@@ -1,6 +1,19 @@
 // src/components/LandingPage.js
 import React, { useState, useEffect } from "react";
-import { Container, Typography, Button, Box, TextField, Divider, Grid, Tab, Tabs, Card } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Button,
+  Box,
+  TextField,
+  Divider,
+  Grid,
+  Tab,
+  Tabs,
+  Card,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import jobHunt from "../assets/job-hunt.svg";
 import api from "../api";
 import { localStorageKeyAPIToken } from "../constants/api";
@@ -14,6 +27,9 @@ const LandingPage = () => {
   const [passwordError, setPasswordError] = useState("");
   const [loginError, setLoginError] = useState("");
   const [registrationError, setRegistrationError] = useState("");
+  const theme = useTheme();
+  const isMobileView = useMediaQuery(theme.breakpoints.down("sm")); // Check if the screen size is mobile
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -91,13 +107,6 @@ const LandingPage = () => {
             <Box mt={2} textAlign="center">
               <Button variant="contained" color="primary" onClick={handleGuestLogin}>
                 Guest Login
-              </Button>
-              <Button
-                onClick={() => {
-                  throw new Error("Sentry Test Error");
-                }}
-              >
-                Break the world
               </Button>
             </Box>
 
@@ -204,11 +213,13 @@ const LandingPage = () => {
           </Card>
         </Grid>
         {/* First Column - Portrait Image */}
-        <Grid item xs={12} md={6}>
-          <Box mt={4} mb={4} textAlign="center">
-            <img src={jobHunt} alt="Portrait" style={{ height: "450px" }} />
-          </Box>
-        </Grid>
+        {!isMobileView && (
+          <Grid item xs={12} md={6}>
+            <Box mt={4} mb={4} textAlign="center">
+              <img src={jobHunt} alt="Portrait" style={{ height: "450px" }} />
+            </Box>
+          </Grid>
+        )}
       </Grid>
     </Container>
   );

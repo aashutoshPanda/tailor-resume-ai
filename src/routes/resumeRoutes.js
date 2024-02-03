@@ -2,19 +2,20 @@
 import express from "express";
 import {
   createResume,
-  getAllResumes,
   getResumeById,
   updateResumeById,
   deleteResumeById,
+  updateResumeWithGPT,
 } from "../controllers/resumeController.js";
-import { isResumeOwner } from "../middlewares/authMiddleware.js";
+
+import { isResumeOwner, resumeIdExists } from "../middlewares/resumeMiddleware.js";
 
 const router = express.Router();
 
 router.post("/", createResume);
-router.get("/", getAllResumes);
-router.get("/:id", isResumeOwner, getResumeById);
-router.patch("/:id", isResumeOwner, updateResumeById);
-router.delete("/:id", isResumeOwner, deleteResumeById);
+router.post("/improve", updateResumeWithGPT);
+router.get("/:id", resumeIdExists, isResumeOwner, getResumeById);
+router.patch("/:id", resumeIdExists, isResumeOwner, updateResumeById);
+router.delete("/:id", resumeIdExists, isResumeOwner, deleteResumeById);
 
 export default router;

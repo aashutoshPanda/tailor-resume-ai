@@ -1,15 +1,16 @@
 // src/components/ResumeCard.js
 import React from "react";
-import { Box, Button, Grid, Container } from "@mui/material";
-import logo from "../assets/logo.svg";
+import { Box, Button, Grid, Container, useMediaQuery } from "@mui/material";
+import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { localStorageKeyAPIToken } from "../constants/api";
-import Iconify from "./iconify";
-import { alpha, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
+
 const Header = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const isTokenPresent = localStorage.getItem(localStorageKeyAPIToken); // Replace "yourToken" with the actual token key
+  const isMobileView = useMediaQuery(theme.breakpoints.down("sm")); // Check if the screen size is mobile
 
   // Access the pathname property of the URLSearchParams object to get the current path
   const handleLogout = () => {
@@ -17,45 +18,36 @@ const Header = () => {
     navigate("/");
   };
 
-  const handleBack = () => {
-    // Navigate back to the previous page
-    navigate(-1);
-  };
-
   return (
     <Container maxWidth="lg">
-      <Grid container justifyContent="space-between" alignItems="center" flexWrap="nowrap" mt={-8}>
-        <Grid item>
-          {isTokenPresent && (
-            <Iconify
-              icon="eva:arrow-back-fill"
-              width={40}
-              sx={{ color: alpha(theme.palette.primary.main, 1) }}
-              onClick={handleBack}
-            />
-          )}
-        </Grid>
-
+      <Grid container justifyContent={isTokenPresent ? "space-between" : "center"} alignItems="center" pt={2}>
         <Grid item>
           <Box
             component="img"
-            sx={{
-              height: 233,
-              width: 350,
-              clipPath: "rect(5px 5px 160px 145px round 20%)",
-            }}
             alt="logo"
             src={logo}
+            style={{
+              maxWidth: isMobileView ? theme.spacing(28) : theme.spacing(42),
+              maxHeight: isMobileView ? theme.spacing(28) : theme.spacing(42),
+            }}
           />
         </Grid>
-
-        <Grid item>
-          {isTokenPresent && (
-            <Button variant="contained" color="inherit" onClick={handleLogout}>
+        {isTokenPresent && (
+          <Grid item>
+            <Button
+              variant="contained"
+              color="inherit"
+              onClick={handleLogout}
+              sx={{
+                [theme.breakpoints.down("sm")]: {
+                  fontSize: theme.typography.pxToRem(10), // Adjust font size if necessary
+                },
+              }}
+            >
               Logout
             </Button>
-          )}
-        </Grid>
+          </Grid>
+        )}
       </Grid>
     </Container>
   );

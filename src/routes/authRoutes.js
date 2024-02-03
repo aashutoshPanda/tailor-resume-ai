@@ -1,5 +1,5 @@
 import express from "express";
-import { login, register, getAllUsers } from "../controllers/authController.js";
+import { login, register } from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -16,12 +16,5 @@ router.post("/login", login);
  * @access  Public
  */
 router.post("/register", register);
-
-/**
- * @route   POST /auth/debug-user
- * @desc    Register a new user
- * @access  Public
- */
-router.get("/users", getAllUsers);
 
 export default router;

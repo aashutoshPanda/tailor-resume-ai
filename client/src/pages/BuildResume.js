@@ -94,7 +94,7 @@ const ResumeBuilder = () => {
     await dispatch(improveResumeWithGPT(selectedResume));
   };
 
-  const resumeNameInput = (
+  const resumeNameAndTemplateInput = (
     <>
       {" "}
       <TextField
@@ -134,13 +134,13 @@ const ResumeBuilder = () => {
 
   return (
     <Container style={{ position: "relative" }}>
-      {!isMobile ? resumeNameInput : null}
+      {!isMobile ? resumeNameAndTemplateInput : null}
       <Grid container spacing={3}>
         {isMobile ? (
           <>
             <Grid paddingLeft={3} container alignItems="center">
               <MenuIcon fontSize="medium" onClick={toggleDrawer} />
-              {resumeNameInput}
+              {resumeNameAndTemplateInput}
             </Grid>
             <Drawer open={isDrawerOpen} onClose={toggleDrawer}>
               <ResumeAccordion />

@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { initialEducationDetails, initialExperience, initialResumeState } from "../constants/resumeBuilder";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../api";
-import { improveResumeJSONWithGPT } from "../utils/openai.js";
 
 // Async Thunks
 export const fetchAllResumes = createAsyncThunk("resume/fetchAllResumes", async () => {
@@ -12,8 +11,9 @@ export const fetchAllResumes = createAsyncThunk("resume/fetchAllResumes", async 
 });
 
 export const improveResumeWithGPT = createAsyncThunk("resume/improveWithGPT", async (resume) => {
-  const improvedResume = await improveResumeJSONWithGPT(resume);
-  return improvedResume;
+  const { projectList, experienceList } = resume;
+  const response = await api.post("/resumes/improve", { projectList, experienceList });
+  return response.data;
 });
 
 export const fetchResumeById = createAsyncThunk("resume/fetchResume", async (id) => {
@@ -57,6 +57,7 @@ const resumeBuilderSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+
     setTemplate: (state, action) => {
       state.selectedResume.template = action.payload;
     },
@@ -152,14 +153,19 @@ const resumeBuilderSlice = createSlice({
         state.resumes = [...state.resumes, action.payload]; // Assuming action.payload is the entire resume object
       })
       .addCase(improveResumeWithGPT.pending, (state) => {
+        console.log("pending called");
         state.loading = true;
       })
       .addCase(improveResumeWithGPT.fulfilled, (state, action) => {
+        console.log("fulllll called");
         state.loading = false;
-        const upadtedState = { ...state.selectedResume, ...action.payload };
-        state.selectedResume = upadtedState;
+        console.log("odl reusme", state.selectedResume);
+        const updatedState = { ...state.selectedResume, ...action.payload };
+        console.log("updated reusme", updatedState);
+        state.selectedResume = updatedState;
       })
       .addCase(improveResumeWithGPT.rejected, (state) => {
+        console.log("rejected called");
         state.loading = false;
       });
   },

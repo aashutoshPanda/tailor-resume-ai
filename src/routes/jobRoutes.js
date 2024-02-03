@@ -1,14 +1,14 @@
 // routes/jobRoutes.js
 import express from "express";
 import { createJob, getAllJobs, getJobById, updateJobById, deleteJobById } from "../controllers/jobControllers.js";
-import { isJobOwner } from "../middlewares/authMiddleware.js";
+import { isJobOwner, jobIdExists } from "../middlewares/jobMiddleware.js";
 
 const router = express.Router();
 
 router.post("/", createJob);
 router.get("/", getAllJobs);
-router.get("/:id", isJobOwner, getJobById);
-router.patch("/:id", isJobOwner, updateJobById);
-router.delete("/:id", isJobOwner, deleteJobById);
+router.get("/:id", jobIdExists, isJobOwner, getJobById);
+router.patch("/:id", jobIdExists, isJobOwner, updateJobById);
+router.delete("/:id", jobIdExists, isJobOwner, deleteJobById);
 
 export default router;

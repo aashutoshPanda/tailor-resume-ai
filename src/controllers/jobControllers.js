@@ -1,5 +1,5 @@
 // controllers/jobController.js
-import Job from "../models/jobModel.js";
+import Job from "../models/JobModel.js";
 import User from "../models/UserModel.js";
 
 // Create a new job application
@@ -10,61 +10,34 @@ export const createJob = async (req, res) => {
   const userId = req.user._id;
 
   // Update the current user to add the new job application ID
-  const updatedUser = await User.findByIdAndUpdate(userId, { $push: { jobIds: newJob._id } }, { new: true });
+  await User.findByIdAndUpdate(userId, { $push: { jobIds: newJob._id } }, { new: true });
 
   res.status(201).json(newJob);
 };
 
 // Get all job applications
 export const getAllJobs = async (req, res) => {
-  // Assuming req.user._id contains the current user's ID
-  const userId = req.user._id;
-
-  // Retrieve the current user
-  const currentUser = await User.findById(userId);
-
-  if (!currentUser) {
-    return res.status(404).json({ message: "User not found" });
-  }
-
   // Retrieve jobs based on jobIds
-  const jobIds = currentUser.jobIds;
+  const jobIds = req.user.jobIds;
   const userJobs = await Job.find({ _id: { $in: jobIds } });
-
   res.status(200).json(userJobs);
 };
+
 // Get a specific job application by ID
 export const getJobById = async (req, res) => {
-  const job = await Job.findById(req.params.id);
-  if (!job) {
-    return res.status(404).json({ error: "Job application not found" });
-  }
-  res.status(200).json(job);
+  res.status(200).json(req.job);
 };
 
 // Update a job application by ID
 export const updateJobById = async (req, res) => {
-  const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  if (!updatedJob) {
-    return res.status(404).json({ error: "Job application not found" });
-  }
+  const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body);
   res.status(200).json(updatedJob);
 };
 
 // Delete a job application by ID
 export const deleteJobById = async (req, res) => {
-  try {
-    const deletedJob = await Job.findByIdAndDelete(req.params.id);
-    if (!deletedJob) {
-      return res.status(404).json({ error: "Job application not found" });
-    }
-
-    // Assuming req.user._id contains the current user's ID
-    const userId = req.user._id;
-
-    // Update the current user to remove the deleted job application ID
-    const updatedUser = await User.findByIdAndUpdate(userId, { $pull: { jobIds: req.params.id } }, { new: true });
-
-    res.status(204).end();
-  } catch (error) {}
+  await Job.findByIdAndDelete(req.params.id);
+  // Update the current user to remove the deleted job application ID
+  await User.findByIdAndUpdate(req.user._id, { $pull: { jobIds: req.params.id } }, { new: true });
+  res.status(204).end();
 };

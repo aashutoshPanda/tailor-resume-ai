@@ -1,6 +1,7 @@
 // controllers/resumeController.js
-import Resume from "../models/resumeModel.js";
+import Resume from "../models/ResumeModel.js";
 import User from "../models/UserModel.js";
+import { improveResumeWithGPT as improveResumeWithGPT } from "../services/improveWithAI.js";
 import { deleteResumeThumbail, getResumeThumbnail } from "../utils/cloudinary.js";
 
 // Create a new resume
@@ -21,74 +22,46 @@ export const createResume = async (req, res) => {
   res.status(201).json(newResume);
 };
 
-// Get all resumes
-export const getAllResumes = async (req, res) => {
-  try {
-    const userId = req.user._id;
-    const currentUser = await User.findById(userId);
-    if (!currentUser) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    const resumeIds = currentUser.resumeIds;
-    const userResumes = await Resume.find({ _id: { $in: resumeIds } });
-    res.status(200).json(userResumes);
-  } catch (error) {}
-};
-
 // Get a specific resume by ID
 export const getResumeById = async (req, res) => {
-  try {
-    const resume = await Resume.findById(req.params.id);
-    if (!resume) {
-      return res.status(404).json({ error: "Resume not found" });
-    }
-    res.status(200).json(resume);
-  } catch (error) {}
+  res.status(200).json(req.resume);
 };
 
 // Update a resume by ID
 export const updateResumeById = async (req, res) => {
-  try {
-    const oldResume = await Resume.findById(req.params.id);
-    const oldThumbnail = oldResume?.thumbnail;
-    await deleteResumeThumbail(oldThumbnail);
-    const thumbnail = await getResumeThumbnail(req.body.imgData);
-    console.log("new thumbnail", thumbnail);
-    const updatedResume = await Resume.findByIdAndUpdate(req.params.id, {
-      ...req.body,
-      thumbnail,
-      lastModified: Date.now(),
-    });
-    if (!updatedResume) {
-      return res.status(404).json({ error: "Resume not found" });
-    }
-    res.status(200).json(updatedResume);
-  } catch (error) {}
+  const oldResume = req.resume;
+  const oldThumbnail = oldResume?.thumbnail;
+  await deleteResumeThumbail(oldThumbnail);
+  const thumbnail = await getResumeThumbnail(req.body.imgData);
+  const updatedResume = await Resume.findByIdAndUpdate(req.params.id, {
+    ...req.body,
+    thumbnail,
+    lastModified: Date.now(),
+  });
+  res.status(200).json(updatedResume);
 };
 
 // Delete a resume by ID
 export const deleteResumeById = async (req, res) => {
+  // Find and delete the resume
+
+  const oldResume = req.resume;
+  const oldThumbnail = oldResume?.thumbnail;
+  await deleteResumeThumbail(oldThumbnail);
+  await Resume.findByIdAndDelete(req.params.id);
+
+  // Update the current user to remove the deleted resume ID
+  await User.findByIdAndUpdate(req.user._id, { $pull: { resumeIds: req.params.id } }, { new: true });
+  res.status(204).end();
+};
+
+// Improve a resume by ID with GPT
+export const updateResumeWithGPT = async (req, res) => {
   try {
-    // Find and delete the resume
-
-    const oldResume = await Resume.findById(req.params.id);
-    const oldThumbnail = oldResume?.thumbnail;
-    await deleteResumeThumbail(oldThumbnail);
-    const deletedResume = await Resume.findByIdAndDelete(req.params.id);
-    if (!deletedResume) {
-      return res.status(404).json({ error: "Resume not found" });
-    }
-
-    // Assuming req.user._id contains the current user's ID
-    const userId = req.user._id;
-
-    // Update the current user to remove the deleted resume ID
-    const updatedUser = await User.findByIdAndUpdate(userId, { $pull: { resumeIds: req.params.id } }, { new: true });
-
-    if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    res.status(204).end();
-  } catch (error) {}
+    const improvedResumeJSON = await improveResumeWithGPT(req.body);
+    // We wont update the resume here, because that is upto the user
+    res.status(200).json(improvedResumeJSON);
+  } catch (err) {
+    res.status(400).json({ error: "try again after sometime", errorCode: "RATE_LIMIT_REACHED" });
+  }
 };
