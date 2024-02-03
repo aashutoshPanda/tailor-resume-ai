@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
  */
 export const login = async (req, res) => {
   const { email, password } = req.body;
-  const userAll = await User.find();
   const user = await User.findOne({ email: email });
   if (!user) {
     return res.status(404).send({ message: "User Not found." });
@@ -39,12 +38,4 @@ export const register = async (req, res) => {
     expiresIn: 86400, // 24 hours
   });
   res.status(201).json({ id, email, token });
-};
-
-/**
- * @desc GET Get all the users for debugging
- */
-export const getAllUsers = async (req, res) => {
-  const allUsers = await User.find({});
-  res.status(201).json(allUsers);
 };

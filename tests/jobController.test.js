@@ -2,7 +2,7 @@
 import supertest from "supertest";
 import app from "../index.js"; // Assuming your Express app instance is exported from 'index.js'
 import User from "../src/models/UserModel.js";
-import Job from "../src/models/jobModel.js"; // Import the Job model
+import Job from "../src/models/JobModel.js"; // Import the Job model
 import bcrypt from "bcrypt";
 import { jobData } from "./jobTestData.js";
 
