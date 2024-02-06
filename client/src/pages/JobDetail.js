@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addJob, fetchJobById, updateLocalJob, deleteJob, updateJob } from "../reducers/jobSlice";
 import React, { useEffect } from "react";
-import { Container, Box, TextField, Button, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
+import { Container, Box, TextField, Button, MenuItem, Select, FormControl, InputLabel, Paper } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 
 const JobOpeningPage = () => {
@@ -59,8 +59,8 @@ const JobOpeningPage = () => {
   if (!job._id && !isCreateMode) return null;
 
   return (
-    <Container maxWidth="lg">
-      <Box>
+    <Container maxWidth="lg" component={Paper}>
+      <Box p={2}>
         {/* ... (previous form fields) */}
         <TextField
           fullWidth

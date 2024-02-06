@@ -7,5 +7,6 @@
 
 3. Delete button from Job detail does not work
 8. Add loading in fetch resumes & jobs
-9. Add white background for Add jobs
+9. Add white background for Add jobs [DONE]
 10. Plus button in home - move to right
+11. Guest login time extend that [DONE]
