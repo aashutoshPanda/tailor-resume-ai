@@ -5,13 +5,14 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ThemeProvider from "./theme";
 import * as Sentry from "@sentry/react";
+import { backendBaseURL } from "./api";
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_FRONTEND_DSN,
   integrations: [
     new Sentry.BrowserTracing({
       // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
-      tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
+      tracePropagationTargets: ["localhost", backendBaseURL],
     }),
     Sentry.replayIntegration({
       maskAllText: false,
