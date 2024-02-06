@@ -15,9 +15,9 @@ const JobOpeningPage = () => {
       // If the job is being created, dispatch the addJob action
       // Otherwise, dispatch the updateJob action
       if (isCreateMode) {
-        dispatch(addJob(job)); // Implement addJob logic in your jobSlice
+        await dispatch(addJob(job)); // Implement addJob logic in your jobSlice
       } else {
-        dispatch(updateJob(job));
+        await dispatch(updateJob(job));
       }
       navigate("/home/job");
       // If the dispatch is successful, navigate to the "/home" route
@@ -31,7 +31,10 @@ const JobOpeningPage = () => {
 
   useEffect(() => {
     // Fetch jobs when the component mounts using the jobId from the URL
-    dispatch(fetchJobById(jobId));
+    const fetchData = async () => {
+      await dispatch(fetchJobById(jobId));
+    };
+    fetchData();
   }, [jobId, dispatch]);
 
   const handleChange = (event) => {
@@ -44,9 +47,10 @@ const JobOpeningPage = () => {
     );
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     // Implement your delete logic here
-    dispatch(deleteJob(job._id));
+    await dispatch(deleteJob(job._id));
+    navigate("/home/job");
   };
 
   const isLinkValid = () => {
