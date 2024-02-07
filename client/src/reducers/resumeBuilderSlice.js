@@ -135,8 +135,15 @@ const resumeBuilderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchAllResumes.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(fetchAllResumes.fulfilled, (state, action) => {
-        state.resumes = action.payload; // Assuming action.payload is the entire resume object
+        state.resumes = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchAllResumes.rejected, (state) => {
+        state.loading = false;
       })
       .addCase(fetchResumeById.fulfilled, (state, action) => {
         state.selectedResume = action.payload; // Assuming action.payload is the entire resume object

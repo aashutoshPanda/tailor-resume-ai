@@ -40,12 +40,20 @@ const jobSlice = createSlice({
   initialState: {
     jobs: [],
     selectedJob: initialJobOpening,
+    loading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(fetchJobs.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(fetchJobs.fulfilled, (state, action) => {
         state.jobs = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchJobs.rejected, (state) => {
+        state.loading = false;
       })
       .addCase(fetchJobById.fulfilled, (state, action) => {
         state.selectedJob = action.payload;

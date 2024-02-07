@@ -169,7 +169,7 @@ const JobOpeningPage = () => {
               labelId="resume-label"
               id="resume"
               name="resume"
-              value={job.resume.id}
+              value={job.resume.id || (resumesCreatedByUser.length > 0 ? resumesCreatedByUser[0]._id : "")}
               onChange={updateSelectedResume}
             >
               {resumesCreatedByUser.map((resume) => (

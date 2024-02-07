@@ -23,12 +23,14 @@ const Header = () => {
       <Grid container justifyContent={isTokenPresent ? "space-between" : "center"} alignItems="center" pt={2}>
         <Grid item>
           <Box
+            onClick={() => navigate("/home")}
             component="img"
             alt="logo"
             src={logo}
             style={{
               maxWidth: isMobileView ? theme.spacing(28) : theme.spacing(42),
               maxHeight: isMobileView ? theme.spacing(28) : theme.spacing(42),
+              cursor: "pointer", // Change cursor to pointer
             }}
           />
         </Grid>

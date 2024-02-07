@@ -1,12 +1,12 @@
-4. Add resume field in jobs [foreign relation] 
-5. Add custom resume filling option - this will be a link to resume in job field
+4. Add resume field in jobs [foreign relation] [DONE]
+5. Add custom resume filling option - this will be a link to resume in job field [SKIP]
 8. Duplicate job opening [SKIP]
 11. Redis cache 
 12. Create readme.md
 
 
 3. Delete button from Job detail does not work [DONE]
-8. Add loading in fetch resumes & jobs
+8. Add loading in fetch resumes & jobs [DONE]
 9. Add white background for Add jobs [DONE]
 10. Plus button in home - move to right
 11. Guest login time extend that [DONE]
