@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addJob, fetchJobById, updateLocalJob, deleteJob, updateJob } from "../reducers/jobSlice";
 import { fetchAllResumes } from "../reducers/resumeBuilderSlice";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Container, Box, TextField, Button, MenuItem, Select, FormControl, InputLabel, Paper } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 
