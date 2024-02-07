@@ -42,6 +42,7 @@ const JobOpeningPage = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    console.log({ name, value });
     dispatch(
       updateLocalJob({
         ...job,
@@ -75,6 +76,7 @@ const JobOpeningPage = () => {
   // possibly the case when invalid job id is provided in the url
   if (!job._id && !isCreateMode) return null;
 
+  console.log({ jobToBePresented: job });
   return (
     <Container maxWidth="lg" component={Paper}>
       <Box p={2}>

@@ -35,6 +35,13 @@ export const getAllResumes = async (req, res) => {
   res.status(200).json(userResumes);
 };
 
+// Get all resumes
+export const getAllResumes = async (req, res) => {
+  const resumeIds = req.user.resumeIds;
+  const userResumes = await Resume.find({ _id: { $in: resumeIds } });
+  res.status(200).json(userResumes);
+};
+
 // Update a resume by ID
 export const updateResumeById = async (req, res) => {
   const oldResume = req.userResume;
@@ -52,6 +59,7 @@ export const updateResumeById = async (req, res) => {
 // Delete a resume by ID
 export const deleteResumeById = async (req, res) => {
   // Find and delete the resume
+  console.log("entered in controller");
 
   const oldResume = req.userResume;
   const oldThumbnail = oldResume?.thumbnail;

@@ -15,6 +15,7 @@ export const resumeIdExists = async (req, res, next) => {
 
 export const isResumeOwner = async (req, res, next) => {
   // Assuming req.user._id contains the current user's ID
+  // console.log("req.resume", req.resume);
   const userId = req.user._id;
 
   // Retrieve the current user
@@ -29,6 +30,7 @@ export const isResumeOwner = async (req, res, next) => {
 
   // Check if the requested ID is in the user's resumeIds
   if (currentUser.resumeIds.includes(requestedResumeId)) {
+    console.log("next to my controller");
     // ID is present, allow the request to proceed
     next();
   } else {
