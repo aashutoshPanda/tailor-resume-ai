@@ -8,6 +8,7 @@ import { ProfilingIntegration } from "@sentry/profiling-node";
 import { rateLimit } from "express-rate-limit";
 
 const app = express();
+app.use(cors());
 Sentry.init({
   dsn: process.env.SENTRY_BACKEND_DSN,
   integrations: [
@@ -41,9 +42,8 @@ app.use(limiter);
 
 // mongo db setup
 setup();
-app.use(bodyParser.json({ limit: "50mb" }));
 
-app.use(cors());
+app.use(bodyParser.json({ limit: "50mb" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

@@ -1,10 +1,12 @@
 // controllers/jobController.js
 import Job from "../models/JobModel.js";
+import Resume from "../models/ResumeModel.js";
 import User from "../models/UserModel.js";
 
 // Create a new job application
 export const createJob = async (req, res) => {
-  const newJob = await Job.create(req.body);
+  const { resume, ...newJobDetails } = req.body;
+  const newJob = await Job.create(newJobDetails);
 
   // Assuming req.user._id contains the current user's ID
   const userId = req.user._id;
@@ -30,7 +32,17 @@ export const getJobById = async (req, res) => {
 
 // Update a job application by ID
 export const updateJobById = async (req, res) => {
-  const updatedJob = await Job.findByIdAndUpdate(req.params.id, req.body);
+  let updateJobDetails = { ...req.body };
+  const { resume: resumeDetails } = req.body;
+  if (resumeDetails) {
+    const { id } = resumeDetails;
+    if (!req.user.resumeIds.includes(id)) {
+      return res.status(403).json({ error: "Unauthorized - Resume does not belong to the current user" });
+    }
+    const resumeObject = await Resume.findById(id);
+    updateJobDetails.resume = resumeObject;
+  }
+  const updatedJob = await Job.findByIdAndUpdate(req.params.id, updateJobDetails);
   res.status(200).json(updatedJob);
 };
 

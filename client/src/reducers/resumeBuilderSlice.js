@@ -131,7 +131,6 @@ const resumeBuilderSlice = createSlice({
     updateVisibility: (state, action) => {
       const { id, visibility } = action.payload;
       state.resumes = state.resumes.map((resume) => (resume._id === id ? { ...resume, visibility } : resume));
-      console.log({ action, resumes: state.resumes });
     },
   },
   extraReducers: (builder) => {
@@ -153,19 +152,14 @@ const resumeBuilderSlice = createSlice({
         state.resumes = [...state.resumes, action.payload]; // Assuming action.payload is the entire resume object
       })
       .addCase(improveResumeWithGPT.pending, (state) => {
-        console.log("pending called");
         state.loading = true;
       })
       .addCase(improveResumeWithGPT.fulfilled, (state, action) => {
-        console.log("fulllll called");
         state.loading = false;
-        console.log("odl reusme", state.selectedResume);
         const updatedState = { ...state.selectedResume, ...action.payload };
-        console.log("updated reusme", updatedState);
         state.selectedResume = updatedState;
       })
       .addCase(improveResumeWithGPT.rejected, (state) => {
-        console.log("rejected called");
         state.loading = false;
       });
   },
