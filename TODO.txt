@@ -11,3 +11,6 @@
 10. Plus button in home - move to right
 11. Guest login time extend that [DONE]
 confirm about share feature
+
+Default resume selected for job is set as null
+Add floating option button with contact info 

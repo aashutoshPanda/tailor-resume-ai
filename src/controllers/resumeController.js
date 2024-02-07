@@ -52,7 +52,6 @@ export const updateResumeById = async (req, res) => {
 // Delete a resume by ID
 export const deleteResumeById = async (req, res) => {
   // Find and delete the resume
-  console.log("entered in controller");
 
   const oldResume = req.userResume;
   const oldThumbnail = oldResume?.thumbnail;
