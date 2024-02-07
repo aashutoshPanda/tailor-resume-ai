@@ -12,6 +12,7 @@ export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
 export const fetchJobById = createAsyncThunk("jobs/fetchJobById", async (id) => {
   if (id === "new") return { ...initialJobOpening };
   const response = await api.get(`/jobs/${id}`);
+  console.log({ jobFromBackend: response.data });
   return response.data;
 });
 

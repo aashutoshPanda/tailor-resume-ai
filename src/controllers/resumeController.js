@@ -1,6 +1,7 @@
 // controllers/resumeController.js
 import Resume from "../models/ResumeModel.js";
 import User from "../models/UserModel.js";
+import Job from "../models/JobModel.js";
 import { improveResumeWithGPT as improveResumeWithGPT } from "../services/improveWithAI.js";
 import { deleteResumeThumbail, getResumeThumbnail } from "../utils/cloudinary.js";
 
@@ -27,8 +28,17 @@ export const getResumeById = async (req, res) => {
   res.status(200).json(req.resume);
 };
 
+// Get all resumes
+export const getAllResumes = async (req, res) => {
+  const resumeIds = req.user.resumeIds;
+  const userResumes = await Resume.find({ _id: { $in: resumeIds } });
+  res.status(200).json(userResumes);
+};
+
 // Update a resume by ID
 export const updateResumeById = async (req, res) => {
+  console.log("in controller");
+  console.log({ oldResume: req.resume });
   const oldResume = req.resume;
   const oldThumbnail = oldResume?.thumbnail;
   await deleteResumeThumbail(oldThumbnail);
@@ -44,14 +54,16 @@ export const updateResumeById = async (req, res) => {
 // Delete a resume by ID
 export const deleteResumeById = async (req, res) => {
   // Find and delete the resume
+  console.log("entered in controller");
 
   const oldResume = req.resume;
   const oldThumbnail = oldResume?.thumbnail;
   await deleteResumeThumbail(oldThumbnail);
   await Resume.findByIdAndDelete(req.params.id);
 
-  // Update the current user to remove the deleted resume ID
   await User.findByIdAndUpdate(req.user._id, { $pull: { resumeIds: req.params.id } }, { new: true });
+  await Job.updateMany({ resume: req.params.id }, { $set: { resume: null } });
+  console.log("done successfully");
   res.status(204).end();
 };
 
