@@ -1,8 +1,9 @@
 // src/components/JobOpeningPage.js
 import { useDispatch, useSelector } from "react-redux";
 import { addJob, fetchJobById, updateLocalJob, deleteJob, updateJob } from "../reducers/jobSlice";
-import React, { useEffect } from "react";
-import { Container, Box, TextField, Button, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
+import { fetchAllResumes } from "../reducers/resumeBuilderSlice";
+import React, { useEffect, useState } from "react";
+import { Container, Box, TextField, Button, MenuItem, Select, FormControl, InputLabel, Paper } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 
 const JobOpeningPage = () => {
@@ -15,9 +16,9 @@ const JobOpeningPage = () => {
       // If the job is being created, dispatch the addJob action
       // Otherwise, dispatch the updateJob action
       if (isCreateMode) {
-        dispatch(addJob(job)); // Implement addJob logic in your jobSlice
+        await dispatch(addJob(job)); // Implement addJob logic in your jobSlice
       } else {
-        dispatch(updateJob(job));
+        await dispatch(updateJob(job));
       }
       navigate("/home/job");
       // If the dispatch is successful, navigate to the "/home" route
@@ -27,11 +28,16 @@ const JobOpeningPage = () => {
     }
   };
   let job = useSelector((state) => state.jobs.selectedJob);
+  const resumesCreatedByUser = useSelector((state) => state.resumeBuilder.resumes);
   const dispatch = useDispatch();
 
   useEffect(() => {
     // Fetch jobs when the component mounts using the jobId from the URL
-    dispatch(fetchJobById(jobId));
+    const fetchData = async () => {
+      await dispatch(fetchJobById(jobId));
+      await dispatch(fetchAllResumes());
+    };
+    fetchData();
   }, [jobId, dispatch]);
 
   const handleChange = (event) => {
@@ -43,10 +49,21 @@ const JobOpeningPage = () => {
       })
     );
   };
-
-  const handleDelete = () => {
+  const updateSelectedResume = async (event) => {
+    dispatch(
+      updateLocalJob({
+        ...job,
+        resume: {
+          ...job.resume,
+          id: event.target.value,
+        },
+      })
+    );
+  };
+  const handleDelete = async () => {
     // Implement your delete logic here
-    dispatch(deleteJob(job._id));
+    await dispatch(deleteJob(job._id));
+    navigate("/home/job");
   };
 
   const isLinkValid = () => {
@@ -59,8 +76,8 @@ const JobOpeningPage = () => {
   if (!job._id && !isCreateMode) return null;
 
   return (
-    <Container maxWidth="lg">
-      <Box>
+    <Container maxWidth="lg" component={Paper}>
+      <Box p={2}>
         {/* ... (previous form fields) */}
         <TextField
           fullWidth
@@ -92,7 +109,6 @@ const JobOpeningPage = () => {
         />
 
         <FormControl fullWidth margin="normal">
-          <InputLabel id="status-label">Status</InputLabel>
           <Select labelId="status-label" id="status" name="status" value={job.status} onChange={handleChange}>
             <MenuItem value="APPLIED">APPLIED</MenuItem>
             <MenuItem value="PENDING">PENDING</MenuItem>
@@ -109,8 +125,12 @@ const JobOpeningPage = () => {
               value={job.referralStatus}
               onChange={handleChange}
             >
-              <MenuItem value="NOT_TAKEN">Not Taken</MenuItem>
-              <MenuItem value="TAKEN">Taken</MenuItem>
+              <MenuItem key={1} value="NOT_TAKEN">
+                Not Taken
+              </MenuItem>
+              <MenuItem key={2} value="TAKEN">
+                Taken
+              </MenuItem>
             </Select>
           </FormControl>
         )}
@@ -140,7 +160,26 @@ const JobOpeningPage = () => {
           value={job.description}
           onChange={handleChange}
         />
-
+        {/* Other form fields */}
+        {resumesCreatedByUser.length === 0 ? (
+          <p>You don't have any resumes, create your first resume for this role!</p>
+        ) : (
+          <FormControl fullWidth margin="normal">
+            <Select
+              labelId="resume-label"
+              id="resume"
+              name="resume"
+              value={job.resume.id || (resumesCreatedByUser.length > 0 ? resumesCreatedByUser[0]._id : "")}
+              onChange={updateSelectedResume}
+            >
+              {resumesCreatedByUser.map((resume) => (
+                <MenuItem key={resume._id} value={resume._id}>
+                  {resume.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )}
         <Box mt={4}>
           <Button variant="contained" color="primary" onClick={handleSave}>
             Save

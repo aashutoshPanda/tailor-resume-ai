@@ -9,7 +9,7 @@ export const resumeIdExists = async (req, res, next) => {
   if (!resume) {
     return res.status(404).json({ error: "Resume not found" });
   }
-  req.resume = resume;
+  req.userResume = resume;
   next();
 };
 

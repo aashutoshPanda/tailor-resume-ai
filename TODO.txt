@@ -1,22 +1,16 @@
-1. CRUD of job from API [DONE]
-2. CRUD of resume from API [DONE]
-3. Add authentication - token based [DONE]
-4. Add resume field in jobs [foreign relation] 
-5. Add custom resume filling option - this will be a link to resume in job field
-6. Integrate ChatGPT - to make resume content better [DONE]
-7. Duplicate resume
-8. Duplicate job opening
-9. Make more resume templates
-10. Resume preview image option
+4. Add resume field in jobs [foreign relation] [DONE]
+5. Add custom resume filling option - this will be a link to resume in job field [SKIP]
+8. Duplicate job opening [SKIP]
 11. Redis cache 
+12. Create readme.md
 
 
+3. Delete button from Job detail does not work [DONE]
+8. Add loading in fetch resumes & jobs [DONE]
+9. Add white background for Add jobs [DONE]
+10. Plus button in home - move to right
+11. Guest login time extend that [DONE]
+confirm about share feature
 
-Bugs
-1. Mobile view of table jobs
-2. Resume name not getting updated
-3. Delete button from Job detail does not work
-4. Download button from Resume Card list does not work
-5. Get more keys for ChatGPT or use paid version
-6. Add rate limiting in backend and move ChatGPT logic to backend
-7. Show timestamps in better format - Resume card
+Default resume selected for job is set as null
+Add floating option button with contact info 

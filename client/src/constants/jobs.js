@@ -88,7 +88,10 @@ export const initialJobOpening = {
   lastDate: new Date().toISOString(),
   jobLink: "https://my-dream-job.com",
   status: "PENDING",
-  resume: "fullstack resume",
+  resume: {
+    name: null,
+    _id: null,
+  },
   description: "The best job anyone can get!",
   referralStatus: "NOT_TAKEN",
   referralName: "The Good Fellow",

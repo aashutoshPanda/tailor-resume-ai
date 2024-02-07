@@ -34,10 +34,8 @@ export const getResumeThumbnail = async (imgData) => {
       transformation: [{ crop: "thumb" }],
     };
     const result = await cloudinary.uploader.upload(imgData, options);
-    console.log("restult = ", result);
     return result.url;
   } catch (error) {
-    console.log(error);
     console.error(error);
   }
 };
