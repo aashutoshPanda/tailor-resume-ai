@@ -6,10 +6,9 @@ import Stack from "@mui/material/Stack";
 export default function AbsolutePositionedChip() {
   const chipContainerStyle = {
     position: "fixed",
-    left: "12px",
-    top: "50%",
-    transform: "translate(-50%) rotate(-90deg)",
-    zIndex: 9999,
+    bottom: "12px",
+    left: "16px",
+    zIndex: 500,
     cursor: "pointer",
   };
 

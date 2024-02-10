@@ -14,7 +14,7 @@ export const FloatingAIButton = ({ handleClick, disabled }) => {
         aria-label="add"
         style={{
           position: "fixed",
-          bottom: "16px",
+          bottom: "48px",
           right: "184px",
           zIndex: 1000, // Adjust the z-index as needed
         }}
@@ -33,7 +33,7 @@ export const FloatingDownloadButton = ({ handleClick, disabled }) => {
       aria-label="add"
       style={{
         position: "fixed",
-        bottom: "16px",
+        bottom: "48px",
         right: "16px",
         zIndex: 1000, // Adjust the z-index as needed
       }}
@@ -51,7 +51,7 @@ export const FloatingSaveButton = ({ handleClick, disabled }) => {
       aria-label="add"
       style={{
         position: "fixed",
-        bottom: "16px",
+        bottom: "48px",
         right: "100px",
         zIndex: 1000, // Adjust the z-index as needed
       }}

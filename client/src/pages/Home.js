@@ -46,9 +46,8 @@ const HomeScreen = () => {
         size="large"
         style={{
           position: "fixed",
-          bottom: theme.spacing(12), // Proper spacing from bottom
-          right: isDesktop ? theme.spacing(48) : theme.spacing(5), // Adjusted positioning for desktop
-          zIndex: 1000, // Adjust the z-index as needed
+          bottom: "48px",
+          right: "184px",
         }}
       >
         <Add fontSize="large" />
