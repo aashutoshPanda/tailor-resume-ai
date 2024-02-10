@@ -6,7 +6,7 @@ Welcome to TailorResume.AI, your ultimate solution for creating, managing, and s
 
 ## Live Applications
 
-- **Netlify Deployment:** [tailor-my-resume.netlify.app](tailor-my-resume.netlify.app)
+- **Netlify Deployment:** [tailor-resume-ai.netlify.app](https://tailor-resume-ai.netlify.app)
 - **Render.com Deployment:** [tailor-my-resume-express-backend.onrender.com](https://tailor-my-resume-express-backend.onrender.com)
 
 ## Features

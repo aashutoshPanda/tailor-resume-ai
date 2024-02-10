@@ -11,6 +11,7 @@ import store from "./store";
 import { localStorageKeyAPIToken } from "./constants/api";
 import wavesSVG from "../src/assets/waves.svg";
 import ShareResume from "./pages/ShareResume";
+import ContactChip from "./components/ContactChip";
 
 const PrivateRoutes = () => {
   const token = localStorage.getItem(localStorageKeyAPIToken); // Replace "yourTokenKey" with the actual key used to store the token
@@ -23,6 +24,7 @@ function App() {
       <img src={wavesSVG} style={{ position: "fixed", bottom: "0px", zIndex: -100000000 }} alt="waves"></img>
       <Provider store={store}>
         <Router>
+          <ContactChip />
           <Header />
           <Routes>
             {/* Redirect from / and /home to /home/resume */}

@@ -1,7 +1,6 @@
 import User from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { hoursIn10Years } from "../constants/auth.js";
 
 /**
  * @desc POST login for a user
@@ -18,9 +17,7 @@ export const login = async (req, res) => {
       message: "Invalid Password!",
     });
   }
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-    expiresIn: hoursIn10Years,
-  });
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
   return res.status(200).send({
     id: user.id,
     email,
@@ -36,8 +33,6 @@ export const register = async (req, res) => {
   const { email, password, fullName } = req.body;
   const encryptedPassword = await bcrypt.hash(password, salt);
   const { id } = await User.create({ email, password: encryptedPassword, fullName });
-  const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: hoursIn10Years,
-  });
+  const token = jwt.sign({ id }, process.env.JWT_SECRET);
   res.status(201).json({ id, email, token });
 };

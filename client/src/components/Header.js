@@ -20,7 +20,7 @@ const Header = () => {
 
   return (
     <Container maxWidth="lg">
-      <Grid container justifyContent={isTokenPresent ? "space-between" : "center"} alignItems="center" pt={2}>
+      <Grid container justifyContent={isTokenPresent ? "space-between" : "center"} alignItems="center" pt={2} pb={4}>
         <Grid item>
           <Box
             onClick={() => navigate("/home")}

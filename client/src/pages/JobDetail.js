@@ -28,6 +28,7 @@ const JobOpeningPage = () => {
     }
   };
   let job = useSelector((state) => state.jobs.selectedJob);
+
   const resumesCreatedByUser = useSelector((state) => state.resumeBuilder.resumes);
   const dispatch = useDispatch();
 
@@ -165,11 +166,13 @@ const JobOpeningPage = () => {
           <p>You don't have any resumes, create your first resume for this role!</p>
         ) : (
           <FormControl fullWidth margin="normal">
+            <InputLabel>Resume</InputLabel>
             <Select
               labelId="resume-label"
+              label="Resume"
               id="resume"
               name="resume"
-              value={job.resume.id || (resumesCreatedByUser.length > 0 ? resumesCreatedByUser[0]._id : "")}
+              value={job.resume.id}
               onChange={updateSelectedResume}
             >
               {resumesCreatedByUser.map((resume) => (
