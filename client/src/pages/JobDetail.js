@@ -28,6 +28,7 @@ const JobOpeningPage = () => {
     }
   };
   let job = useSelector((state) => state.jobs.selectedJob);
+
   const resumesCreatedByUser = useSelector((state) => state.resumeBuilder.resumes);
   const dispatch = useDispatch();
 
@@ -36,6 +37,22 @@ const JobOpeningPage = () => {
     const fetchData = async () => {
       await dispatch(fetchJobById(jobId));
       await dispatch(fetchAllResumes());
+      // We keep the resume id for a dummy job as null in init data
+      // When there are no resumes created by the user the resume id for the job should be null
+      // when there are some resumes created we should keep the first one by default as the resume for the job
+      // This checks if nothing is selected by user (users might have selected a particular resume themselves) in that case we dont want to override
+      // So if nothing is selected and there are some resumes created then select the first resume
+      if (job.resume.id === null && resumesCreatedByUser.length > 0) {
+        dispatch(
+          updateLocalJob({
+            ...job,
+            resume: {
+              ...job.resume,
+              id: resumesCreatedByUser[0]._id,
+            },
+          })
+        );
+      }
     };
     fetchData();
   }, [jobId, dispatch]);
@@ -169,7 +186,7 @@ const JobOpeningPage = () => {
               labelId="resume-label"
               id="resume"
               name="resume"
-              value={job.resume.id || (resumesCreatedByUser.length > 0 ? resumesCreatedByUser[0]._id : "")}
+              value={job.resume.id}
               onChange={updateSelectedResume}
             >
               {resumesCreatedByUser.map((resume) => (
