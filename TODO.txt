@@ -12,5 +12,9 @@
 11. Guest login time extend that [DONE]
 confirm about share feature
 
-Default resume selected for job is set as null
-Add floating option button with contact info 
+Default resume selected for job is set as null [DONE]
+Add floating option button with contact info [DONE]
+share resume link - undefined [DONE]
+resume image max height [DONE]
+Add space after Delhi, India in mobile [DONE]
+Move burger icon on left side of resume input in mobile [DONE]

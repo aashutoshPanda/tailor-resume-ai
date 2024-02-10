@@ -34,12 +34,28 @@ const ResumeBuilder = () => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const resumeName = useSelector((state) => state.resumeBuilder.selectedResume.name);
   const template = useSelector((state) => state.resumeBuilder.selectedResume.template);
+  useEffect(() => {
+    const fetchById = async () => {
+      await dispatch(fetchResumeById(resumeId));
+    };
+    fetchById();
+  }, [resumeId, dispatch]);
+
+  const captureScreenshot = async (element) => {
+    const container = document.createElement("div");
+    container.style.width = "1280px";
+    container.style.display = "flex";
+    container.style.overflow = "hidden";
+    container.appendChild(element);
+    document.body.appendChild(container);
+    const canvas = await html2canvas(container);
+    document.body.removeChild(container);
+    return canvas.toDataURL("image/png");
+  };
 
   const handleDownload = async () => {
     try {
-      const input = ref.current;
-      const canvas = await html2canvas(input);
-      const imgData = canvas.toDataURL("image/png");
+      const imgData = await captureScreenshot(ref.current);
       const pdf = new jsPDF();
       pdf.addImage(imgData, "JPEG", 0, 0);
       pdf.save(selectedResume.name);
@@ -49,31 +65,20 @@ const ResumeBuilder = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchById = async () => {
-      await dispatch(fetchResumeById(resumeId));
-    };
-    fetchById();
-  }, [resumeId, dispatch]);
-
   const handleSave = async () => {
     try {
       dispatch(setLoading(true));
-      const input = ref.current;
-      const canvas = await html2canvas(input);
-      const imgData = canvas.toDataURL("image/png");
+      const imgData = await captureScreenshot(ref.current);
 
       if (isCreateMode) {
-        await dispatch(addResume({ ...selectedResume, imgData })); // Implement addJob logic in your jobSlice
+        await dispatch(addResume({ ...selectedResume, imgData }));
       } else {
         await dispatch(updateResume({ ...selectedResume, imgData }));
       }
-      // If the dispatch is successful, navigate to the "/home" route
       navigate("/home/resume");
       dispatch(setLoading(false));
     } catch (error) {
       dispatch(setLoading(false));
-      // If the dispatch fails, handle the error appropriately
       console.error("Failed to save resume:", error);
     }
   };
@@ -90,7 +95,7 @@ const ResumeBuilder = () => {
     dispatch(setTemplate(e.target.value));
   };
 
-  const handleAIButtonClick = async (e) => {
+  const handleAIButtonClick = async () => {
     await dispatch(improveResumeWithGPT(selectedResume));
   };
 

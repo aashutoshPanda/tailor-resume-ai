@@ -112,7 +112,7 @@ const InternshipResumePreview = (props, ref) => {
       </Grid>
 
       {/* Second Row */}
-      <Grid container justifyContent="center" direction="column">
+      <Grid container justifyContent="center" direction="column" pt={1}>
         <Grid container justifyContent="center">
           <Grid item>
             <Typography variant="h6">Education</Typography>
@@ -132,7 +132,7 @@ const InternshipResumePreview = (props, ref) => {
             <Typography variant="h6">Experience</Typography>
             <Divider style={{ backgroundColor: "#f0f0f0" }} />
             {experienceList.map((experience, index) => (
-              <Box key={index} mt={2}>
+              <Box key={index} mt={1}>
                 {/* First Row - Company Name */}
                 <Typography variant="subtitle1" fontWeight="bold">
                   {experience.organisation}

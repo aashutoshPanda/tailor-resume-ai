@@ -39,13 +39,19 @@ const ResumeCard = ({ resume }) => {
       setSnackbarOpen(true);
     }
   };
+  const getURLToCopy = (resumeId) => {
+    const { REACT_APP_ENV, REACT_APP_FRONTEND_BASE_URL_LOCAL, REACT_APP_FRONTEND_BASE_URL_PROD } = process.env;
+    const baseURL = REACT_APP_ENV === "LOCAL" ? REACT_APP_FRONTEND_BASE_URL_LOCAL : REACT_APP_FRONTEND_BASE_URL_PROD;
+    const urlToCopy = `${baseURL}/resume/share/${resumeId}`;
+    return urlToCopy;
+  };
 
   const handleShare = async (id, visibility) => {
-    let url = `${process.env.REACT_APP_FRONTEND_BASE_URL}/resume/share/${id}`;
     try {
       if (visibility !== visibilityTypes.public) {
         await api.patch(`/resumes/${id}`, { visibility: visibilityTypes.public });
       }
+      const url = getURLToCopy(id);
       await copyToClipboard(url);
       dispatch(updateVisibility({ id, visibility: visibilityTypes.public }));
     } catch (error) {
@@ -102,7 +108,11 @@ const ResumeCard = ({ resume }) => {
         <Typography variant="subtitle2" color="textSecondary" align="left">
           Last Edited: {elapsed}
         </Typography>
-        <img src={resume.thumbnail} alt={resume.name} style={{ width: "40%", height: "auto" }} />
+        <img
+          src={resume.thumbnail}
+          alt={resume.name}
+          style={{ width: "auto", height: "40%", maxHeight: "220px", overflow: "hidden" }}
+        />
         {resume.visibility === visibilityTypes.public ? visibility : null}
       </CardContent>
       <CardActions>

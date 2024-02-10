@@ -67,14 +67,14 @@ const EntryLevelResumePreview = (props, ref) => {
       </Grid>
 
       {/* Second Row */}
-      <Grid container spacing={3}>
+      <Grid container spacing={3} pt={1}>
         {/* First Column */}
         <Grid item md={6}>
           <Box textAlign="left">
             <Typography variant="h6">Experience</Typography>
             <Divider style={{ backgroundColor: "#f0f0f0" }} />
             {experienceList.map((experience, index) => (
-              <Box key={index} mt={2}>
+              <Box key={index} mt={1}>
                 {/* First Row - Company Name */}
                 <Typography variant="subtitle1" fontWeight="bold">
                   {experience.organisation}
