@@ -37,12 +37,16 @@ const ResumeBuilder = () => {
 
   const handleDownload = async () => {
     try {
+      dispatch(setLoading(true));
       const input = ref.current;
       const canvas = await html2canvas(input, { scale: 0.95 });
       const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, "JPEG", 0, 0);
+      const pdf = new jsPDF("p", "pt", [canvas.width, canvas.height]);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
       pdf.save(selectedResume.name);
+      dispatch(setLoading(false));
     } catch (error) {
       // Handle error
       console.error("Error generating PDF:", error);
