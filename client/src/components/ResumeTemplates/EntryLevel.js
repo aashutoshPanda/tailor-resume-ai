@@ -38,7 +38,7 @@ const EntryLevelResumePreview = (props, ref) => {
   const basicDetailComponent = isMobile ? basicDetailsMobile : basicDetailsDesktop;
 
   return (
-    <Grid item md={8} ref={ref} component={Paper} mt={3}>
+    <Grid item md={8} ref={ref} component={Paper} mt={3} p={2}>
       {/* First Row */}
       <Grid container spacing={3}>
         {/* First Column */}
