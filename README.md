@@ -9,6 +9,14 @@ Welcome to TailorResume.AI, your ultimate solution for creating, managing, and s
 - **Netlify Deployment:** [tailor-resume-ai.netlify.app](https://tailor-resume-ai.netlify.app)
 - **Render.com Deployment:** [tailor-my-resume-express-backend.onrender.com](https://tailor-my-resume-express-backend.onrender.com)
 
+## Wireframe
+
+Figma wireframe - [Web & Mobile mockups](https://www.figma.com/file/GxuX8FxP5UWVFho9PPrcxJ/TailorMyResume-Material-3-Design?type=design&node-id=54725%3A27727&mode=design&t=g5eMDLaZ9TifUZ1i-1)
+
+## Architecture
+
+<img src="./assets/arch-diagram.png" alt="architecture" width="600"/>
+
 ## Features
 
 1. **Create Resume:** Design and generate your professional resume using our intuitive application.
@@ -34,10 +42,6 @@ In the job application process, using the same resume for different roles may no
 ### Resume Builder
 
 ![Resume Builder Desktop](./assets/resume-builder-desktop.png)
-
-### Use AI to improve your resume
-
-![Improve Resume with AI](./assets/improve-resume-with-ai.webm)
 
 ### My Resumes page
 
@@ -86,11 +90,6 @@ npm run start
 ```
 
 Remember to create `.env` files as per the provided `.env.example` in both the client and root directories of the project.
-
-## Additional Resources
-
-- **Figma Diagrams:** [Figma Wireframe for Desktop & Mobile](https://www.figma.com/file/GxuX8FxP5UWVFho9PPrcxJ/TailorMyResume-Material-3-Design?type=design&node-id=54725%3A27727&mode=design&t=9uk293qjmVIjlVdB-1)
-- **PRD Document:** [Link to PRD document](#)
 
 ## Deployment
 
