@@ -38,7 +38,7 @@ const ResumeBuilder = () => {
   const handleDownload = async () => {
     try {
       const input = ref.current;
-      const canvas = await html2canvas(input);
+      const canvas = await html2canvas(input, { scale: 0.95 });
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF();
       pdf.addImage(imgData, "JPEG", 0, 0);
